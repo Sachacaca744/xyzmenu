@@ -1,0 +1,61 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.8/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :compileJava
+> Task :processResources
+> Task :classes
+> Task :jar
+> Task :downloadMcpConfig
+> Task :extractSrg
+> Task :createMcpToSrg
+> Task :reobfJar
+> Task :jarJar SKIPPED
+> Task :reobfJarJar SKIPPED
+> Task :assemble
+> Task :compileTestJava NO-SOURCE
+> Task :processTestResources NO-SOURCE
+> Task :testClasses UP-TO-DATE
+> Task :test NO-SOURCE
+> Task :check UP-TO-DATE
+> Task :build
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run-1794054946002.json
+
+BUILD SUCCESSFUL in 21s
+7 actionable tasks: 7 executed
+Archive:  build/libs/uitems-1.0.0.jar
+  Length      Date    Time    Name
+---------  ---------- -----   ----
+        0  1970-01-11 22:58   META-INF/
+      115  2026-11-07 12:35   META-INF/MANIFEST.MF
+      477  2026-11-07 12:35   META-INF/mods.toml
+        0  1970-01-11 22:58   assets/
+        0  1970-01-11 22:58   assets/uitems/
+        0  1970-01-11 22:58   assets/uitems/lang/
+      199  2026-11-07 12:35   assets/uitems/lang/en_us.json
+      205  2026-11-07 12:35   assets/uitems/lang/fr_fr.json
+        0  1970-01-11 22:58   assets/uitems/models/
+        0  1970-01-11 22:58   assets/uitems/models/item/
+      100  2026-11-07 12:35   assets/uitems/models/item/builder_shirt.json
+      100  2026-11-07 12:35   assets/uitems/models/item/founder_shirt.json
+       99  2026-11-07 12:35   assets/uitems/models/item/founder_sword.json
+       98  2026-11-07 12:35   assets/uitems/models/item/staff_shirt.json
+        0  1970-01-11 22:58   assets/uitems/textures/
+        0  1970-01-11 22:58   assets/uitems/textures/item/
+      169  2026-11-07 12:35   assets/uitems/textures/item/builder_shirt.png
+      169  2026-11-07 12:35   assets/uitems/textures/item/founder_shirt.png
+      173  2026-11-07 12:35   assets/uitems/textures/item/founder_sword.png
+      174  2026-11-07 12:35   assets/uitems/textures/item/staff_shirt.png
+        0  1970-01-11 22:58   assets/uitems/textures/models/
+        0  1970-01-11 22:58   assets/uitems/textures/models/armor/
+      189  2026-11-07 12:35   assets/uitems/textures/models/armor/builder_layer_1.png
+      192  2026-11-07 12:35   assets/uitems/textures/models/armor/founder_layer_1.png
+      200  2026-11-07 12:35   assets/uitems/textures/models/armor/staff_layer_1.png
+        0  1970-01-11 22:58   fr/
+        0  1970-01-11 22:58   fr/uitems/
+     9109  2026-11-07 12:35   fr/uitems/Events.class
+      892  2026-11-07 12:35   fr/uitems/FounderSword.class
+     3325  2026-11-07 12:35   fr/uitems/ModItems.class
+     2890  2026-11-07 12:35   fr/uitems/ShirtMaterial.class
+     1135  2026-11-07 12:35   fr/uitems/Uitems.class
+       80  2026-11-07 12:35   pack.mcmeta
+---------                     -------
+    20090                     33 files
