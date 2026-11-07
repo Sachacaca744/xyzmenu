@@ -1,0 +1,54 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.8/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Task :compileJava
+Note: /home/runner/work/xyzmenu/xyzmenu/src/main/java/fr/ucore/Rewards.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+
+> Task :processResources
+> Task :classes
+> Task :jar
+> Task :downloadMcpConfig
+> Task :extractSrg
+> Task :createMcpToSrg
+> Task :reobfJar
+> Task :jarJar SKIPPED
+> Task :reobfJarJar SKIPPED
+> Task :assemble
+> Task :compileTestJava NO-SOURCE
+> Task :processTestResources NO-SOURCE
+> Task :testClasses UP-TO-DATE
+> Task :test NO-SOURCE
+> Task :check UP-TO-DATE
+> Task :build
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run-1794054947487.json
+
+BUILD SUCCESSFUL in 24s
+7 actionable tasks: 7 executed
+Archive:  build/libs/ucore-1.0.0.jar
+  Length      Date    Time    Name
+---------  ---------- -----   ----
+        0  1970-01-11 22:58   META-INF/
+      113  2026-11-07 12:36   META-INF/MANIFEST.MF
+      564  2026-11-07 12:36   META-INF/mods.toml
+        0  1970-01-11 22:58   fr/
+        0  1970-01-11 22:58   fr/ucore/
+     2455  2026-11-07 12:36   fr/ucore/Cfg$Config.class
+      530  2026-11-07 12:36   fr/ucore/Cfg$Day.class
+      455  2026-11-07 12:36   fr/ucore/Cfg$Grade.class
+      526  2026-11-07 12:36   fr/ucore/Cfg$Reward.class
+     6606  2026-11-07 12:36   fr/ucore/Cfg.class
+    20225  2026-11-07 12:36   fr/ucore/Cmds.class
+     5200  2026-11-07 12:36   fr/ucore/Daily.class
+     7556  2026-11-07 12:36   fr/ucore/Events.class
+    16478  2026-11-07 12:36   fr/ucore/Gifts.class
+     9238  2026-11-07 12:36   fr/ucore/Rewards.class
+     1204  2026-11-07 12:36   fr/ucore/Store$Data.class
+      541  2026-11-07 12:36   fr/ucore/Store$Gift.class
+      539  2026-11-07 12:36   fr/ucore/Store$Spawn.class
+      443  2026-11-07 12:36   fr/ucore/Store$Streak.class
+     3475  2026-11-07 12:36   fr/ucore/Store.class
+     2243  2026-11-07 12:36   fr/ucore/Ucore.class
+       80  2026-11-07 12:36   pack.mcmeta
+---------                     -------
+    78471                     22 files
