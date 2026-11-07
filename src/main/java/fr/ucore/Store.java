@@ -29,7 +29,14 @@ public class Store {
         public int streak = 0;
     }
 
+    /** Code cadeau a usage unique : detruit apres utilisation. */
+    public static class Gift {
+        public Cfg.Reward reward = new Cfg.Reward();
+        public String created = "";
+    }
+
     public static class Data {
+        public Map<String, Gift> gifts = new HashMap<>();
         public Spawn firstSpawn = new Spawn();
         public Spawn spawn = new Spawn();
         public Map<String, Long> money = new HashMap<>();
@@ -70,6 +77,7 @@ public class Store {
         if (read.grade == null) read.grade = new HashMap<>();
         if (read.daily == null) read.daily = new HashMap<>();
         if (read.seen == null) read.seen = new HashSet<>();
+        if (read.gifts == null) read.gifts = new HashMap<>();
         data = read;
     }
 

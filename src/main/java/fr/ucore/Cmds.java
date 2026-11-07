@@ -40,6 +40,8 @@ public class Cmds {
 
     public static void register(CommandDispatcher<CommandSourceStack> d) {
 
+        Gifts.register(d);
+
         // ---------- /spawn (tout le monde) ----------
         d.register(Commands.literal("spawn").executes(ctx -> {
             ServerPlayer p = ctx.getSource().getPlayerOrException();
