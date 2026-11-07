@@ -1,0 +1,115 @@
+=====================================================================
+  LAUNCHER - GUIDE ADMIN  (comment ajouter / retirer des mods)
+=====================================================================
+
+COMMENT CA MARCHE
+-----------------
+Les joueurs ont UN seul fichier : ServeurLauncher.exe.
+Au lancement, il lit le fichier "modpack.json" (celui de ce dossier, sur GitHub),
+puis il telecharge / met a jour / SUPPRIME les mods du joueur pour qu'ils soient
+exactement ceux de la liste. Tu n'as donc jamais besoin de refaire le .exe pour
+changer des mods : tu modifies modpack.json et c'est tout.
+
+Les mods du launcher sont dans un dossier a part (%APPDATA%\ServeurLauncher\game),
+ils n'ecrasent rien de ton Minecraft normal.
+
+IMPORTANT : si tu ajoutes un mod, mets-le AUSSI sur le serveur (dossier "mods").
+Un mod serveur + client doit etre identique des deux cotes. Les mods "serveur
+seulement" (ex : ucore) ne vont PAS dans modpack.json.
+
+
+AJOUTER UN MOD  (2 etapes, 2 minutes)
+-------------------------------------
+1) Mets le fichier .jar du mod quelque part ou il peut etre telecharge :
+     - soit dans le dossier "mods" de cette page GitHub
+       (Add file > Upload files, branche "launcher", dossier mods/)
+     - soit utilise une adresse de telechargement directe (https://...)
+2) Dans modpack.json, ajoute une ligne dans la liste "mods" :
+
+     { "file": "nom-du-mod.jar" },
+
+   Si le .jar est dans le dossier mods/ de GitHub, c'est tout.
+   Si il est ailleurs, ajoute son adresse :
+
+     { "file": "nom-du-mod.jar", "url": "https://adresse/directe/nom-du-mod.jar" },
+
+   Attention aux virgules : toutes les lignes sauf la derniere finissent par une virgule.
+
+Les joueurs recevront le mod au prochain lancement du launcher
+(compte environ 5 minutes avant que GitHub affiche ta modification).
+
+
+RETIRER UN MOD
+--------------
+Supprime sa ligne dans modpack.json. Le launcher l'efface chez tous les joueurs
+au prochain lancement. (Pour le couper temporairement : ajoute  "enabled": false )
+
+     { "file": "nom-du-mod.jar", "enabled": false },
+
+
+METTRE A JOUR UN MOD
+--------------------
+Cas 1 : le nouveau fichier a un NOUVEAU nom (ex : mod-1.2.jar a la place de mod-1.1.jar)
+        -> change simplement le nom dans modpack.json. L'ancien est efface tout seul.
+Cas 2 : le fichier garde le MEME nom mais son contenu change
+        -> ajoute / change  "version": "2"  (n'importe quel texte different)
+           ou mets son empreinte "sha256" (voir plus bas).
+        Exemple : { "file": "uwarp-1.0.0.jar", "url": "...", "version": "2" },
+
+
+SECURITE (OPTIONNEL MAIS CONSEILLE) : "sha256"
+-----------------------------------------------
+Avec  "sha256": "...."  le launcher verifie que le fichier n'a pas ete modifie ou
+abime, et le retelecharge si besoin. Pour obtenir l'empreinte d'un fichier,
+sous Windows : ouvre PowerShell et tape
+     Get-FileHash "C:\chemin\vers\mod.jar" -Algorithm SHA256
+Si "sha256" est present, il remplace "version" pour la detection des mises a jour.
+
+
+LES AUTRES REGLAGES
+-------------------
+"name"          Titre affiche dans le launcher.
+"description"   Petite phrase sous le titre.
+"minecraft"     Version de Minecraft (1.20.1).
+"forge"         Version de Forge (47.4.28). Mets "stable" pour la derniere stable.
+                Si tu changes de version de Forge, change-la aussi sur le serveur !
+"server"        Adresse du serveur (ex : "play.monserveur.fr:25565").
+                Si elle est remplie, le jeu rejoint le serveur tout seul. Vide = menu normal.
+"ram_mb"        Memoire proposee par defaut aux nouveaux joueurs (4096 = 4 Go).
+"msa_app_id"    Voir plus bas (connexion Microsoft). Laisse vide au debut.
+"mods_base_url" Dossier ou chercher les mods qui n'ont pas de "url".
+"files"         Fichiers en plus (configs, resource packs...). Exemple :
+     { "path": "resourcepacks/mon-pack.zip", "url": "https://...", "version": "1" }
+                Le "path" est toujours a l'interieur du dossier du jeu.
+
+
+DROITS D'AUTEUR DES MODS
+-------------------------
+Heberger les .jar d'un autre auteur sur GitHub n'est pas toujours permis (licence
+"tous droits reserves"). Verifie la licence de chaque mod, ou utilise l'adresse
+de telechargement officielle (Modrinth, par exemple) dans "url" plutot que de
+copier le fichier.
+
+
+CONNEXION MICROSOFT (a savoir)
+------------------------------
+Les joueurs se connectent avec leur vrai compte Minecraft (Microsoft), une seule
+fois. Par defaut le launcher utilise l'identifiant d'application du projet libre
+PortableMC. Pour un usage serieux et durable, enregistre ta propre application
+Microsoft (Azure) et mets son identifiant dans "msa_app_id".
+Remarque : Mojang demande une validation pour les nouvelles applications.
+
+
+SI LE LAUNCHER AFFICHE UNE ERREUR
+---------------------------------
+Les joueurs peuvent cliquer sur "Dossier du jeu", puis ouvrir logs\launcher-jeu.log
+et te l'envoyer. Les erreurs les plus frequentes : une virgule oubliee dans
+modpack.json, ou un nom de fichier mal ecrit (verifie les majuscules).
+
+
+WINDOWS "PROTEGE VOTRE PC"
+---------------------------
+Le .exe n'est pas signe numeriquement : Windows peut afficher un avertissement.
+Dis a tes joueurs : "Informations complementaires" puis "Executer quand meme".
+Certains antivirus peuvent aussi le signaler a tort (c'est courant pour ce type
+de programme). Une signature de code payante regle le probleme.

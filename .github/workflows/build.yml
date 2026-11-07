@@ -1,0 +1,52 @@
+name: Build launcher (Windows)
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Installer les outils
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install portablemc pyinstaller 2>&1 | tee build.log
+      - name: Creer le .exe
+        run: |
+          set -o pipefail
+          python -m PyInstaller --onefile --noconsole --name ServeurLauncher --collect-all portablemc launcher.py 2>&1 | tee -a build.log
+          ls -l dist | tee -a build.log
+      - name: Test du .exe (auto-test)
+        run: |
+          export LAUNCHER_DATA="$PWD/selftest-data"
+          ./dist/ServeurLauncher.exe --selftest || true
+          sleep 3
+          cat "$PWD/selftest-data/selftest.txt" | tee -a build.log
+          grep -q "^OK" "$PWD/selftest-data/selftest.txt"
+          test "$(stat -c%s dist/ServeurLauncher.exe)" -gt 5000000
+      - name: Publier le .exe dans les Releases
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete launcher-exe --yes --cleanup-tag || true
+          gh release create launcher-exe dist/ServeurLauncher.exe --title "Launcher (Windows)" --notes "Compile automatiquement (${GITHUB_SHA})" --target "$GITHUB_SHA"
+      - name: Publier le journal
+        if: always()
+        run: |
+          mkdir -p /tmp/logs && cp build.log /tmp/logs/build.log || echo "pas de log" > /tmp/logs/build.log
+          cd /tmp/logs
+          git init -q && git checkout -q -b logs
+          git add . && git -c user.name=ci -c user.email=ci@example.com commit -qm "log ${GITHUB_SHA}"
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" "logs:refs/heads/logs-launcher"

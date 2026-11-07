@@ -1,0 +1,23 @@
+{
+  "name": "Mon Serveur Pokémon",
+  "description": "Minecraft 1.20.1 + Cobblemon : tout est automatique.",
+  "minecraft": "1.20.1",
+  "forge": "47.4.28",
+  "server": "",
+  "ram_mb": 4096,
+  "msa_app_id": "",
+  "mods_base_url": "https://raw.githubusercontent.com/Sachacaca744/xyzmenu/launcher/mods/",
+  "mods": [
+    {
+      "file": "uitems-1.0.0.jar",
+      "url": "https://github.com/Sachacaca744/xyzmenu/releases/download/build-mod-uitems/uitems-1.0.0.jar",
+      "sha256": "893ee11780a4945d7b564d09056452cd6e93eb9583f2203ebebdcda031568c02"
+    },
+    {
+      "file": "uwarp-1.0.0.jar",
+      "url": "https://github.com/Sachacaca744/xyzmenu/releases/download/build-mod-uwarp/uwarp-1.0.0.jar",
+      "sha256": "d33edbd8953507f38fa69ae3343cf0d6bc187f4a513e64449c438a3685d789e1"
+    }
+  ],
+  "files": []
+}
