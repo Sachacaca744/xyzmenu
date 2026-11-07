@@ -1,0 +1,27 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="MIT"
+
+[[mods]]
+modId="ucore"
+version="1.0.0"
+displayName="Ucore"
+description='''
+Mod serveur : grades et prefixes dans le chat, /daily avec serie de connexions,
+monnaie (/balance, /pay), annonces automatiques, spawn des nouveaux joueurs et /spawn.
+Les joueurs n'ont pas besoin de l'installer.
+'''
+
+[[dependencies.ucore]]
+modId="forge"
+mandatory=true
+versionRange="[47,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.ucore]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.20.1,1.21)"
+ordering="NONE"
+side="BOTH"
