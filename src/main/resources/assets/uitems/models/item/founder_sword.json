@@ -1,0 +1,4 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": { "layer0": "uitems:item/founder_sword" }
+}
