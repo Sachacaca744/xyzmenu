@@ -1,0 +1,10 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": { "layer0": "uarmor:item/riot_shield" },
+  "display": {
+    "thirdperson_righthand": { "rotation": [45, 90, -10], "translation": [1, 1, 2], "scale": [1.2, 1.2, 1.2] },
+    "firstperson_righthand": { "rotation": [10, -10, 0], "translation": [-3, 3, 4], "scale": [1.5, 1.5, 1.5] },
+    "thirdperson_lefthand": { "rotation": [45, 90, -10], "translation": [1, 1, 2], "scale": [1.2, 1.2, 1.2] },
+    "firstperson_lefthand": { "rotation": [10, -10, 0], "translation": [-3, 3, 4], "scale": [1.5, 1.5, 1.5] }
+  }
+}

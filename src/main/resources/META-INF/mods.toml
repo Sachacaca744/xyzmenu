@@ -1,0 +1,26 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="MIT"
+
+[[mods]]
+modId="uarmor"
+version="1.0.0"
+displayName="Uarmor"
+description='''
+Armures Admin (casque, plastron, jambieres, bottes) et Bouclier Anti-Emeute Admin. /staff admin
+A installer sur le serveur ET chez les joueurs.
+'''
+
+[[dependencies.uarmor]]
+modId="forge"
+mandatory=true
+versionRange="[47,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.uarmor]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.20.1,1.21)"
+ordering="NONE"
+side="BOTH"
