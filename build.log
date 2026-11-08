@@ -1,0 +1,65 @@
+163 INFO: PyInstaller: 6.22.3, contrib hooks: 2026.9
+163 INFO: Python: 3.11.9
+171 INFO: Platform: Windows-10-10.0.26100-SP0
+171 INFO: Python environment: C:\hostedtoolcache\windows\Python\3.11.9\x64
+171 INFO: wrote D:\a\xyzmenu\xyzmenu\Launcher.spec
+179 INFO: Module search paths (PYTHONPATH):
+['C:\\hostedtoolcache\\windows\\Python\\3.11.9\\x64\\Scripts\\pyinstaller.exe',
+ 'C:\\hostedtoolcache\\windows\\Python\\3.11.9\\x64\\python311.zip',
+ 'C:\\hostedtoolcache\\windows\\Python\\3.11.9\\x64\\DLLs',
+ 'C:\\hostedtoolcache\\windows\\Python\\3.11.9\\x64\\Lib',
+ 'C:\\hostedtoolcache\\windows\\Python\\3.11.9\\x64',
+ 'C:\\hostedtoolcache\\windows\\Python\\3.11.9\\x64\\Lib\\site-packages',
+ 'D:\\a\\xyzmenu\\xyzmenu']
+370 INFO: checking Analysis
+370 INFO: Building Analysis because Analysis-00.toc is non existent
+370 INFO: Looking for Python shared library...
+370 INFO: Using Python shared library: C:\hostedtoolcache\windows\Python\3.11.9\x64\python311.dll
+370 INFO: Running Analysis Analysis-00.toc
+370 INFO: Target bytecode optimization level: 0
+372 INFO: Initializing module dependency graph...
+374 INFO: Initializing module graph hook caches...
+390 INFO: Analyzing modules for base_library.zip ...
+999 INFO: Processing standard module hook 'hook-encodings.py' from 'C:\\hostedtoolcache\\windows\\Python\\3.11.9\\x64\\Lib\\site-packages\\PyInstaller\\hooks'
+1461 INFO: Processing standard module hook 'hook-heapq.py' from 'C:\\hostedtoolcache\\windows\\Python\\3.11.9\\x64\\Lib\\site-packages\\PyInstaller\\hooks'
+1615 INFO: Processing standard module hook 'hook-math.py' from 'C:\\hostedtoolcache\\windows\\Python\\3.11.9\\x64\\Lib\\site-packages\\PyInstaller\\hooks'
+1939 INFO: Processing standard module hook 'hook-pickle.py' from 'C:\\hostedtoolcache\\windows\\Python\\3.11.9\\x64\\Lib\\site-packages\\PyInstaller\\hooks'
+4416 INFO: Caching module dependency graph...
+4450 INFO: Analyzing D:\a\xyzmenu\xyzmenu\launcher.py
+4812 INFO: Processing standard module hook 'hook-webbrowser.py' from 'C:\\hostedtoolcache\\windows\\Python\\3.11.9\\x64\\Lib\\site-packages\\PyInstaller\\hooks'
+4820 INFO: Processing pre-find-module-path hook 'hook-tkinter.py' from 'C:\\hostedtoolcache\\windows\\Python\\3.11.9\\x64\\Lib\\site-packages\\PyInstaller\\hooks\\pre_find_module_path'
+4821 INFO: TclTkInfo: initializing cached Tcl/Tk info...
+5804 INFO: Processing standard module hook 'hook-_tkinter.py' from 'C:\\hostedtoolcache\\windows\\Python\\3.11.9\\x64\\Lib\\site-packages\\PyInstaller\\hooks'
+5840 INFO: Processing module hooks (post-graph stage)...
+5843 INFO: Processing standard module hook 'hook-_tkinter.py' from 'C:\\hostedtoolcache\\windows\\Python\\3.11.9\\x64\\Lib\\site-packages\\PyInstaller\\hooks'
+5851 INFO: Performing binary vs. data reclassification (923 entries)
+6468 INFO: Looking for ctypes DLLs
+6477 INFO: Analyzing run-time hooks ...
+6477 INFO: Including run-time hook 'pyi_rth_inspect.py' from 'C:\\hostedtoolcache\\windows\\Python\\3.11.9\\x64\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+6481 INFO: Including run-time hook 'pyi_rth__tkinter.py' from 'C:\\hostedtoolcache\\windows\\Python\\3.11.9\\x64\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+6502 INFO: Creating base_library.zip...
+6519 INFO: Looking for dynamic libraries
+6624 INFO: Extra DLL search directories (AddDllDirectory): []
+6624 INFO: Extra DLL search directories (PATH): []
+7271 INFO: Warnings written to D:\a\xyzmenu\xyzmenu\build\Launcher\warn-Launcher.txt
+7287 INFO: Graph cross-reference written to D:\a\xyzmenu\xyzmenu\build\Launcher\xref-Launcher.html
+7316 INFO: checking PYZ
+7316 INFO: Building PYZ because PYZ-00.toc is non existent
+7316 INFO: Building PYZ (ZlibArchive) D:\a\xyzmenu\xyzmenu\build\Launcher\PYZ-00.pyz
+7507 INFO: Building PYZ (ZlibArchive) D:\a\xyzmenu\xyzmenu\build\Launcher\PYZ-00.pyz completed successfully.
+7535 INFO: checking PKG
+7535 INFO: Building PKG because PKG-00.toc is non existent
+7535 INFO: Building PKG (CArchive) Launcher.pkg
+11434 INFO: Building PKG (CArchive) Launcher.pkg completed successfully.
+11453 INFO: Bootloader C:\hostedtoolcache\windows\Python\3.11.9\x64\Lib\site-packages\PyInstaller\bootloader\Windows-64bit-intel\runw.exe
+11453 INFO: checking EXE
+11453 INFO: Building EXE because EXE-00.toc is non existent
+11453 INFO: Building EXE from EXE-00.toc
+11453 INFO: Copying bootloader EXE to D:\a\xyzmenu\xyzmenu\dist\Launcher.exe
+11455 INFO: Copying icon to EXE
+11457 INFO: Copying 0 resources to EXE
+11457 INFO: Embedding manifest in EXE
+11459 INFO: Appending PKG archive to EXE
+11466 INFO: Fixing EXE headers
+11553 INFO: Building EXE from EXE-00.toc completed successfully.
+11570 INFO: Build complete! The results are available in: D:\a\xyzmenu\xyzmenu\dist
