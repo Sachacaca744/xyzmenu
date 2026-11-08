@@ -33,7 +33,7 @@ public class BrushScreen extends Screen {
         super(Component.literal("Peinture"));
         this.tex = tex;
         this.color = color;
-        var atlas = Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS);
+        TextureAtlas atlas = Minecraft.getInstance().getModelManager().getAtlas(TextureAtlas.LOCATION_BLOCKS);
         for (ResourceLocation rl : atlas.getTextureLocations()) {
             if (rl.getPath().startsWith("block/")) all.add(rl);
         }
