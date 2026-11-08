@@ -1,0 +1,85 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.8/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Task :compileJava
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+
+> Task :processResources
+> Task :classes
+> Task :jar
+> Task :downloadMcpConfig
+> Task :extractSrg
+> Task :createMcpToSrg
+> Task :reobfJar
+> Task :jarJar SKIPPED
+> Task :reobfJarJar SKIPPED
+> Task :assemble
+> Task :compileTestJava NO-SOURCE
+> Task :processTestResources NO-SOURCE
+> Task :testClasses UP-TO-DATE
+> Task :test NO-SOURCE
+> Task :check UP-TO-DATE
+> Task :build
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run-1794164699178.json
+
+BUILD SUCCESSFUL in 21s
+7 actionable tasks: 7 executed
+Archive:  build/libs/upaint-1.0.0.jar
+  Length      Date    Time    Name
+---------  ---------- -----   ----
+        0  1970-01-11 22:58   META-INF/
+      115  2026-11-08 19:05   META-INF/MANIFEST.MF
+      507  2026-11-08 19:05   META-INF/mods.toml
+        0  1970-01-11 22:58   assets/
+        0  1970-01-11 22:58   assets/upaint/
+        0  1970-01-11 22:58   assets/upaint/lang/
+      320  2026-11-08 19:05   assets/upaint/lang/en_us.json
+      347  2026-11-08 19:05   assets/upaint/lang/fr_fr.json
+        0  1970-01-11 22:58   assets/upaint/models/
+        0  1970-01-11 22:58   assets/upaint/models/item/
+       72  2026-11-08 19:05   assets/upaint/models/item/brush.json
+       73  2026-11-08 19:05   assets/upaint/models/item/bucket.json
+       80  2026-11-08 19:05   assets/upaint/models/item/compass_rain.json
+       81  2026-11-08 19:05   assets/upaint/models/item/compass_storm.json
+       79  2026-11-08 19:05   assets/upaint/models/item/compass_sun.json
+       73  2026-11-08 19:05   assets/upaint/models/item/eraser.json
+       74  2026-11-08 19:05   assets/upaint/models/item/pipette.json
+       73  2026-11-08 19:05   assets/upaint/models/item/roller.json
+        0  1970-01-11 22:58   assets/upaint/textures/
+        0  1970-01-11 22:58   assets/upaint/textures/item/
+      182  2026-11-08 19:05   assets/upaint/textures/item/brush.png
+      148  2026-11-08 19:05   assets/upaint/textures/item/bucket.png
+      246  2026-11-08 19:05   assets/upaint/textures/item/compass_rain.png
+      271  2026-11-08 19:05   assets/upaint/textures/item/compass_storm.png
+      256  2026-11-08 19:05   assets/upaint/textures/item/compass_sun.png
+      134  2026-11-08 19:05   assets/upaint/textures/item/eraser.png
+      154  2026-11-08 19:05   assets/upaint/textures/item/pipette.png
+      182  2026-11-08 19:05   assets/upaint/textures/item/roller.png
+        0  1970-01-11 22:58   fr/
+        0  1970-01-11 22:58   fr/upaint/
+     2883  2026-11-08 19:05   fr/upaint/Events.class
+     5404  2026-11-08 19:05   fr/upaint/Net$ChunkMsg.class
+     4512  2026-11-08 19:05   fr/upaint/Net$DeltaMsg.class
+     4484  2026-11-08 19:05   fr/upaint/Net$SetBrushMsg.class
+     3528  2026-11-08 19:05   fr/upaint/Net.class
+     1812  2026-11-08 19:05   fr/upaint/PaintData$Entry.class
+     1556  2026-11-08 19:05   fr/upaint/PaintData$Paint.class
+    10626  2026-11-08 19:05   fr/upaint/PaintData.class
+      835  2026-11-08 19:05   fr/upaint/PaintToolItem$1.class
+     1275  2026-11-08 19:05   fr/upaint/PaintToolItem$Kind.class
+    12523  2026-11-08 19:05   fr/upaint/PaintToolItem.class
+     3931  2026-11-08 19:05   fr/upaint/Reg.class
+     2505  2026-11-08 19:05   fr/upaint/TabHook.class
+     1166  2026-11-08 19:05   fr/upaint/Upaint.class
+      696  2026-11-08 19:05   fr/upaint/WeatherCompass$1.class
+     1179  2026-11-08 19:05   fr/upaint/WeatherCompass$Kind.class
+     3363  2026-11-08 19:05   fr/upaint/WeatherCompass.class
+        0  1970-01-11 22:58   fr/upaint/client/
+    10948  2026-11-08 19:05   fr/upaint/client/BrushScreen.class
+      660  2026-11-08 19:05   fr/upaint/client/ClientHooks.class
+     5429  2026-11-08 19:05   fr/upaint/client/ClientPaint.class
+    10165  2026-11-08 19:05   fr/upaint/client/PaintRenderer.class
+       80  2026-11-08 19:05   pack.mcmeta
+---------                     -------
+    93027                     53 files
