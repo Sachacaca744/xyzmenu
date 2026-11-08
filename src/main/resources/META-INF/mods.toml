@@ -1,0 +1,26 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="MIT"
+
+[[mods]]
+modId="upaint"
+version="1.0.0"
+displayName="Upaint"
+description='''
+Boussoles meteo (soleil, pluie, orage) et outils de peinture : pinceau, rouleau, seau, gomme, pipette.
+A installer sur le serveur ET chez les joueurs.
+'''
+
+[[dependencies.upaint]]
+modId="forge"
+mandatory=true
+versionRange="[47,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.upaint]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.20.1,1.21)"
+ordering="NONE"
+side="BOTH"
