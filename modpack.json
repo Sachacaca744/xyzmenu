@@ -9,6 +9,17 @@
   "mods_base_url": "https://raw.githubusercontent.com/Sachacaca744/xyzmenu/launcher/mods/",
   "mods": [
     {
+      "source": "modrinth",
+      "project": "cobblemon",
+      "version": "1.5.2+1.20.1"
+    },
+    {
+      "source": "modrinth",
+      "project": "cobblemon-alpha-project",
+      "version": "1.2",
+      "optional": true
+    },
+    {
       "file": "KopperLib-1.6.0.jar",
       "sha256": "37ab3c6e88420b19632340ae78c126b6fab3b16908b567c4bbfda87df80077e2"
     },

@@ -25,7 +25,7 @@ from pathlib import Path
 # REGLAGES DU LAUNCHER (modifiables avant compilation)
 # ----------------------------------------------------------------------------------------------
 APP_NAME = "ServeurLauncher"
-APP_VERSION = "1.0.0"
+APP_VERSION = "1.1.0"
 MANIFEST_URL = os.environ.get(
     "LAUNCHER_MANIFEST",
     "https://raw.githubusercontent.com/Sachacaca744/xyzmenu/launcher/modpack.json",
@@ -127,6 +127,48 @@ def load_manifest(location: str, cache_file: Path) -> tuple[dict, bool]:
         return cached, True
 
 
+def sha1_of(path: Path) -> str:
+    h = hashlib.sha1()
+    with open(path, "rb") as f:
+        for chunk in iter(lambda: f.read(1024 * 1024), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def modrinth_resolve(project: str, wanted_version: str, mc: str) -> tuple:
+    """Interroge Modrinth : renvoie (nom_fichier, url, sha1, numero_de_version)."""
+    q = urllib.parse.urlencode({"loaders": json.dumps(["forge"]), "game_versions": json.dumps([mc])})
+    versions = json.loads(http_get("https://api.modrinth.com/v2/project/%s/version?%s"
+                                   % (urllib.parse.quote(str(project)), q)).decode("utf-8"))
+    if not versions:
+        raise RuntimeError("Modrinth : aucune version Forge %s pour '%s'" % (mc, project))
+    chosen = None
+    w = str(wanted_version or "").strip()
+    if w:
+        for v in versions:
+            if v.get("version_number") == w:
+                chosen = v
+                break
+        if chosen is None:
+            for v in versions:
+                num = str(v.get("version_number", ""))
+                fn = " ".join(str(f.get("filename", "")) for f in v.get("files", []))
+                if w in num or w in fn:
+                    chosen = v
+                    break
+        if chosen is None:
+            avail = ", ".join(str(v.get("version_number", "?")) for v in versions[:8])
+            raise RuntimeError("Modrinth : version '%s' introuvable pour '%s' (disponibles : %s)" % (w, project, avail))
+    else:
+        chosen = versions[0]
+    files = chosen.get("files") or []
+    if not files:
+        raise RuntimeError("Modrinth : version sans fichier pour '%s'" % project)
+    f = next((x for x in files if x.get("primary")), files[0])
+    name = _safe_jar_name(f["filename"])
+    return name, f["url"], str(f.get("hashes", {}).get("sha1", "")).lower(), str(chosen.get("version_number", ""))
+
+
 def _safe_jar_name(name: str) -> str:
     n = Path(str(name)).name
     if n != str(name) or not n.lower().endswith(".jar"):
@@ -160,8 +202,29 @@ def sync_files(mc_dir: Path, manifest: dict, status=lambda s: None, progress=lam
 
     # --- liste voulue ---
     wanted = {}  # nom -> (url, sha256, version)
+    sha1s = {}   # nom -> sha1 (mods Modrinth)
+    state.setdefault("modrinth", {})
+    mc_version = str(manifest.get("minecraft", "1.20.1"))
     for m in manifest.get("mods", []):
         if not isinstance(m, dict) or m.get("enabled", True) is False:
+            continue
+        if str(m.get("source", "")).lower() == "modrinth":
+            ident = str(m.get("project", "")) + "@" + str(m.get("version", ""))
+            status("Recherche du mod : %s" % m.get("project"))
+            try:
+                name, url, sha1, num = modrinth_resolve(m.get("project", ""), m.get("version", ""), mc_version)
+                wanted[name] = (url, "", "modrinth:" + sha1)
+                sha1s[name] = sha1
+                state["modrinth"][ident] = name
+            except Exception as e:
+                old_name = state["modrinth"].get(ident)
+                if old_name and (mods_dir / old_name).exists():
+                    # pas d'internet ou Modrinth en panne : on garde la copie deja telechargee
+                    wanted[old_name] = ("", "", state["mods"].get(old_name, ""))
+                elif m.get("optional"):
+                    status("Mod ignore (introuvable) : %s" % m.get("project"))
+                else:
+                    raise RuntimeError("Mod '%s' impossible a telecharger : %s" % (m.get("project"), e)) from e
             continue
         name = _safe_jar_name(m.get("file", ""))
         url = m.get("url") or (base_url + urllib.parse.quote(name) if base_url else "")
@@ -197,6 +260,8 @@ def sync_files(mc_dir: Path, manifest: dict, status=lambda s: None, progress=lam
         ok = path.exists() and path.stat().st_size > 0
         if ok and sha:
             ok = sha256_of(path) == sha
+        if ok and name in sha1s:
+            ok = sha1_of(path) == sha1s[name]
         if ok and key and state["mods"].get(name) != key:
             ok = False
         if ok:
@@ -220,6 +285,12 @@ def sync_files(mc_dir: Path, manifest: dict, status=lambda s: None, progress=lam
         progress(i / max(total, 1))
         got = download_file(url, path)
         if sha and got != sha:
+            try:
+                path.unlink()
+            except OSError:
+                pass
+            raise RuntimeError("Fichier corrompu ou modifie : " + str(name))
+        if kind == "mod" and name in sha1s and sha1_of(path) != sha1s[name]:
             try:
                 path.unlink()
             except OSError:

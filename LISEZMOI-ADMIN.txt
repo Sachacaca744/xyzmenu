@@ -113,3 +113,16 @@ Le .exe n'est pas signe numeriquement : Windows peut afficher un avertissement.
 Dis a tes joueurs : "Informations complementaires" puis "Executer quand meme".
 Certains antivirus peuvent aussi le signaler a tort (c'est courant pour ce type
 de programme). Une signature de code payante regle le probleme.
+
+
+------------------------------------------------------------
+AJOUTER UN MOD DIRECTEMENT DEPUIS MODRINTH (gros mods, ex : Cobblemon)
+------------------------------------------------------------
+Pas besoin d'heberger le fichier : le launcher le telecharge depuis Modrinth sur
+l'ordinateur du joueur. Ajoute dans "mods" :
+
+  { "source": "modrinth", "project": "cobblemon", "version": "1.5.2+1.20.1" }
+
+- "project" = la fin de l'adresse du mod sur modrinth.com/mod/<project>
+- "version" = le numero de version affiche sur Modrinth (laisse "" pour toujours la derniere)
+- "optional": true = si le mod est introuvable, le launcher l'ignore au lieu de s'arreter
