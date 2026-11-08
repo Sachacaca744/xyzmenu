@@ -88,7 +88,12 @@
     {
       "file": "ecto_halloween-1.0.0.jar",
       "sha256": "928714de0235f75dacea51637d7c05d804e0634d84214b3ede27547a2f9440cf"
+    },
+    {
+      "file": "zard_halloween-1.0.0.jar",
+      "sha256": "f8e51e0d6327d4725b310b7fb2c92b3f8a7dd1a9c19c782fd167ce3aac83346b"
     }
   ],
-  "files": []
+  "files": [],
+  "website": "https://payhip.com/Cailloux"
 }

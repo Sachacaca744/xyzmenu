@@ -25,7 +25,7 @@ from pathlib import Path
 # REGLAGES DU LAUNCHER (modifiables avant compilation)
 # ----------------------------------------------------------------------------------------------
 APP_NAME = "ServeurLauncher"
-APP_VERSION = "1.2.0"
+APP_VERSION = "1.3.0"
 MANIFEST_URL = os.environ.get(
     "LAUNCHER_MANIFEST",
     "https://raw.githubusercontent.com/Sachacaca744/xyzmenu/launcher/modpack.json",
@@ -35,6 +35,7 @@ MANIFEST_URL = os.environ.get(
 DEFAULT_MSA_APP_ID = "708e91b5-99f8-4a1d-80ec-e746cbb24771"
 ALLOW_HTTP = os.environ.get("LAUNCHER_ALLOW_HTTP") == "1"  # uniquement pour les tests
 
+SITE_URL = "https://payhip.com/Cailloux"  # bouton "Site internet" (modifiable aussi via "website" dans modpack.json)
 RAM_CHOICES = [2048, 3072, 4096, 6144, 8192, 12288, 16384]
 
 
@@ -585,6 +586,7 @@ class App:
         self.folder_btn = _PillButton(cv, px, 484, half, 36, "Dossier du jeu", self.open_folder, size=10)
         self.logout_btn = _PillButton(cv, px + half + 12, 484, half, 36, "Changer de compte", self.on_logout,
                                       size=10)
+        self.site_btn = _PillButton(cv, px, 534, pw, 36, "Site internet", self.open_site, size=10)
 
         root.after(100, self.pump)
         threading.Thread(target=self.prepare, daemon=True).start()
@@ -636,6 +638,13 @@ class App:
                 os.startfile(str(self.game_dir))  # type: ignore[attr-defined]
             else:
                 webbrowser.open(self.game_dir.as_uri())
+        except Exception:
+            pass
+
+    def open_site(self):
+        url = str(self.manifest.get("website") or SITE_URL)
+        try:
+            webbrowser.open(check_url(url))
         except Exception:
             pass
 
