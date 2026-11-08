@@ -1,0 +1,79 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.8/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Task :compileJava
+Note: /home/runner/work/xyzmenu/xyzmenu/src/main/java/fr/utaxi/BoothBlock.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+
+> Task :processResources
+> Task :classes
+> Task :jar
+> Task :downloadMcpConfig
+> Task :extractSrg
+> Task :createMcpToSrg
+> Task :reobfJar
+> Task :jarJar SKIPPED
+> Task :reobfJarJar SKIPPED
+> Task :assemble
+> Task :compileTestJava NO-SOURCE
+> Task :processTestResources NO-SOURCE
+> Task :testClasses UP-TO-DATE
+> Task :test NO-SOURCE
+> Task :check UP-TO-DATE
+> Task :build
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run-1794163345118.json
+
+BUILD SUCCESSFUL in 22s
+7 actionable tasks: 7 executed
+Archive:  build/libs/utaxi-1.0.0.jar
+  Length      Date    Time    Name
+---------  ---------- -----   ----
+        0  1970-01-11 22:58   META-INF/
+      113  2026-11-08 18:42   META-INF/MANIFEST.MF
+      578  2026-11-08 18:42   META-INF/mods.toml
+        0  1970-01-11 22:58   assets/
+        0  1970-01-11 22:58   assets/utaxi/
+        0  1970-01-11 22:58   assets/utaxi/blockstates/
+      706  2026-11-08 18:42   assets/utaxi/blockstates/taxi_booth.json
+        0  1970-01-11 22:58   assets/utaxi/lang/
+      107  2026-11-08 18:42   assets/utaxi/lang/en_us.json
+      107  2026-11-08 18:42   assets/utaxi/lang/fr_fr.json
+        0  1970-01-11 22:58   assets/utaxi/models/
+        0  1970-01-11 22:58   assets/utaxi/models/block/
+     4718  2026-11-08 18:42   assets/utaxi/models/block/booth_lower.json
+     4719  2026-11-08 18:42   assets/utaxi/models/block/booth_upper.json
+        0  1970-01-11 22:58   assets/utaxi/models/item/
+       87  2026-11-08 18:42   assets/utaxi/models/item/taxi_booth.json
+        0  1970-01-11 22:58   assets/utaxi/textures/
+        0  1970-01-11 22:58   assets/utaxi/textures/block/
+      392  2026-11-08 18:42   assets/utaxi/textures/block/dark.png
+      159  2026-11-08 18:42   assets/utaxi/textures/block/glass.png
+      429  2026-11-08 18:42   assets/utaxi/textures/block/red.png
+      356  2026-11-08 18:42   assets/utaxi/textures/block/roof.png
+        0  1970-01-11 22:58   assets/utaxi/textures/item/
+      175  2026-11-08 18:42   assets/utaxi/textures/item/taxi_booth.png
+        0  1970-01-11 22:58   fr/
+        0  1970-01-11 22:58   fr/utaxi/
+     9757  2026-11-08 18:42   fr/utaxi/BoothBlock.class
+    10244  2026-11-08 18:42   fr/utaxi/Cmds.class
+     9730  2026-11-08 18:42   fr/utaxi/Events.class
+     3440  2026-11-08 18:42   fr/utaxi/Net$GoMsg.class
+     4597  2026-11-08 18:42   fr/utaxi/Net$OpenMsg.class
+     3075  2026-11-08 18:42   fr/utaxi/Net.class
+     4308  2026-11-08 18:42   fr/utaxi/Reg.class
+     2185  2026-11-08 18:42   fr/utaxi/TabHook.class
+     1258  2026-11-08 18:42   fr/utaxi/TaxiBE.class
+      548  2026-11-08 18:42   fr/utaxi/TaxiCfg$Dest.class
+     2698  2026-11-08 18:42   fr/utaxi/TaxiCfg.class
+     1247  2026-11-08 18:42   fr/utaxi/Utaxi.class
+        0  1970-01-11 22:58   fr/utaxi/client/
+      773  2026-11-08 18:42   fr/utaxi/client/ClientHooks.class
+     2633  2026-11-08 18:42   fr/utaxi/client/ClientSetup.class
+      845  2026-11-08 18:42   fr/utaxi/client/GeoModel$Bone.class
+      686  2026-11-08 18:42   fr/utaxi/client/GeoModel$Cube.class
+    10864  2026-11-08 18:42   fr/utaxi/client/GeoModel.class
+     8592  2026-11-08 18:42   fr/utaxi/client/StatueRenderer.class
+     4975  2026-11-08 18:42   fr/utaxi/client/TaxiScreen.class
+       80  2026-11-08 18:42   pack.mcmeta
+---------                     -------
+    95181                     47 files
