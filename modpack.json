@@ -14,12 +14,6 @@
       "version": "1.5.2+1.20.1"
     },
     {
-      "source": "modrinth",
-      "project": "cobblemon-alpha-project",
-      "version": "1.2",
-      "optional": true
-    },
-    {
       "file": "KopperLib-1.6.0.jar",
       "sha256": "37ab3c6e88420b19632340ae78c126b6fab3b16908b567c4bbfda87df80077e2"
     },
@@ -82,6 +76,10 @@
     {
       "file": "architectury-9.2.14-forge.jar",
       "sha256": "218b471d0b8a1f6cda14cfc1beb9eeb0df54304500acc6c5613d9b88ec65d9af"
+    },
+    {
+      "file": "cobblemon-alphas-forge-1.20.1-1.2.0.jar",
+      "sha256": "7e5161d29d5ec485a27d8f2a663f6b86f2b0dabb8a509195fe9db84c4b723dc2"
     }
   ],
   "files": []
