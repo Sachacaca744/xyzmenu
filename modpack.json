@@ -80,6 +80,14 @@
     {
       "file": "cobblemon-alphas-forge-1.20.1-1.2.0.jar",
       "sha256": "7e5161d29d5ec485a27d8f2a663f6b86f2b0dabb8a509195fe9db84c4b723dc2"
+    },
+    {
+      "file": "cobblemon_additions-forge-1.1.1.jar",
+      "sha256": "8fa0bf50e57380e1d96ee390679c9cb2881e3bd9d0ee1953083aa318ebc0a8b6"
+    },
+    {
+      "file": "ecto_halloween-1.0.0.jar",
+      "sha256": "928714de0235f75dacea51637d7c05d804e0634d84214b3ede27547a2f9440cf"
     }
   ],
   "files": []
