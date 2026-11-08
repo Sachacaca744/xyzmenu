@@ -25,7 +25,7 @@ jobs:
       - name: Creer le .exe
         run: |
           set -o pipefail
-          python -m PyInstaller --onefile --noconsole --name ServeurLauncher --collect-all portablemc launcher.py 2>&1 | tee -a build.log
+          python -m PyInstaller --onefile --noconsole --name ServeurLauncher --collect-all portablemc --add-data "bg.png;." launcher.py 2>&1 | tee -a build.log
           ls -l dist | tee -a build.log
       - name: Test du .exe (auto-test)
         run: |

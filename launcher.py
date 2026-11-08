@@ -393,14 +393,136 @@ def make_handler(status, progress):
 # ----------------------------------------------------------------------------------------------
 # Interface
 # ----------------------------------------------------------------------------------------------
-BG = "#12121c"
-PANEL = "#1b1b2b"
-ACCENT = "#7c5cff"
-ACCENT_HOVER = "#947aff"
-TEXT = "#ecebf5"
-MUTED = "#9a98b3"
-ERROR = "#ff6b6b"
-OK = "#5fe3a1"
+BG = "#0e1522"
+PANEL = "#16233a"
+ACCENT = "#22b8e8"
+ACCENT_HOVER = "#55ceF5"
+ACCENT_DARK = "#0f7fa8"
+TEXT = "#f2f6fc"
+MUTED = "#a9b8d0"
+ERROR = "#ff7b7b"
+OK = "#6cf0a8"
+WIN_W, WIN_H = 960, 600
+PANEL_X = 610  # le panneau des boutons commence ici (image a gauche)
+
+
+def asset_path(name: str) -> Path:
+    base = Path(getattr(sys, "_MEIPASS", Path(__file__).resolve().parent))
+    return base / name
+
+
+def rounded_points(x1, y1, x2, y2, r):
+    return [x1 + r, y1, x1 + r, y1, x2 - r, y1, x2 - r, y1, x2, y1, x2, y1 + r, x2, y1 + r, x2, y2 - r, x2, y2 - r,
+            x2, y2, x2 - r, y2, x2 - r, y2, x1 + r, y2, x1 + r, y2, x1, y2, x1, y2 - r, x1, y2 - r, x1, y1 + r,
+            x1, y1 + r, x1, y1]
+
+
+class _Txt:
+    """Texte pose sur le canvas (se pilote comme un Label)."""
+
+    def __init__(self, canvas, item):
+        self.c, self.item = canvas, item
+
+    def configure(self, text=None, fg=None):
+        if text is not None:
+            self.c.itemconfigure(self.item, text=text)
+        if fg is not None:
+            self.c.itemconfigure(self.item, fill=fg)
+
+
+class _Var:
+    def __init__(self, on_change):
+        self._v, self._cb = "", on_change
+
+    def set(self, v):
+        self._v = v
+        self._cb(v)
+
+    def get(self):
+        return self._v
+
+
+class _Bar:
+    """Barre de progression arrondie."""
+
+    def __init__(self, canvas, x, y, w, h):
+        self.c, self.x, self.y, self.w, self.h = canvas, x, y, w, h
+        canvas.create_polygon(rounded_points(x, y, x + w, y + h, h // 2), smooth=True, fill="#0a1220",
+                              outline="#2b4468")
+        self.fill = canvas.create_polygon(0, 0, 0, 0, 0, 0, smooth=True, fill=ACCENT, outline="")
+        self.configure(value=0)
+
+    def configure(self, value=0):
+        frac = max(0.0, min(1.0, value / 1000.0))
+        wid = int((self.w - 4) * frac)
+        if wid < self.h - 4:
+            self.c.itemconfigure(self.fill, state="hidden" if wid <= 0 else "normal")
+            wid = max(wid, self.h - 4) if wid > 0 else 0
+        else:
+            self.c.itemconfigure(self.fill, state="normal")
+        if wid > 0:
+            self.c.coords(self.fill, *rounded_points(self.x + 2, self.y + 2, self.x + 2 + wid,
+                                                     self.y + self.h - 2, (self.h - 4) // 2))
+
+
+class _PillButton:
+    """Bouton arrondi, style Cobblemon : pastille avec ombre en dessous. primary=bouton principal."""
+
+    def __init__(self, canvas, x, y, w, h, text, command, primary=False, size=12):
+        self.c, self.cmd, self.primary = canvas, command, primary
+        self.state, self.text, self.hover = "normal", text, False
+        r = h // 2
+        self.shadow = canvas.create_polygon(rounded_points(x, y + 4, x + w, y + h + 4, r), smooth=True, fill="")
+        self.body = canvas.create_polygon(rounded_points(x, y, x + w, y + h, r), smooth=True, fill="", width=2)
+        self.label = canvas.create_text(x + w // 2, y + h // 2, text=text, fill=TEXT,
+                                        font=("Segoe UI", size, "bold"))
+        for item in (self.shadow, self.body, self.label):
+            canvas.tag_bind(item, "<Enter>", self._enter)
+            canvas.tag_bind(item, "<Leave>", self._leave)
+            canvas.tag_bind(item, "<Button-1>", self._click)
+        self._paint()
+
+    def _enter(self, _e):
+        self.hover = True
+        self._paint()
+
+    def _leave(self, _e):
+        self.hover = False
+        self._paint()
+
+    def _click(self, _e):
+        if self.state == "normal" and self.cmd:
+            self.cmd()
+
+    def _paint(self):
+        c = self.c
+        if self.state == "disabled":
+            fill, edge, shadow, fg, cur = "#2a3850", "#3a4c68", "#1a2538", "#7d8da8", "arrow"
+        elif self.primary:
+            fill = ACCENT_HOVER if self.hover else ACCENT
+            edge, shadow, fg, cur = "#aeeaff", ACCENT_DARK, "#04202c", "hand2"
+        else:
+            fill = "#2b4468" if self.hover else "#1d3050"
+            edge, shadow, fg, cur = "#5b7ba8", "#0c1626", TEXT, "hand2"
+        c.itemconfigure(self.shadow, fill=shadow)
+        c.itemconfigure(self.body, fill=fill, outline=edge)
+        c.itemconfigure(self.label, fill=fg, text=self.text)
+        for item in (self.shadow, self.body, self.label):
+            c.itemconfigure(item, state="normal")
+        try:
+            c.configure(cursor=cur if self.hover else "")
+        except Exception:
+            pass
+
+    def configure(self, state=None, text=None):
+        if state is not None:
+            self.state = state
+        if text is not None:
+            self.text = text
+        self._paint()
+
+    def cget(self, key):
+        return self.text if key == "text" else self.state
 
 
 class App:
@@ -423,69 +545,46 @@ class App:
         root = tk.Tk()
         self.root = root
         root.title(APP_NAME)
-        root.geometry("520x380")
+        sw, sh = root.winfo_screenwidth(), root.winfo_screenheight()
+        root.geometry("%dx%d+%d+%d" % (WIN_W, WIN_H, max(0, (sw - WIN_W) // 2), max(0, (sh - WIN_H) // 3)))
         root.resizable(False, False)
         root.configure(bg=BG)
 
-        style = ttk.Style()
+        cv = tk.Canvas(root, width=WIN_W, height=WIN_H, bg=BG, highlightthickness=0, bd=0)
+        cv.pack(fill="both", expand=True)
+        self.canvas = cv
+        self.bg_img = None
         try:
-            style.theme_use("clam")
+            self.bg_img = tk.PhotoImage(file=str(asset_path("bg.png")))
+            cv.create_image(0, 0, image=self.bg_img, anchor="nw")
         except Exception:
-            pass
-        style.configure("Bar.Horizontal.TProgressbar", troughcolor=PANEL, background=ACCENT,
-                        bordercolor=PANEL, lightcolor=ACCENT, darkcolor=ACCENT, thickness=14)
-        style.configure("Dark.TCombobox", fieldbackground="#262638", background="#262638", foreground=TEXT,
-                        arrowcolor=TEXT, bordercolor="#262638", lightcolor="#262638", darkcolor="#262638")
-        style.map("Dark.TCombobox",
-                  fieldbackground=[("readonly", "#262638")],
-                  foreground=[("readonly", TEXT)],
-                  selectbackground=[("readonly", "#262638")],
-                  selectforeground=[("readonly", TEXT)])
-        root.option_add("*TCombobox*Listbox.background", "#262638")
-        root.option_add("*TCombobox*Listbox.foreground", TEXT)
-        root.option_add("*TCombobox*Listbox.selectBackground", ACCENT)
+            cv.create_rectangle(0, 0, PANEL_X, WIN_H, fill=PANEL, outline="")
 
-        header = tk.Frame(root, bg=BG)
-        header.pack(fill="x", padx=28, pady=(26, 0))
-        self.title_lbl = tk.Label(header, text=APP_NAME, font=("Segoe UI", 24, "bold"), fg=TEXT, bg=BG, anchor="w")
-        self.title_lbl.pack(fill="x")
-        self.sub_lbl = tk.Label(header, text="Minecraft + Forge + mods, tout est automatique.",
-                                font=("Segoe UI", 10), fg=MUTED, bg=BG, anchor="w")
-        self.sub_lbl.pack(fill="x")
+        px = PANEL_X + 34
+        pw = WIN_W - PANEL_X - 68
+        # titre + sous-titre (avec ombre pour rester lisibles)
+        cv.create_text(px + 2, 62, text=APP_NAME, anchor="w", fill="#000000", width=pw,
+                       font=("Segoe UI", 22, "bold"))
+        self.title_lbl = _Txt(cv, cv.create_text(px, 60, text=APP_NAME, anchor="w", fill=TEXT, width=pw,
+                                                 font=("Segoe UI", 22, "bold")))
+        self.sub_lbl = _Txt(cv, cv.create_text(px, 112, text="Minecraft + Forge + mods, tout est automatique.",
+                                               anchor="w", fill=MUTED, width=pw, font=("Segoe UI", 10)))
 
-        card = tk.Frame(root, bg=PANEL)
-        card.pack(fill="both", expand=True, padx=28, pady=22)
+        self.play_btn = _PillButton(cv, px, 190, pw, 64, "JOUER", self.on_play, primary=True, size=20)
+        self.play_btn.configure(state="disabled")
 
-        self.status_lbl = tk.Label(card, text="Demarrage...", font=("Segoe UI", 11), fg=TEXT, bg=PANEL,
-                                   wraplength=430, justify="left", anchor="w")
-        self.status_lbl.pack(fill="x", padx=20, pady=(20, 8))
-        self.bar = ttk.Progressbar(card, style="Bar.Horizontal.TProgressbar", mode="determinate", maximum=1000)
-        self.bar.pack(fill="x", padx=20)
+        self.status_lbl = _Txt(cv, cv.create_text(px, 300, text="Demarrage...", anchor="nw", fill=TEXT, width=pw,
+                                                  font=("Segoe UI", 11)))
+        self.bar = _Bar(cv, px, 372, pw, 16)
 
-        self.play_btn = tk.Button(card, text="JOUER", font=("Segoe UI", 16, "bold"), fg="white", bg=ACCENT,
-                                  activebackground=ACCENT_HOVER, activeforeground="white", relief="flat",
-                                  bd=0, cursor="hand2", state="disabled", command=self.on_play)
-        self.play_btn.pack(fill="x", padx=20, pady=(22, 10), ipady=10)
-        self.play_btn.bind("<Enter>", lambda e: self.play_btn.configure(bg=ACCENT_HOVER) if self.ready else None)
-        self.play_btn.bind("<Leave>", lambda e: self.play_btn.configure(bg=ACCENT))
-
-        row = tk.Frame(card, bg=PANEL)
-        row.pack(fill="x", padx=20, pady=(0, 14))
-        tk.Label(row, text="Memoire :", font=("Segoe UI", 9), fg=MUTED, bg=PANEL).pack(side="left")
-        self.ram_var = tk.StringVar()
         ram_default = int(self.settings.get("ram_mb", 4096))
+        self.ram_btn = _PillButton(cv, px, 430, pw, 40, "", self.cycle_ram, size=11)
+        self.ram_var = _Var(lambda v: self.ram_btn.configure(text="Mémoire : %s   ▸" % v))
         self.ram_var.set(self._ram_label(ram_default))
-        self.ram_box = ttk.Combobox(row, textvariable=self.ram_var, state="readonly", width=7,
-                                    values=[self._ram_label(r) for r in RAM_CHOICES], style="Dark.TCombobox")
-        self.ram_box.pack(side="left", padx=(6, 0))
-        self.logout_btn = tk.Button(row, text="Changer de compte", font=("Segoe UI", 9), fg=MUTED, bg=PANEL,
-                                    activebackground=PANEL, activeforeground=TEXT, relief="flat", bd=0,
-                                    cursor="hand2", command=self.on_logout)
-        self.logout_btn.pack(side="right")
-        self.folder_btn = tk.Button(row, text="Dossier du jeu", font=("Segoe UI", 9), fg=MUTED, bg=PANEL,
-                                    activebackground=PANEL, activeforeground=TEXT, relief="flat", bd=0,
-                                    cursor="hand2", command=self.open_folder)
-        self.folder_btn.pack(side="right", padx=(0, 14))
+        half = (pw - 12) // 2
+        self.folder_btn = _PillButton(cv, px, 484, half, 36, "Dossier du jeu", self.open_folder, size=10)
+        self.logout_btn = _PillButton(cv, px + half + 12, 484, half, 36, "Changer de compte", self.on_logout,
+                                      size=10)
 
         root.after(100, self.pump)
         threading.Thread(target=self.prepare, daemon=True).start()
@@ -494,6 +593,11 @@ class App:
     @staticmethod
     def _ram_label(mb: int) -> str:
         return "%d Go" % (mb // 1024)
+
+    def cycle_ram(self):
+        cur = self._ram_value()
+        i = RAM_CHOICES.index(cur) if cur in RAM_CHOICES else 2
+        self.ram_var.set(self._ram_label(RAM_CHOICES[(i + 1) % len(RAM_CHOICES)]))
 
     def _ram_value(self) -> int:
         for r in RAM_CHOICES:
@@ -666,6 +770,8 @@ def selftest() -> None:
         inst = make_installer({"minecraft": "1.20.1", "forge": "47.4.28"}, data_dir() / "game")
         make_handler(lambda s: None, lambda f: None)
         msa.Auth(DEFAULT_MSA_APP_ID)
+        if not asset_path("bg.png").exists():
+            raise RuntimeError("bg.png absent du .exe")
         out.write_text("OK " + str(inst), encoding="utf-8")
     except Exception:
         out.write_text("ERREUR\n" + traceback.format_exc(), encoding="utf-8")
