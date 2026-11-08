@@ -1,0 +1,16 @@
+{
+ "variants": {
+  "facing=north": {
+   "model": "uboards:block/screen"
+  },
+  "facing=south": {
+   "model": "uboards:block/screen"
+  },
+  "facing=east": {
+   "model": "uboards:block/screen"
+  },
+  "facing=west": {
+   "model": "uboards:block/screen"
+  }
+ }
+}
