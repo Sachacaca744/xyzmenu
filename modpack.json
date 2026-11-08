@@ -96,6 +96,14 @@
     {
       "file": "uboards-1.0.0.jar",
       "sha256": "04b9509031a2a582bde97a10850fb3d8cc3f9a177cd9e7b2da8c7683350ae6a4"
+    },
+    {
+      "file": "utab-1.0.0.jar",
+      "sha256": "b11a204f9e3a7a5d03a044cafb0a8952aff0365ab5915216ba8eb9e9fcf3ab39"
+    },
+    {
+      "file": "utaxi-1.0.0.jar",
+      "sha256": "6910864b753cbe8ad38b6301178a743e136426c8fce305da689a07d22c30087e"
     }
   ],
   "files": [],
