@@ -1,0 +1,26 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="MIT"
+
+[[mods]]
+modId="utaxi"
+version="1.0.0"
+displayName="Utaxi"
+description='''
+Cabine "Taxi Corvaillus" : le joueur entre dans la cabine et voyage vers les destinations definies par les OP.
+A installer sur le serveur ET chez les joueurs. Utilise le modele 3D du Corvaillus de Cobblemon s'il est installe.
+'''
+
+[[dependencies.utaxi]]
+modId="forge"
+mandatory=true
+versionRange="[47,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.utaxi]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.20.1,1.21)"
+ordering="NONE"
+side="BOTH"
