@@ -25,7 +25,7 @@ from pathlib import Path
 # REGLAGES DU LAUNCHER (modifiables avant compilation)
 # ----------------------------------------------------------------------------------------------
 APP_NAME = "ServeurLauncher"
-APP_VERSION = "1.1.0"
+APP_VERSION = "1.2.0"
 MANIFEST_URL = os.environ.get(
     "LAUNCHER_MANIFEST",
     "https://raw.githubusercontent.com/Sachacaca744/xyzmenu/launcher/modpack.json",
