@@ -1,0 +1,82 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.8/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Task :compileJava
+Note: /home/runner/work/xyzmenu/xyzmenu/src/main/java/fr/uboards/BoardBlock.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+
+> Task :processResources
+> Task :classes
+> Task :jar
+> Task :downloadMcpConfig
+> Task :extractSrg
+> Task :createMcpToSrg
+> Task :reobfJar
+> Task :jarJar SKIPPED
+> Task :reobfJarJar SKIPPED
+> Task :assemble
+> Task :compileTestJava NO-SOURCE
+> Task :processTestResources NO-SOURCE
+> Task :testClasses UP-TO-DATE
+> Task :test NO-SOURCE
+> Task :check UP-TO-DATE
+> Task :build
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run-1794146666949.json
+
+BUILD SUCCESSFUL in 18s
+7 actionable tasks: 7 executed
+Archive:  build/libs/uboards-1.0.0.jar
+  Length      Date    Time    Name
+---------  ---------- -----   ----
+        0  1970-01-11 22:58   META-INF/
+      117  2026-11-08 14:04   META-INF/MANIFEST.MF
+      505  2026-11-08 14:04   META-INF/mods.toml
+        0  1970-01-11 22:58   assets/
+        0  1970-01-11 22:58   assets/uboards/
+        0  1970-01-11 22:58   assets/uboards/blockstates/
+      254  2026-11-08 14:04   assets/uboards/blockstates/board.json
+      258  2026-11-08 14:04   assets/uboards/blockstates/screen.json
+        0  1970-01-11 22:58   assets/uboards/lang/
+      182  2026-11-08 14:04   assets/uboards/lang/en_us.json
+      194  2026-11-08 14:04   assets/uboards/lang/fr_fr.json
+        0  1970-01-11 22:58   assets/uboards/models/
+        0  1970-01-11 22:58   assets/uboards/models/block/
+       84  2026-11-08 14:04   assets/uboards/models/block/board.json
+       85  2026-11-08 14:04   assets/uboards/models/block/screen.json
+        0  1970-01-11 22:58   assets/uboards/models/item/
+       84  2026-11-08 14:04   assets/uboards/models/item/board.json
+       84  2026-11-08 14:04   assets/uboards/models/item/remote.json
+       85  2026-11-08 14:04   assets/uboards/models/item/screen.json
+        0  1970-01-11 22:58   assets/uboards/textures/
+        0  1970-01-11 22:58   assets/uboards/textures/block/
+       88  2026-11-08 14:04   assets/uboards/textures/block/board.png
+       89  2026-11-08 14:04   assets/uboards/textures/block/screen.png
+        0  1970-01-11 22:58   assets/uboards/textures/item/
+      214  2026-11-08 14:04   assets/uboards/textures/item/board.png
+      197  2026-11-08 14:04   assets/uboards/textures/item/remote.png
+      163  2026-11-08 14:04   assets/uboards/textures/item/screen.png
+        0  1970-01-11 22:58   fr/
+        0  1970-01-11 22:58   fr/uboards/
+    16423  2026-11-08 14:04   fr/uboards/Actions.class
+     5168  2026-11-08 14:04   fr/uboards/BoardBE.class
+      714  2026-11-08 14:04   fr/uboards/BoardBlock$1.class
+    10450  2026-11-08 14:04   fr/uboards/BoardBlock.class
+     2127  2026-11-08 14:04   fr/uboards/BoardItem.class
+     6069  2026-11-08 14:04   fr/uboards/Cmds.class
+     4243  2026-11-08 14:04   fr/uboards/Net$EditMsg.class
+     4575  2026-11-08 14:04   fr/uboards/Net$ImgChunkMsg.class
+     3622  2026-11-08 14:04   fr/uboards/Net$ImgReqMsg.class
+     3548  2026-11-08 14:04   fr/uboards/Net.class
+     8534  2026-11-08 14:04   fr/uboards/Reg.class
+     7754  2026-11-08 14:04   fr/uboards/RemoteItem.class
+     1258  2026-11-08 14:04   fr/uboards/Uboards.class
+        0  1970-01-11 22:58   fr/uboards/client/
+     2112  2026-11-08 14:04   fr/uboards/client/BoardRenderer$Layout.class
+     9261  2026-11-08 14:04   fr/uboards/client/BoardRenderer.class
+      765  2026-11-08 14:04   fr/uboards/client/ClientHooks.class
+     4005  2026-11-08 14:04   fr/uboards/client/ClientImages.class
+     2642  2026-11-08 14:04   fr/uboards/client/ClientSetup.class
+     5055  2026-11-08 14:04   fr/uboards/client/EditScreen.class
+       80  2026-11-08 14:04   pack.mcmeta
+---------                     -------
+   101088                     50 files
