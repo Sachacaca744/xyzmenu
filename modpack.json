@@ -9,14 +9,64 @@
   "mods_base_url": "https://raw.githubusercontent.com/Sachacaca744/xyzmenu/launcher/mods/",
   "mods": [
     {
+      "file": "KopperLib-1.6.0.jar",
+      "sha256": "37ab3c6e88420b19632340ae78c126b6fab3b16908b567c4bbfda87df80077e2"
+    },
+    {
+      "file": "PokeRider-2.0.0-alpha.10.jar",
+      "sha256": "4d55fd09f16a516e94bfe28ac2bb128486171a684a5c8e240a46da2afb1ca65c"
+    },
+    {
+      "file": "cobblemore_lib-forge-1.2.0.jar",
+      "sha256": "d6ddb95d7425bc6ac3e25a9551884a62598577eece53ea7da3845bc0c5087dbd"
+    },
+    {
+      "file": "cobbleshop-1.0.0.jar",
+      "sha256": "d08969d3135aaca2e9d4607d5298ee74215a5c6270d601b5778d81608be27ad4"
+    },
+    {
+      "file": "constructionwand-1.20.1-2.11.jar",
+      "sha256": "b55ca6f0e734bad848adb06949675136f1d05cb4fb3efdde084c9842c40e1eec"
+    },
+    {
+      "file": "easy_npc-forge-1.20.1-7.18.0.jar",
+      "sha256": "3acbab54661d539791340ef18e6327448263e52f5fd93b4ba69880f2415b8e7a"
+    },
+    {
+      "file": "easy_npc_bundle-forge-1.20.1-7.18.0.jar",
+      "sha256": "a42f28d26fbd8ba3cc51443cd739aaa06a2ed4456ddcf6dd68242feb3539d931"
+    },
+    {
+      "file": "easy_npc_config_ui-forge-1.20.1-7.18.0.jar",
+      "sha256": "4a5de693aabf0e26114218a3a923c57c3e6dfaab0f4b00b1b4ed183a3e3d3280"
+    },
+    {
+      "file": "kotlinforforge-4.12.0-all.jar",
+      "sha256": "6a66c6a68ec09f8717cdbf06883394f0ee24d7cd826b7134a0f81839e8e720ae"
+    },
+    {
+      "file": "open-parties-and-claims-forge-1.20.1-0.33.0.jar",
+      "sha256": "dc9bac197864da55a76fd84ac5c5a5789afffcf7ea15a3831a08e651b0691e7b"
+    },
+    {
       "file": "uitems-1.0.0.jar",
-      "url": "https://github.com/Sachacaca744/xyzmenu/releases/download/build-mod-uitems/uitems-1.0.0.jar",
       "sha256": "893ee11780a4945d7b564d09056452cd6e93eb9583f2203ebebdcda031568c02"
     },
     {
+      "file": "uninu-1.0.0.jar",
+      "sha256": "55c053cd9e496ae96d53ccf05e788ea62c9195d29a6552cc33d9eced7a0a7867"
+    },
+    {
       "file": "uwarp-1.0.0.jar",
-      "url": "https://github.com/Sachacaca744/xyzmenu/releases/download/build-mod-uwarp/uwarp-1.0.0.jar",
-      "sha256": "d33edbd8953507f38fa69ae3343cf0d6bc187f4a513e64449c438a3685d789e1"
+      "sha256": "aa93d48d605f908bfd5870540fe548031d2dfaed6941f9c7d9f079e0e66d9b45"
+    },
+    {
+      "file": "xaeroworldmap-forge-1.20.1-1.47.0.jar",
+      "sha256": "88c6d844163c95a94d92bc6d87d9011cc840bd6207c3099a81b113d4450a3f6b"
+    },
+    {
+      "file": "xyz-1.20.1-1.0.0.jar",
+      "sha256": "f0a912902257b61c21c916845591be9ce027ec061f80dea1fe64daec3de5c2da"
     }
   ],
   "files": []
