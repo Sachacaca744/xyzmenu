@@ -104,6 +104,10 @@
     {
       "file": "utaxi-1.0.0.jar",
       "sha256": "6910864b753cbe8ad38b6301178a743e136426c8fce305da689a07d22c30087e"
+    },
+    {
+      "file": "upaint-1.0.0.jar",
+      "sha256": "9abaac2d3df9b9228e26d961d4f5338c34df1815021c359d21f2ba35529ba727"
     }
   ],
   "files": [],
