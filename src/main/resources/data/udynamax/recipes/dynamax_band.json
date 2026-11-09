@@ -1,0 +1,22 @@
+{
+ "type": "minecraft:crafting_shaped",
+ "pattern": [
+  "SDS",
+  "DRD",
+  "SDS"
+ ],
+ "key": {
+  "S": {
+   "item": "minecraft:string"
+  },
+  "D": {
+   "item": "minecraft:diamond_block"
+  },
+  "R": {
+   "item": "udynamax:red_star"
+  }
+ },
+ "result": {
+  "item": "udynamax:dynamax_band"
+ }
+}

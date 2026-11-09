@@ -1,0 +1,33 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="MIT"
+
+[[mods]]
+modId="udynamax"
+version="1.0.0"
+displayName="Udynamax"
+description='''
+Bracelet Dynamax pour Cobblemon, minimap, et bloc invisible anti-Dynamax.
+A installer sur le serveur ET chez les joueurs.
+'''
+
+[[dependencies.udynamax]]
+modId="forge"
+mandatory=true
+versionRange="[47,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.udynamax]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.20.1,1.21)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.udynamax]]
+modId="cobblemon"
+mandatory=true
+versionRange="[1.5,)"
+ordering="AFTER"
+side="BOTH"

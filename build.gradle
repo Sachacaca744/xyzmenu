@@ -1,0 +1,59 @@
+plugins {
+    id 'java'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+}
+
+group = 'fr.udynamax'
+version = '1.0.0'
+
+base {
+    archivesName = 'udynamax'
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(17)
+}
+
+minecraft {
+    mappings channel: 'official', version: '1.20.1'
+}
+
+repositories {
+    mavenCentral()
+}
+
+// Telecharge Cobblemon (compilation seulement) depuis Modrinth si absent
+def cobJar = file('libs/cobblemon.jar')
+if (!cobJar.exists()) {
+    cobJar.parentFile.mkdirs()
+    def c = new URL('https://api.modrinth.com/v2/project/cobblemon/version?loaders=%5B%22forge%22%5D&game_versions=%5B%221.20.1%22%5D').openConnection()
+    c.setRequestProperty('User-Agent', 'xyzmenu-ci/1.0')
+    def arr = new groovy.json.JsonSlurper().parse(c.inputStream)
+    def v = arr.find { it.version_number.contains('1.5.2') }
+    def f = v.files.find { it.primary } ?: v.files[0]
+    def d = new URL(f.url).openConnection()
+    d.setRequestProperty('User-Agent', 'xyzmenu-ci/1.0')
+    cobJar.withOutputStream { o -> o << d.inputStream }
+    println 'Cobblemon telecharge: ' + cobJar.length()
+}
+
+dependencies {
+    compileOnly files('libs/cobblemon.jar')
+    compileOnly 'org.jetbrains.kotlin:kotlin-stdlib:1.9.23'
+    minecraft 'net.minecraftforge:forge:1.20.1-47.3.0'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+jar {
+    manifest {
+        attributes([
+            'Specification-Title'  : 'udynamax',
+            'Implementation-Title' : 'udynamax',
+            'Implementation-Version': project.version
+        ])
+    }
+    finalizedBy 'reobfJar'
+}

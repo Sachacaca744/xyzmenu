@@ -1,0 +1,22 @@
+{
+ "type": "minecraft:crafting_shaped",
+ "pattern": [
+  "DRD",
+  "RNR",
+  "DRD"
+ ],
+ "key": {
+  "D": {
+   "item": "minecraft:diamond"
+  },
+  "R": {
+   "item": "minecraft:redstone_block"
+  },
+  "N": {
+   "item": "minecraft:nether_star"
+  }
+ },
+ "result": {
+  "item": "udynamax:red_star"
+ }
+}
