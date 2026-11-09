@@ -1,0 +1,90 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.8/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Cobblemon telecharge: 104105045
+
+> Task :compileJava
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+
+> Task :processResources
+> Task :classes
+> Task :jar
+> Task :downloadMcpConfig
+> Task :extractSrg
+> Task :createMcpToSrg
+> Task :reobfJar
+> Task :jarJar SKIPPED
+> Task :reobfJarJar SKIPPED
+> Task :assemble
+> Task :compileTestJava NO-SOURCE
+> Task :processTestResources NO-SOURCE
+> Task :testClasses UP-TO-DATE
+> Task :test NO-SOURCE
+> Task :check UP-TO-DATE
+> Task :build
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run-1794205312084.json
+
+BUILD SUCCESSFUL in 39s
+7 actionable tasks: 7 executed
+Archive:  build/libs/udynamax-1.0.0.jar
+  Length      Date    Time    Name
+---------  ---------- -----   ----
+        0  1970-01-11 22:58   META-INF/
+      119  2026-11-09 06:22   META-INF/MANIFEST.MF
+      597  2026-11-09 06:22   META-INF/mods.toml
+        0  1970-01-11 22:58   assets/
+        0  1970-01-11 22:58   assets/udynamax/
+        0  1970-01-11 22:58   assets/udynamax/blockstates/
+       60  2026-11-09 06:22   assets/udynamax/blockstates/dynamax_ward.json
+        0  1970-01-11 22:58   assets/udynamax/lang/
+      271  2026-11-09 06:22   assets/udynamax/lang/en_us.json
+      297  2026-11-09 06:22   assets/udynamax/lang/fr_fr.json
+        0  1970-01-11 22:58   assets/udynamax/models/
+        0  1970-01-11 22:58   assets/udynamax/models/block/
+       57  2026-11-09 06:22   assets/udynamax/models/block/dynamax_ward.json
+        0  1970-01-11 22:58   assets/udynamax/models/item/
+       82  2026-11-09 06:22   assets/udynamax/models/item/dynamax_band.json
+       82  2026-11-09 06:22   assets/udynamax/models/item/dynamax_ward.json
+       78  2026-11-09 06:22   assets/udynamax/models/item/red_star.json
+        0  1970-01-11 22:58   assets/udynamax/textures/
+        0  1970-01-11 22:58   assets/udynamax/textures/block/
+      183  2026-11-09 06:22   assets/udynamax/textures/block/dynamax_ward.png
+        0  1970-01-11 22:58   assets/udynamax/textures/item/
+      220  2026-11-09 06:22   assets/udynamax/textures/item/dynamax_band.png
+      183  2026-11-09 06:22   assets/udynamax/textures/item/dynamax_ward.png
+      243  2026-11-09 06:22   assets/udynamax/textures/item/red_star.png
+        0  1970-01-11 22:58   data/
+        0  1970-01-11 22:58   data/udynamax/
+        0  1970-01-11 22:58   data/udynamax/loot_tables/
+        0  1970-01-11 22:58   data/udynamax/loot_tables/blocks/
+      256  2026-11-09 06:22   data/udynamax/loot_tables/blocks/dynamax_ward.json
+        0  1970-01-11 22:58   data/udynamax/recipes/
+      288  2026-11-09 06:22   data/udynamax/recipes/dynamax_band.json
+      290  2026-11-09 06:22   data/udynamax/recipes/red_star.json
+        0  1970-01-11 22:58   fr/
+        0  1970-01-11 22:58   fr/udynamax/
+      530  2026-11-09 06:22   fr/udynamax/Dyn$Active.class
+    14016  2026-11-09 06:22   fr/udynamax/Dyn.class
+     3686  2026-11-09 06:22   fr/udynamax/DynSaved.class
+    10232  2026-11-09 06:22   fr/udynamax/Events.class
+     3509  2026-11-09 06:22   fr/udynamax/Net$ActivateMsg.class
+     4037  2026-11-09 06:22   fr/udynamax/Net$ScaleMsg.class
+     3138  2026-11-09 06:22   fr/udynamax/Net.class
+      731  2026-11-09 06:22   fr/udynamax/Reg$1.class
+      731  2026-11-09 06:22   fr/udynamax/Reg$2.class
+     3390  2026-11-09 06:22   fr/udynamax/Reg.class
+     2283  2026-11-09 06:22   fr/udynamax/TabHook.class
+     1214  2026-11-09 06:22   fr/udynamax/Udynamax.class
+     4651  2026-11-09 06:22   fr/udynamax/WardBlock.class
+     3695  2026-11-09 06:22   fr/udynamax/WardData.class
+        0  1970-01-11 22:58   fr/udynamax/client/
+     5261  2026-11-09 06:22   fr/udynamax/client/ClientEvents$ForgeBus.class
+     2680  2026-11-09 06:22   fr/udynamax/client/ClientEvents$ModBus.class
+     1173  2026-11-09 06:22   fr/udynamax/client/ClientEvents.class
+     1224  2026-11-09 06:22   fr/udynamax/client/ClientScale.class
+     9237  2026-11-09 06:22   fr/udynamax/client/Minimap.class
+       80  2026-11-09 06:22   pack.mcmeta
+---------                     -------
+    78804                     55 files
