@@ -112,6 +112,10 @@
     {
       "file": "uregions-1.0.0.jar",
       "sha256": "4346cd4db968b8dbdb275784d7a53e2131587651ad301fdfc92616973fea0612"
+    },
+    {
+      "file": "udynamax-1.0.0.jar",
+      "sha256": "8e8052a0c2d1b3568998cc84bea4b37c23a7db71d547cf8f34b6b109f2f55a30"
     }
   ],
   "files": [],
