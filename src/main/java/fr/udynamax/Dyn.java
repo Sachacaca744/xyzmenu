@@ -35,7 +35,7 @@ public class Dyn {
     private static class Active {
         UUID player, battleId;
         Pokemon pokemon;
-        float oldScale;
+        float oldScale, factor;
         long start;
     }
 
@@ -85,8 +85,10 @@ public class Dyn {
         DynSaved ds = DynSaved.get(sp.server);
         ds.old.put(pk.getUuid(), a.oldScale);
         ds.setDirty();
+        a.factor = factor;
         pk.setScaleModifier(factor);
         ent.refreshDimensions();
+        sendScale(ent, factor);
         ACTIVE.put(sp.getUUID(), a);
         USED.put(sp.getUUID(), a.battleId);
 
@@ -102,7 +104,10 @@ public class Dyn {
     private static void revert(MinecraftServer server, Active a) {
         a.pokemon.setScaleModifier(a.oldScale);
         PokemonEntity e = a.pokemon.getEntity();
-        if (e != null) e.refreshDimensions();
+        if (e != null) {
+            e.refreshDimensions();
+            sendScale(e, a.oldScale);
+        }
         DynSaved ds = DynSaved.get(server);
         ds.old.remove(a.pokemon.getUuid());
         ds.setDirty();
@@ -152,8 +157,15 @@ public class Dyn {
                         Component.literal("Le Dynamax se dissipe...").withStyle(ChatFormatting.GRAY), true);
                 continue;
             }
+            if (t % 20 == 0) sendScale(ent, a.factor);
             effects((ServerLevel) ent.level(), ent, t);
         }
+    }
+
+    /** Le client ne recoit pas la taille de Cobblemon : on la lui envoie nous-memes. */
+    private static void sendScale(PokemonEntity ent, float scale) {
+        Net.CH.send(net.minecraftforge.network.PacketDistributor.TRACKING_ENTITY.with(() -> ent),
+                new Net.ScaleMsg(ent.getId(), scale));
     }
 
     private static void effects(ServerLevel level, PokemonEntity ent, long t) {
