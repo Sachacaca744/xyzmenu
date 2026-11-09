@@ -4,9 +4,15 @@ URL=$(python3 -c "
 import json
 d=json.load(open('v.json'))
 print([f['url'] for v in d if '1.5.2' in v['version_number'] for f in v['files'] if f.get('primary')][0])")
-curl -sL -A "xyzmenu-ci/1.0" "$URL" -o cob.jar; ls -l cob.jar
-mkdir -p x && cd x && unzip -qo ../cob.jar 'com/cobblemon/mod/common/*' 'META-INF/*' 2>/dev/null
-J="javap -cp /tmp/x -public"
-for c in battles.BattleRegistry battles.BattleSide battles.ActiveBattlePokemon entity.pokemon.PokemonEntity api.events.battles.BattleVictoryEvent api.events.battles.BattleFledEvent api.events.battles.BattleStartedPostEvent api.reactive.EventObservable api.reactive.Observable api.Priority client.gui.battle.BattleGUI; do echo "=== $c"; $J com.cobblemon.mod.common.$c 2>&1 | grep -v "\$default" | head -45; done
-unzip -p ../cob.jar META-INF/mods.toml | head -30
-ls /tmp/x/META-INF | head
+curl -sL -A "xyzmenu-ci/1.0" "$URL" -o cob.jar
+mkdir -p x && cd x && unzip -qo ../cob.jar 'com/cobblemon/mod/common/*' 2>/dev/null
+P="com.cobblemon.mod.common"
+echo "=== Pokemon scale members"; javap -cp /tmp/x -p $P.pokemon.Pokemon | grep -i scale
+echo "=== setScaleModifier code"; javap -cp /tmp/x -p -c $P.pokemon.Pokemon | awk '/void setScaleModifier\(float\)/,/^$/' | head -40
+echo "=== Pokemon scale-related observables"; javap -cp /tmp/x -p $P.pokemon.Pokemon | grep -iE "Observable|emit" | head
+echo "=== PokemonEntity scale/dimension members"; javap -cp /tmp/x -p $P.entity.pokemon.PokemonEntity | grep -iE "scale|dimension|Size|updateScale|SCALE" | head -20
+echo "=== PokemonEntity getDimensions code"; javap -cp /tmp/x -p -c $P.entity.pokemon.PokemonEntity | awk '/m_6972_|getDimensions/,/^$/' | grep -E "invoke|getstatic" | head -30
+echo "=== who reads scaleModifier"; cd /tmp/x; grep -rl "getScaleModifier" . 2>/dev/null | head -20
+echo "=== PokemonSideDelegate/ client"; javap -cp /tmp/x -p $P.client.entity.PokemonClientDelegate | grep -iE "scale|dimension" | head
+echo "=== Scale command"; ls $(find /tmp/x -type d -name commands | head -1) | grep -i scale
+javap -cp /tmp/x -p -c $P.api.pokemon.PokemonProperties 2>/dev/null | grep -i scale | head
