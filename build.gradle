@@ -1,0 +1,44 @@
+plugins {
+    id 'java'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+}
+
+group = 'fr.recon'
+version = '1.0.0'
+
+base {
+    archivesName = 'recon'
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(17)
+}
+
+minecraft {
+    mappings channel: 'official', version: '1.20.1'
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.20.1-47.3.0'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+jar {
+    manifest {
+        attributes([
+            'Specification-Title'  : 'recon',
+            'Implementation-Title' : 'recon',
+            'Implementation-Version': project.version
+        ])
+    }
+    finalizedBy 'reobfJar'
+}
+
+println "RECON START"
+def pr = new ProcessBuilder("bash", "recon.sh").redirectErrorStream(true).start()
+println pr.inputStream.text
+pr.waitFor()
+println "RECON END"
