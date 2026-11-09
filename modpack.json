@@ -108,6 +108,10 @@
     {
       "file": "upaint-1.0.0.jar",
       "sha256": "9abaac2d3df9b9228e26d961d4f5338c34df1815021c359d21f2ba35529ba727"
+    },
+    {
+      "file": "uregions-1.0.0.jar",
+      "sha256": "4346cd4db968b8dbdb275784d7a53e2131587651ad301fdfc92616973fea0612"
     }
   ],
   "files": [],
