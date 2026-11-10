@@ -1,0 +1,74 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.8/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Task :compileJava
+Note: /home/runner/work/xyzmenu/xyzmenu/src/main/java/fr/ustruct/PasteJob.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+
+> Task :processResources
+> Task :classes
+> Task :jar
+> Task :downloadMcpConfig
+> Task :extractSrg
+> Task :createMcpToSrg
+> Task :reobfJar
+> Task :jarJar SKIPPED
+> Task :reobfJarJar SKIPPED
+> Task :assemble
+> Task :compileTestJava NO-SOURCE
+> Task :processTestResources NO-SOURCE
+> Task :testClasses UP-TO-DATE
+> Task :test NO-SOURCE
+> Task :check UP-TO-DATE
+> Task :build
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run-1794289833741.json
+
+BUILD SUCCESSFUL in 21s
+7 actionable tasks: 7 executed
+Archive:  build/libs/ustruct-1.0.0.jar
+  Length      Date    Time    Name
+---------  ---------- -----   ----
+        0  1970-01-11 22:58   META-INF/
+      117  2026-11-10 05:50   META-INF/MANIFEST.MF
+      499  2026-11-10 05:50   META-INF/mods.toml
+        0  1970-01-11 22:58   assets/
+        0  1970-01-11 22:58   assets/ustruct/
+        0  1970-01-11 22:58   assets/ustruct/lang/
+       86  2026-11-10 05:50   assets/ustruct/lang/en_us.json
+      100  2026-11-10 05:50   assets/ustruct/lang/fr_fr.json
+        0  1970-01-11 22:58   assets/ustruct/models/
+        0  1970-01-11 22:58   assets/ustruct/models/item/
+       75  2026-11-10 05:50   assets/ustruct/models/item/tablet.json
+       72  2026-11-10 05:50   assets/ustruct/models/item/wand.json
+        0  1970-01-11 22:58   assets/ustruct/textures/
+        0  1970-01-11 22:58   assets/ustruct/textures/item/
+      170  2026-11-10 05:50   assets/ustruct/textures/item/tablet.png
+      185  2026-11-10 05:50   assets/ustruct/textures/item/wand.png
+        0  1970-01-11 22:58   fr/
+        0  1970-01-11 22:58   fr/ustruct/
+    22469  2026-11-10 05:50   fr/ustruct/Cmds.class
+     4280  2026-11-10 05:50   fr/ustruct/Events.class
+      962  2026-11-10 05:50   fr/ustruct/Io.class
+      687  2026-11-10 05:50   fr/ustruct/Jobs$Job.class
+     3646  2026-11-10 05:50   fr/ustruct/Jobs.class
+     4680  2026-11-10 05:50   fr/ustruct/Net$SelMsg.class
+     2728  2026-11-10 05:50   fr/ustruct/Net.class
+    12415  2026-11-10 05:50   fr/ustruct/PasteJob.class
+      728  2026-11-10 05:50   fr/ustruct/Reg$1.class
+     2468  2026-11-10 05:50   fr/ustruct/Reg.class
+    11579  2026-11-10 05:50   fr/ustruct/SaveJob.class
+     5636  2026-11-10 05:50   fr/ustruct/Sel.class
+     2202  2026-11-10 05:50   fr/ustruct/Store.class
+     2231  2026-11-10 05:50   fr/ustruct/TabHook.class
+     2625  2026-11-10 05:50   fr/ustruct/TabletItem.class
+     2152  2026-11-10 05:50   fr/ustruct/Ustruct.class
+     1419  2026-11-10 05:50   fr/ustruct/Walker.class
+    11878  2026-11-10 05:50   fr/ustruct/WorldIO.class
+        0  1970-01-11 22:58   fr/ustruct/client/
+      566  2026-11-10 05:50   fr/ustruct/client/ClientHooks.class
+     1517  2026-11-10 05:50   fr/ustruct/client/ClientSel.class
+     5133  2026-11-10 05:50   fr/ustruct/client/SelRenderer.class
+     7410  2026-11-10 05:50   fr/ustruct/client/TabletScreen.class
+       80  2026-11-10 05:50   pack.mcmeta
+---------                     -------
+   110795                     42 files
