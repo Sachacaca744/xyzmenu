@@ -116,6 +116,10 @@
     {
       "file": "udynamax-1.0.0.jar",
       "sha256": "fc6a062546d20ad0627ee9929694e54c5bb49148024e4fa41b2f232aeb1f4441"
+    },
+    {
+      "file": "ustruct-1.0.0.jar",
+      "sha256": "177ef42ee9e919036833a24f96bc591374c58f9ac5b9b0193654816c493c58d1"
     }
   ],
   "files": [],
