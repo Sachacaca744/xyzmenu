@@ -1,0 +1,26 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="MIT"
+
+[[mods]]
+modId="ustruct"
+version="1.0.0"
+displayName="Ustruct"
+description='''
+Sauvegarde de structures (jusqu'a 700x700x700) et de mondes entiers, portables d'un modpack a l'autre.
+Dossier de donnees : <jeu>/ustruct/
+'''
+
+[[dependencies.ustruct]]
+modId="forge"
+mandatory=true
+versionRange="[47,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.ustruct]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.20.1,1.21)"
+ordering="NONE"
+side="BOTH"
