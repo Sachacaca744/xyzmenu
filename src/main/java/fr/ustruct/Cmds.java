@@ -94,7 +94,7 @@ public class Cmds {
                                         .suggests((c, b) -> SharedSuggestionProvider.suggest(new String[]{"aucun", "x", "z"}, b))
                                         .executes(c -> paste(c, BlockPosArgument.getLoadedBlockPos(c, "pos"), IntegerArgumentType.getInteger(c, "rotation"), mir(c), false))
                                         .then(Commands.argument("air", BoolArgumentType.bool())
-                                                .executes(c -> paste(c, BlockPosArgument.getLoadedBlockPos(c, "pos"), IntegerArgumentType.getInteger(c, "rotation"), mir(c), BoolArgumentType.getBool(c, "air"))))))))));
+                                                .executes(c -> paste(c, BlockPosArgument.getLoadedBlockPos(c, "pos"), IntegerArgumentType.getInteger(c, "rotation"), mir(c), BoolArgumentType.getBool(c, "air")))))))));
 
         root.then(Commands.literal("undo").executes(Cmds::undo));
         root.then(Commands.literal("list").executes(c -> {
