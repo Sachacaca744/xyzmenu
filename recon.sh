@@ -1,17 +1,13 @@
-cd /tmp
-curl -s -A "xyzmenu-ci/1.0" -G "https://api.modrinth.com/v2/project/cobblemon/version" --data-urlencode 'loaders=["forge"]' --data-urlencode 'game_versions=["1.20.1"]' -o v.json
-URL=$(python3 -c "
-import json
-d=json.load(open('v.json'))
-print([f['url'] for v in d if '1.5.2' in v['version_number'] for f in v['files'] if f.get('primary')][0])")
-curl -sL -A "xyzmenu-ci/1.0" "$URL" -o cob.jar
-mkdir -p x && cd x && unzip -qo ../cob.jar 'com/cobblemon/mod/common/*' 2>/dev/null
-P="com.cobblemon.mod.common"
-echo "=== ClientDelegate.onTrackedDataSet around scale"
-javap -cp /tmp/x -p -c $P.client.entity.PokemonClientDelegate | awk '/void onTrackedDataSet/,/^$/' | awk '{print}' | grep -nE "putfield.*entityScaleModifier|getstatic|invoke" | sed -n '1,200p' | grep -B14 "entityScaleModifier" | cut -c1-200
-echo "=== PokemonRenderer.render invokes"
-javap -cp /tmp/x -p -c $P.client.render.pokemon.PokemonRenderer | awk '/public void render\(com.cobblemon.mod.common.entity.pokemon.PokemonEntity/,/^$/' | grep -E "invoke" | cut -c1-200
-echo "=== PokemonRenderer super"
-javap -cp /tmp/x -p $P.client.render.pokemon.PokemonRenderer | head -3
-echo "=== PokemonRenderer.scale"
-javap -cp /tmp/x -p -c $P.client.render.pokemon.PokemonRenderer | awk '/protected void scale\(/,/^$/' | grep -E "invoke|fmul|ldc" | cut -c1-200
+set -x
+mkdir -p /tmp/srv && cd /tmp/srv
+M=$(curl -s -A "xyzmenu-ci/1.0" https://launchermeta.mojang.com/mc/game/version_manifest_v2.json | python3 -c "import sys,json;print([v['url'] for v in json.load(sys.stdin)['versions'] if v['id']=='1.20.1'][0])")
+SU=$(curl -s -A "xyzmenu-ci/1.0" "$M" | python3 -c "import sys,json;print(json.load(sys.stdin)['downloads']['server']['url'])")
+curl -sL -A "xyzmenu-ci/1.0" "$SU" -o server.jar; ls -l server.jar
+echo "eula=true" > eula.txt
+printf 'level-type=minecraft\\:flat\nlevel-name=world\nonline-mode=false\nspawn-protection=0\nmax-tick-time=-1\n' > server.properties
+(sleep 40; echo "stop") | java -jar server.jar nogui 2>&1 | tail -15
+ls -l world
+echo "LEVELDAT_B64_START"
+base64 -w0 world/level.dat
+echo
+echo "LEVELDAT_B64_END"
