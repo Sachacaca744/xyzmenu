@@ -124,6 +124,10 @@
     {
       "file": "uarms-1.0.0.jar",
       "sha256": "30d0a7f562c0b34a5a45cf262e0a5c4f6a5843f62b38d7c30a22cdfe2dc878cf"
+    },
+    {
+      "file": "upolice-1.0.0.jar",
+      "sha256": "40c9d49591840a05ac64a07234b4f7fcf23bb1908bc0ca64afe7029597751d60"
     }
   ],
   "files": [],
