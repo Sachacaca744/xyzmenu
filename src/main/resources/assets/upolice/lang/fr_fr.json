@@ -1,0 +1,13 @@
+{
+ "item.upolice.tear_gas_spray": "Bombe lacrymogène",
+ "item.upolice.tear_gas_grenade": "Grenade lacrymogène",
+ "item.upolice.flashbang": "Grenade assourdissante",
+ "item.upolice.dispersal_grenade": "Grenade de désencerclement",
+ "item.upolice.smoke_grenade": "Grenade fumigène",
+ "item.upolice.lbd40": "LBD 40",
+ "item.upolice.paint_marker": "Marqueur de peinture",
+ "item.upolice.water_cannon": "Canon à eau",
+ "item.upolice.net_launcher": "Lanceur de filet",
+ "item.upolice.handcuffs": "Menottes",
+ "entity.upolice.grenade": "Grenade"
+}

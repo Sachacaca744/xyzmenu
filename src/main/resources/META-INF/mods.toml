@@ -1,0 +1,26 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="MIT"
+
+[[mods]]
+modId="upolice"
+version="1.0.0"
+displayName="Upolice"
+description='''
+10 armes non letales de maintien de l'ordre : gaz, grenades, LBD, canon a eau, filet, menottes, billes de peinture.
+A installer sur le serveur ET chez les joueurs.
+'''
+
+[[dependencies.upolice]]
+modId="forge"
+mandatory=true
+versionRange="[47,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.upolice]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.20.1,1.21)"
+ordering="NONE"
+side="BOTH"
