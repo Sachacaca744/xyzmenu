@@ -1,0 +1,20 @@
+{
+ "item.uarms.knife": "Couteau",
+ "item.uarms.war_knife": "Couteau de guerre",
+ "item.uarms.pistol": "Pistolet",
+ "item.uarms.smg": "Pistolet-mitrailleur",
+ "item.uarms.rifle": "Fusil d'assaut",
+ "item.uarms.shotgun": "Fusil à pompe",
+ "item.uarms.sniper": "Fusil de précision",
+ "item.uarms.taser": "Taser",
+ "item.uarms.ballistic_shield": "Bouclier balistique",
+ "item.uarms.flashball": "Flash-Ball",
+ "item.uarms.gomme_cogne": "Gomme-cogne",
+ "item.uarms.pepper_spray": "Pistolet à poivre",
+ "item.uarms.baton": "Matraque",
+ "item.uarms.bullet": "Balles",
+ "item.uarms.shell": "Cartouches",
+ "item.uarms.rubber_ball": "Balles en caoutchouc",
+ "item.uarms.soldier_spawn_egg": "Œuf d'apparition de Soldat",
+ "entity.uarms.soldier": "Soldat"
+}

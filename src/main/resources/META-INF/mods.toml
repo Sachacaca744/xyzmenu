@@ -1,0 +1,26 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="MIT"
+
+[[mods]]
+modId="uarms"
+version="1.0.0"
+displayName="Uarms"
+description='''
+Couteaux, armes a feu, taser, bouclier balistique, armes non letales et soldats.
+A installer sur le serveur ET chez les joueurs.
+'''
+
+[[dependencies.uarms]]
+modId="forge"
+mandatory=true
+versionRange="[47,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.uarms]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.20.1,1.21)"
+ordering="NONE"
+side="BOTH"

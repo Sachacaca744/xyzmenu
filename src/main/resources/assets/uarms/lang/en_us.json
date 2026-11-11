@@ -1,0 +1,20 @@
+{
+ "item.uarms.knife": "Knife",
+ "item.uarms.war_knife": "War Knife",
+ "item.uarms.pistol": "Pistol",
+ "item.uarms.smg": "SMG",
+ "item.uarms.rifle": "Assault Rifle",
+ "item.uarms.shotgun": "Shotgun",
+ "item.uarms.sniper": "Sniper Rifle",
+ "item.uarms.taser": "Taser",
+ "item.uarms.ballistic_shield": "Ballistic Shield",
+ "item.uarms.flashball": "Flash-Ball",
+ "item.uarms.gomme_cogne": "Rubber Launcher",
+ "item.uarms.pepper_spray": "Pepper Spray",
+ "item.uarms.baton": "Baton",
+ "item.uarms.bullet": "Bullets",
+ "item.uarms.shell": "Shells",
+ "item.uarms.rubber_ball": "Rubber Balls",
+ "item.uarms.soldier_spawn_egg": "Soldier Spawn Egg",
+ "entity.uarms.soldier": "Soldier"
+}
