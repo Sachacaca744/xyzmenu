@@ -120,6 +120,10 @@
     {
       "file": "ustruct-1.0.0.jar",
       "sha256": "177ef42ee9e919036833a24f96bc591374c58f9ac5b9b0193654816c493c58d1"
+    },
+    {
+      "file": "uarms-1.0.0.jar",
+      "sha256": "30d0a7f562c0b34a5a45cf262e0a5c4f6a5843f62b38d7c30a22cdfe2dc878cf"
     }
   ],
   "files": [],
