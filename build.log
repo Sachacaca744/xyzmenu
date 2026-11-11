@@ -1,0 +1,84 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.8/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Task :compileJava
+Note: /home/runner/work/xyzmenu/xyzmenu/src/main/java/fr/upolice/TabHook.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+> Task :processResources
+> Task :classes
+> Task :jar
+> Task :downloadMcpConfig
+> Task :extractSrg
+> Task :createMcpToSrg
+> Task :reobfJar
+> Task :jarJar SKIPPED
+> Task :reobfJarJar SKIPPED
+> Task :assemble
+> Task :compileTestJava NO-SOURCE
+> Task :processTestResources NO-SOURCE
+> Task :testClasses UP-TO-DATE
+> Task :test NO-SOURCE
+> Task :check UP-TO-DATE
+> Task :build
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run-1794391276910.json
+
+BUILD SUCCESSFUL in 20s
+7 actionable tasks: 7 executed
+Archive:  build/libs/upolice-1.0.0.jar
+  Length      Date    Time    Name
+---------  ---------- -----   ----
+        0  1970-01-11 22:58   META-INF/
+      117  2026-11-11 10:01   META-INF/MANIFEST.MF
+      524  2026-11-11 10:01   META-INF/mods.toml
+        0  1970-01-11 22:58   assets/
+        0  1970-01-11 22:58   assets/upolice/
+        0  1970-01-11 22:58   assets/upolice/lang/
+      499  2026-11-11 10:01   assets/upolice/lang/en_us.json
+      545  2026-11-11 10:01   assets/upolice/lang/fr_fr.json
+        0  1970-01-11 22:58   assets/upolice/models/
+        0  1970-01-11 22:58   assets/upolice/models/item/
+       86  2026-11-11 10:01   assets/upolice/models/item/dispersal_grenade.json
+       78  2026-11-11 10:01   assets/upolice/models/item/flashbang.json
+       78  2026-11-11 10:01   assets/upolice/models/item/handcuffs.json
+       73  2026-11-11 10:01   assets/upolice/models/item/lbd40.json
+       80  2026-11-11 10:01   assets/upolice/models/item/net_launcher.json
+       80  2026-11-11 10:01   assets/upolice/models/item/paint_marker.json
+       82  2026-11-11 10:01   assets/upolice/models/item/smoke_grenade.json
+       85  2026-11-11 10:01   assets/upolice/models/item/tear_gas_grenade.json
+       83  2026-11-11 10:01   assets/upolice/models/item/tear_gas_spray.json
+       80  2026-11-11 10:01   assets/upolice/models/item/water_cannon.json
+        0  1970-01-11 22:58   assets/upolice/textures/
+        0  1970-01-11 22:58   assets/upolice/textures/item/
+      196  2026-11-11 10:01   assets/upolice/textures/item/dispersal_grenade.png
+      194  2026-11-11 10:01   assets/upolice/textures/item/flashbang.png
+      189  2026-11-11 10:01   assets/upolice/textures/item/handcuffs.png
+      509  2026-11-11 10:01   assets/upolice/textures/item/lbd40.png
+      602  2026-11-11 10:01   assets/upolice/textures/item/net_launcher.png
+      647  2026-11-11 10:01   assets/upolice/textures/item/paint_marker.png
+      194  2026-11-11 10:01   assets/upolice/textures/item/smoke_grenade.png
+      197  2026-11-11 10:01   assets/upolice/textures/item/tear_gas_grenade.png
+      211  2026-11-11 10:01   assets/upolice/textures/item/tear_gas_spray.png
+      599  2026-11-11 10:01   assets/upolice/textures/item/water_cannon.png
+        0  1970-01-11 22:58   fr/
+        0  1970-01-11 22:58   fr/upolice/
+     4850  2026-11-11 10:01   fr/upolice/Cuffs.class
+     7824  2026-11-11 10:01   fr/upolice/GasSpray.class
+      809  2026-11-11 10:01   fr/upolice/GrenadeEntity$1.class
+     9682  2026-11-11 10:01   fr/upolice/GrenadeEntity.class
+      775  2026-11-11 10:01   fr/upolice/GrenadeItem$1.class
+     1212  2026-11-11 10:01   fr/upolice/GrenadeItem$Kind.class
+     5154  2026-11-11 10:01   fr/upolice/GrenadeItem.class
+     7297  2026-11-11 10:01   fr/upolice/NetGun.class
+     7465  2026-11-11 10:01   fr/upolice/Reg.class
+     3044  2026-11-11 10:01   fr/upolice/ShotItem$Spec.class
+     7657  2026-11-11 10:01   fr/upolice/ShotItem.class
+     2698  2026-11-11 10:01   fr/upolice/TabHook.class
+      984  2026-11-11 10:01   fr/upolice/Upolice.class
+     6083  2026-11-11 10:01   fr/upolice/Util.class
+     7191  2026-11-11 10:01   fr/upolice/WaterCannon.class
+        0  1970-01-11 22:58   fr/upolice/client/
+     2556  2026-11-11 10:01   fr/upolice/client/ClientSetup.class
+       80  2026-11-11 10:01   pack.mcmeta
+---------                     -------
+    81389                     52 files
