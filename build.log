@@ -1,0 +1,106 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.8/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Task :compileJava
+Note: /home/runner/work/xyzmenu/xyzmenu/src/main/java/fr/uarms/Soldier.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: /home/runner/work/xyzmenu/xyzmenu/src/main/java/fr/uarms/TabHook.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+> Task :processResources
+> Task :classes
+> Task :jar
+> Task :downloadMcpConfig
+> Task :extractSrg
+> Task :createMcpToSrg
+> Task :reobfJar
+> Task :jarJar SKIPPED
+> Task :reobfJarJar SKIPPED
+> Task :assemble
+> Task :compileTestJava NO-SOURCE
+> Task :processTestResources NO-SOURCE
+> Task :testClasses UP-TO-DATE
+> Task :test NO-SOURCE
+> Task :check UP-TO-DATE
+> Task :build
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run-1794389266787.json
+
+BUILD SUCCESSFUL in 1m
+7 actionable tasks: 7 executed
+Archive:  build/libs/uarms-1.0.0.jar
+  Length      Date    Time    Name
+---------  ---------- -----   ----
+        0  1970-01-11 22:58   META-INF/
+      113  2026-11-11 09:28   META-INF/MANIFEST.MF
+      481  2026-11-11 09:28   META-INF/mods.toml
+        0  1970-01-11 22:58   assets/
+        0  1970-01-11 22:58   assets/uarms/
+        0  1970-01-11 22:58   assets/uarms/lang/
+      676  2026-11-11 09:28   assets/uarms/lang/en_us.json
+      748  2026-11-11 09:28   assets/uarms/lang/fr_fr.json
+        0  1970-01-11 22:58   assets/uarms/models/
+        0  1970-01-11 22:58   assets/uarms/models/item/
+       83  2026-11-11 09:28   assets/uarms/models/item/ballistic_shield.json
+       71  2026-11-11 09:28   assets/uarms/models/item/baton.json
+       73  2026-11-11 09:28   assets/uarms/models/item/bullet.json
+       75  2026-11-11 09:28   assets/uarms/models/item/flashball.json
+       77  2026-11-11 09:28   assets/uarms/models/item/gomme_cogne.json
+       71  2026-11-11 09:28   assets/uarms/models/item/knife.json
+       79  2026-11-11 09:28   assets/uarms/models/item/pepper_spray.json
+       72  2026-11-11 09:28   assets/uarms/models/item/pistol.json
+       71  2026-11-11 09:28   assets/uarms/models/item/rifle.json
+       78  2026-11-11 09:28   assets/uarms/models/item/rubber_ball.json
+       72  2026-11-11 09:28   assets/uarms/models/item/shell.json
+       73  2026-11-11 09:28   assets/uarms/models/item/shotgun.json
+       69  2026-11-11 09:28   assets/uarms/models/item/smg.json
+       72  2026-11-11 09:28   assets/uarms/models/item/sniper.json
+       37  2026-11-11 09:28   assets/uarms/models/item/soldier_spawn_egg.json
+       72  2026-11-11 09:28   assets/uarms/models/item/taser.json
+       75  2026-11-11 09:28   assets/uarms/models/item/war_knife.json
+        0  1970-01-11 22:58   assets/uarms/textures/
+        0  1970-01-11 22:58   assets/uarms/textures/entity/
+     1198  2026-11-11 09:28   assets/uarms/textures/entity/soldier.png
+        0  1970-01-11 22:58   assets/uarms/textures/item/
+      201  2026-11-11 09:28   assets/uarms/textures/item/ballistic_shield.png
+      164  2026-11-11 09:28   assets/uarms/textures/item/baton.png
+      150  2026-11-11 09:28   assets/uarms/textures/item/bullet.png
+      516  2026-11-11 09:28   assets/uarms/textures/item/flashball.png
+      451  2026-11-11 09:28   assets/uarms/textures/item/gomme_cogne.png
+      184  2026-11-11 09:28   assets/uarms/textures/item/knife.png
+      189  2026-11-11 09:28   assets/uarms/textures/item/pepper_spray.png
+      454  2026-11-11 09:28   assets/uarms/textures/item/pistol.png
+      542  2026-11-11 09:28   assets/uarms/textures/item/rifle.png
+      171  2026-11-11 09:28   assets/uarms/textures/item/rubber_ball.png
+      128  2026-11-11 09:28   assets/uarms/textures/item/shell.png
+      515  2026-11-11 09:28   assets/uarms/textures/item/shotgun.png
+      492  2026-11-11 09:28   assets/uarms/textures/item/smg.png
+      502  2026-11-11 09:28   assets/uarms/textures/item/sniper.png
+      194  2026-11-11 09:28   assets/uarms/textures/item/taser.png
+      223  2026-11-11 09:28   assets/uarms/textures/item/war_knife.png
+        0  1970-01-11 22:58   fr/
+        0  1970-01-11 22:58   fr/uarms/
+     2817  2026-11-11 09:28   fr/uarms/BatonItem.class
+     6887  2026-11-11 09:28   fr/uarms/Cmds.class
+     2124  2026-11-11 09:28   fr/uarms/Events.class
+     8707  2026-11-11 09:28   fr/uarms/Fire.class
+     3854  2026-11-11 09:28   fr/uarms/GunItem$Spec.class
+     6810  2026-11-11 09:28   fr/uarms/GunItem.class
+     6264  2026-11-11 09:28   fr/uarms/KnifeItem.class
+    10159  2026-11-11 09:28   fr/uarms/Reg.class
+     2646  2026-11-11 09:28   fr/uarms/ShieldItem.class
+     4530  2026-11-11 09:28   fr/uarms/Soldier$SoldierAttackGoal.class
+     8282  2026-11-11 09:28   fr/uarms/Soldier.class
+     2474  2026-11-11 09:28   fr/uarms/SoldierData.class
+     6953  2026-11-11 09:28   fr/uarms/SoldierSpawner.class
+     6844  2026-11-11 09:28   fr/uarms/SprayItem.class
+     3677  2026-11-11 09:28   fr/uarms/TabHook.class
+     5999  2026-11-11 09:28   fr/uarms/TaserItem.class
+     1187  2026-11-11 09:28   fr/uarms/Uarms.class
+        0  1970-01-11 22:58   fr/uarms/client/
+     2773  2026-11-11 09:28   fr/uarms/client/ClientEvents$ForgeBus.class
+     2611  2026-11-11 09:28   fr/uarms/client/ClientEvents$ModBus.class
+      462  2026-11-11 09:28   fr/uarms/client/ClientEvents.class
+     4470  2026-11-11 09:28   fr/uarms/client/SoldierRenderer.class
+       80  2026-11-11 09:28   pack.mcmeta
+---------                     -------
+   110122                     72 files
