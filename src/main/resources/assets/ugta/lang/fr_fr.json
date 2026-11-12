@@ -1,0 +1,21 @@
+{
+ "item.ugta.sedan": "Berline",
+ "item.ugta.sports_car": "Voiture de sport",
+ "item.ugta.police_car": "Voiture de police",
+ "item.ugta.truck": "Camion",
+ "item.ugta.plane": "Avion",
+ "item.ugta.helicopter": "Hélicoptère",
+ "item.ugta.pistol_prop": "Pistolet de policier",
+ "item.ugta.rifle_prop": "Fusil d'assaut de l'armée",
+ "entity.ugta.sedan": "Berline",
+ "entity.ugta.sports_car": "Voiture de sport",
+ "entity.ugta.police_car": "Voiture de police",
+ "entity.ugta.truck": "Camion",
+ "entity.ugta.plane": "Avion",
+ "entity.ugta.helicopter": "Hélicoptère",
+ "entity.ugta.police_helicopter": "Hélicoptère de police",
+ "entity.ugta.cop": "Policier",
+ "entity.ugta.ped": "Passant",
+ "key.ugta.horn": "Klaxon",
+ "key.categories.ugta": "GTA"
+}

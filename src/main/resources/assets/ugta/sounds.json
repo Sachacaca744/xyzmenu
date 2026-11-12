@@ -1,0 +1,8 @@
+{
+ "engine": {"sounds": ["ugta:engine"]},
+ "siren": {"sounds": ["ugta:siren"]},
+ "rotor": {"sounds": ["ugta:rotor"]},
+ "horn": {"sounds": ["ugta:horn"]},
+ "prop": {"sounds": ["ugta:prop"]},
+ "shot": {"sounds": ["ugta:shot"]}
+}

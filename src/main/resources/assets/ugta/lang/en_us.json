@@ -1,0 +1,21 @@
+{
+ "item.ugta.sedan": "Sedan",
+ "item.ugta.sports_car": "Sports Car",
+ "item.ugta.police_car": "Police Car",
+ "item.ugta.truck": "Truck",
+ "item.ugta.plane": "Plane",
+ "item.ugta.helicopter": "Helicopter",
+ "item.ugta.pistol_prop": "Police Pistol",
+ "item.ugta.rifle_prop": "Army Rifle",
+ "entity.ugta.sedan": "Sedan",
+ "entity.ugta.sports_car": "Sports Car",
+ "entity.ugta.police_car": "Police Car",
+ "entity.ugta.truck": "Truck",
+ "entity.ugta.plane": "Plane",
+ "entity.ugta.helicopter": "Helicopter",
+ "entity.ugta.police_helicopter": "Police Helicopter",
+ "entity.ugta.cop": "Cop",
+ "entity.ugta.ped": "Pedestrian",
+ "key.ugta.horn": "Horn",
+ "key.categories.ugta": "GTA"
+}
