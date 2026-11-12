@@ -1,0 +1,116 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.8/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Task :compileJava
+Note: /home/runner/work/xyzmenu/xyzmenu/src/main/java/fr/ugta/Spawner.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+
+> Task :processResources
+> Task :classes
+> Task :jar
+> Task :downloadMcpConfig
+> Task :extractSrg
+> Task :createMcpToSrg
+> Task :reobfJar
+> Task :jarJar SKIPPED
+> Task :reobfJarJar SKIPPED
+> Task :assemble
+> Task :compileTestJava NO-SOURCE
+> Task :processTestResources NO-SOURCE
+> Task :testClasses UP-TO-DATE
+> Task :test NO-SOURCE
+> Task :check UP-TO-DATE
+> Task :build
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run-1794463064206.json
+
+BUILD SUCCESSFUL in 23s
+7 actionable tasks: 7 executed
+Archive:  build/libs/ugta-1.0.0.jar
+  Length      Date    Time    Name
+---------  ---------- -----   ----
+        0  1970-01-11 22:58   META-INF/
+      111  2026-11-12 05:57   META-INF/MANIFEST.MF
+      499  2026-11-12 05:57   META-INF/mods.toml
+        0  1970-01-11 22:58   assets/
+        0  1970-01-11 22:58   assets/ugta/
+        0  1970-01-11 22:58   assets/ugta/lang/
+      677  2026-11-12 05:57   assets/ugta/lang/en_us.json
+      748  2026-11-12 05:57   assets/ugta/lang/fr_fr.json
+        0  1970-01-11 22:58   assets/ugta/models/
+        0  1970-01-11 22:58   assets/ugta/models/item/
+       76  2026-11-12 05:57   assets/ugta/models/item/helicopter.json
+       76  2026-11-12 05:57   assets/ugta/models/item/pistol_prop.json
+       71  2026-11-12 05:57   assets/ugta/models/item/plane.json
+       76  2026-11-12 05:57   assets/ugta/models/item/police_car.json
+       75  2026-11-12 05:57   assets/ugta/models/item/rifle_prop.json
+       71  2026-11-12 05:57   assets/ugta/models/item/sedan.json
+       76  2026-11-12 05:57   assets/ugta/models/item/sports_car.json
+       71  2026-11-12 05:57   assets/ugta/models/item/truck.json
+      227  2026-11-12 05:57   assets/ugta/sounds.json
+        0  1970-01-11 22:58   assets/ugta/sounds/
+     4708  2026-11-12 05:57   assets/ugta/sounds/engine.ogg
+     4465  2026-11-12 05:57   assets/ugta/sounds/horn.ogg
+     9202  2026-11-12 05:57   assets/ugta/sounds/prop.ogg
+    11555  2026-11-12 05:57   assets/ugta/sounds/rotor.ogg
+     5102  2026-11-12 05:57   assets/ugta/sounds/shot.ogg
+     4924  2026-11-12 05:57   assets/ugta/sounds/siren.ogg
+        0  1970-01-11 22:58   assets/ugta/textures/
+        0  1970-01-11 22:58   assets/ugta/textures/entity/
+     1644  2026-11-12 05:57   assets/ugta/textures/entity/army.png
+      502  2026-11-12 05:57   assets/ugta/textures/entity/cop.png
+      419  2026-11-12 05:57   assets/ugta/textures/entity/ped_0.png
+      424  2026-11-12 05:57   assets/ugta/textures/entity/ped_1.png
+      413  2026-11-12 05:57   assets/ugta/textures/entity/ped_2.png
+      428  2026-11-12 05:57   assets/ugta/textures/entity/ped_3.png
+      412  2026-11-12 05:57   assets/ugta/textures/entity/ped_4.png
+      407  2026-11-12 05:57   assets/ugta/textures/entity/ped_5.png
+      419  2026-11-12 05:57   assets/ugta/textures/entity/ped_6.png
+      420  2026-11-12 05:57   assets/ugta/textures/entity/ped_7.png
+       79  2026-11-12 05:57   assets/ugta/textures/entity/white.png
+        0  1970-01-11 22:58   assets/ugta/textures/item/
+      178  2026-11-12 05:57   assets/ugta/textures/item/helicopter.png
+      142  2026-11-12 05:57   assets/ugta/textures/item/pistol_prop.png
+      209  2026-11-12 05:57   assets/ugta/textures/item/plane.png
+      226  2026-11-12 05:57   assets/ugta/textures/item/police_car.png
+      166  2026-11-12 05:57   assets/ugta/textures/item/rifle_prop.png
+      198  2026-11-12 05:57   assets/ugta/textures/item/sedan.png
+      196  2026-11-12 05:57   assets/ugta/textures/item/sports_car.png
+      177  2026-11-12 05:57   assets/ugta/textures/item/truck.png
+        0  1970-01-11 22:58   fr/
+        0  1970-01-11 22:58   fr/ugta/
+    10850  2026-11-12 05:57   fr/ugta/Cmds.class
+     3833  2026-11-12 05:57   fr/ugta/Cop$EnterCarGoal.class
+     1254  2026-11-12 05:57   fr/ugta/Cop$HoldGoal.class
+     1996  2026-11-12 05:57   fr/ugta/Cop$PursueGoal.class
+    12635  2026-11-12 05:57   fr/ugta/Cop.class
+     6121  2026-11-12 05:57   fr/ugta/Gun.class
+     2017  2026-11-12 05:57   fr/ugta/Kind.class
+     3326  2026-11-12 05:57   fr/ugta/Net$HornMsg.class
+     3963  2026-11-12 05:57   fr/ugta/Net$StarsMsg.class
+     3074  2026-11-12 05:57   fr/ugta/Net.class
+     2399  2026-11-12 05:57   fr/ugta/Ped$DodgeCarGoal.class
+     5962  2026-11-12 05:57   fr/ugta/Ped.class
+     8513  2026-11-12 05:57   fr/ugta/Reg.class
+    10478  2026-11-12 05:57   fr/ugta/Spawner.class
+     3556  2026-11-12 05:57   fr/ugta/TabHook.class
+     1277  2026-11-12 05:57   fr/ugta/Ugta.class
+      735  2026-11-12 05:57   fr/ugta/Vehicle$1.class
+    22157  2026-11-12 05:57   fr/ugta/Vehicle.class
+     4502  2026-11-12 05:57   fr/ugta/VehicleAI.class
+     2364  2026-11-12 05:57   fr/ugta/VehicleItem.class
+      718  2026-11-12 05:57   fr/ugta/Wanted$St.class
+    16236  2026-11-12 05:57   fr/ugta/Wanted.class
+        0  1970-01-11 22:58   fr/ugta/client/
+     3449  2026-11-12 05:57   fr/ugta/client/ClientEvents$ForgeBus.class
+     3443  2026-11-12 05:57   fr/ugta/client/ClientEvents$ModBus.class
+      719  2026-11-12 05:57   fr/ugta/client/ClientEvents.class
+     1341  2026-11-12 05:57   fr/ugta/client/ClientHooks.class
+     3917  2026-11-12 05:57   fr/ugta/client/CopRenderer.class
+     2842  2026-11-12 05:57   fr/ugta/client/PedRenderer.class
+     4372  2026-11-12 05:57   fr/ugta/client/StarsHud.class
+      868  2026-11-12 05:57   fr/ugta/client/VehicleRenderer$1.class
+    11616  2026-11-12 05:57   fr/ugta/client/VehicleRenderer.class
+     2041  2026-11-12 05:57   fr/ugta/client/VehicleSound.class
+       80  2026-11-12 05:57   pack.mcmeta
+---------                     -------
+   212523                     84 files
