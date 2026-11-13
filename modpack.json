@@ -128,6 +128,10 @@
     {
       "file": "upolice-1.0.0.jar",
       "sha256": "40c9d49591840a05ac64a07234b4f7fcf23bb1908bc0ca64afe7029597751d60"
+    },
+    {
+      "file": "ugta-1.0.0.jar",
+      "sha256": "0f976ddde4134fafa4a7de7df9d70b0cf207a7c3d101196bab63e1d8a6be1139"
     }
   ],
   "files": [],
