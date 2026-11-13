@@ -1,0 +1,207 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.8/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+RECON START
+-rw-r--r-- 1 runner runner 47791053 Nov 13 06:13 server.jar
+world:
+total 12
+drwxr-xr-x 2 runner runner 4096 Nov 12 06:03 data
+-rw-r--r-- 1 runner runner 1506 Nov 12 06:03 level.dat
+drwxr-xr-x 2 runner runner 4096 Nov 12 06:03 region
+
+world/region:
+total 14532
+-rw-r--r-- 1 runner runner 2568192 Nov 12 06:03 r.-1.-1.mca
+-rw-r--r-- 1 runner runner 2670592 Nov 12 06:03 r.-1.0.mca
+SRVLOG_START
+Unpacking 1.20.1/server-1.20.1.jar (versions:1.20.1) to versions/1.20.1/server-1.20.1.jar
+Unpacking com/github/oshi/oshi-core/6.2.2/oshi-core-6.2.2.jar (libraries:com.github.oshi:oshi-core:6.2.2) to libraries/com/github/oshi/oshi-core/6.2.2/oshi-core-6.2.2.jar
+Unpacking com/google/code/gson/gson/2.10/gson-2.10.jar (libraries:com.google.code.gson:gson:2.10) to libraries/com/google/code/gson/gson/2.10/gson-2.10.jar
+Unpacking com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.jar (libraries:com.google.guava:failureaccess:1.0.1) to libraries/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.jar
+Unpacking com/google/guava/guava/31.1-jre/guava-31.1-jre.jar (libraries:com.google.guava:guava:31.1-jre) to libraries/com/google/guava/guava/31.1-jre/guava-31.1-jre.jar
+Unpacking com/mojang/authlib/4.0.43/authlib-4.0.43.jar (libraries:com.mojang:authlib:4.0.43) to libraries/com/mojang/authlib/4.0.43/authlib-4.0.43.jar
+Unpacking com/mojang/brigadier/1.1.8/brigadier-1.1.8.jar (libraries:com.mojang:brigadier:1.1.8) to libraries/com/mojang/brigadier/1.1.8/brigadier-1.1.8.jar
+Unpacking com/mojang/datafixerupper/6.0.8/datafixerupper-6.0.8.jar (libraries:com.mojang:datafixerupper:6.0.8) to libraries/com/mojang/datafixerupper/6.0.8/datafixerupper-6.0.8.jar
+Unpacking com/mojang/logging/1.1.1/logging-1.1.1.jar (libraries:com.mojang:logging:1.1.1) to libraries/com/mojang/logging/1.1.1/logging-1.1.1.jar
+Unpacking commons-io/commons-io/2.11.0/commons-io-2.11.0.jar (libraries:commons-io:commons-io:2.11.0) to libraries/commons-io/commons-io/2.11.0/commons-io-2.11.0.jar
+Unpacking io/netty/netty-buffer/4.1.82.Final/netty-buffer-4.1.82.Final.jar (libraries:io.netty:netty-buffer:4.1.82.Final) to libraries/io/netty/netty-buffer/4.1.82.Final/netty-buffer-4.1.82.Final.jar
+Unpacking io/netty/netty-codec/4.1.82.Final/netty-codec-4.1.82.Final.jar (libraries:io.netty:netty-codec:4.1.82.Final) to libraries/io/netty/netty-codec/4.1.82.Final/netty-codec-4.1.82.Final.jar
+Unpacking io/netty/netty-common/4.1.82.Final/netty-common-4.1.82.Final.jar (libraries:io.netty:netty-common:4.1.82.Final) to libraries/io/netty/netty-common/4.1.82.Final/netty-common-4.1.82.Final.jar
+Unpacking io/netty/netty-handler/4.1.82.Final/netty-handler-4.1.82.Final.jar (libraries:io.netty:netty-handler:4.1.82.Final) to libraries/io/netty/netty-handler/4.1.82.Final/netty-handler-4.1.82.Final.jar
+Unpacking io/netty/netty-resolver/4.1.82.Final/netty-resolver-4.1.82.Final.jar (libraries:io.netty:netty-resolver:4.1.82.Final) to libraries/io/netty/netty-resolver/4.1.82.Final/netty-resolver-4.1.82.Final.jar
+Unpacking io/netty/netty-transport/4.1.82.Final/netty-transport-4.1.82.Final.jar (libraries:io.netty:netty-transport:4.1.82.Final) to libraries/io/netty/netty-transport/4.1.82.Final/netty-transport-4.1.82.Final.jar
+Unpacking io/netty/netty-transport-classes-epoll/4.1.82.Final/netty-transport-classes-epoll-4.1.82.Final.jar (libraries:io.netty:netty-transport-classes-epoll:4.1.82.Final) to libraries/io/netty/netty-transport-classes-epoll/4.1.82.Final/netty-transport-classes-epoll-4.1.82.Final.jar
+Unpacking io/netty/netty-transport-native-epoll/4.1.82.Final/netty-transport-native-epoll-4.1.82.Final-linux-x86_64.jar (libraries:io.netty:netty-transport-native-epoll:4.1.82.Final:linux-x86_64) to libraries/io/netty/netty-transport-native-epoll/4.1.82.Final/netty-transport-native-epoll-4.1.82.Final-linux-x86_64.jar
+Unpacking io/netty/netty-transport-native-epoll/4.1.82.Final/netty-transport-native-epoll-4.1.82.Final-linux-aarch_64.jar (libraries:io.netty:netty-transport-native-epoll:4.1.82.Final:linux-aarch_64) to libraries/io/netty/netty-transport-native-epoll/4.1.82.Final/netty-transport-native-epoll-4.1.82.Final-linux-aarch_64.jar
+Unpacking io/netty/netty-transport-native-unix-common/4.1.82.Final/netty-transport-native-unix-common-4.1.82.Final.jar (libraries:io.netty:netty-transport-native-unix-common:4.1.82.Final) to libraries/io/netty/netty-transport-native-unix-common/4.1.82.Final/netty-transport-native-unix-common-4.1.82.Final.jar
+Unpacking it/unimi/dsi/fastutil/8.5.9/fastutil-8.5.9.jar (libraries:it.unimi.dsi:fastutil:8.5.9) to libraries/it/unimi/dsi/fastutil/8.5.9/fastutil-8.5.9.jar
+Unpacking net/java/dev/jna/jna/5.12.1/jna-5.12.1.jar (libraries:net.java.dev.jna:jna:5.12.1) to libraries/net/java/dev/jna/jna/5.12.1/jna-5.12.1.jar
+Unpacking net/java/dev/jna/jna-platform/5.12.1/jna-platform-5.12.1.jar (libraries:net.java.dev.jna:jna-platform:5.12.1) to libraries/net/java/dev/jna/jna-platform/5.12.1/jna-platform-5.12.1.jar
+Unpacking net/sf/jopt-simple/jopt-simple/5.0.4/jopt-simple-5.0.4.jar (libraries:net.sf.jopt-simple:jopt-simple:5.0.4) to libraries/net/sf/jopt-simple/jopt-simple/5.0.4/jopt-simple-5.0.4.jar
+Unpacking org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar (libraries:org.apache.commons:commons-lang3:3.12.0) to libraries/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar
+Unpacking org/apache/logging/log4j/log4j-api/2.19.0/log4j-api-2.19.0.jar (libraries:org.apache.logging.log4j:log4j-api:2.19.0) to libraries/org/apache/logging/log4j/log4j-api/2.19.0/log4j-api-2.19.0.jar
+Unpacking org/apache/logging/log4j/log4j-core/2.19.0/log4j-core-2.19.0.jar (libraries:org.apache.logging.log4j:log4j-core:2.19.0) to libraries/org/apache/logging/log4j/log4j-core/2.19.0/log4j-core-2.19.0.jar
+Unpacking org/apache/logging/log4j/log4j-slf4j2-impl/2.19.0/log4j-slf4j2-impl-2.19.0.jar (libraries:org.apache.logging.log4j:log4j-slf4j2-impl:2.19.0) to libraries/org/apache/logging/log4j/log4j-slf4j2-impl/2.19.0/log4j-slf4j2-impl-2.19.0.jar
+Unpacking org/joml/joml/1.10.5/joml-1.10.5.jar (libraries:org.joml:joml:1.10.5) to libraries/org/joml/joml/1.10.5/joml-1.10.5.jar
+Unpacking org/slf4j/slf4j-api/2.0.1/slf4j-api-2.0.1.jar (libraries:org.slf4j:slf4j-api:2.0.1) to libraries/org/slf4j/slf4j-api/2.0.1/slf4j-api-2.0.1.jar
+Starting net.minecraft.server.Main
+[06:13:29] [ServerMain/INFO]: Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
+[06:13:31] [ServerMain/INFO]: Loaded 7 recipes
+[06:13:31] [ServerMain/INFO]: Loaded 1271 advancements
+[06:13:31] [Server thread/INFO]: Starting minecraft server version 1.20.1
+[06:13:31] [Server thread/INFO]: Loading properties
+[06:13:31] [Server thread/INFO]: Default game type: SURVIVAL
+[06:13:31] [Server thread/INFO]: Generating keypair
+[06:13:32] [Server thread/INFO]: Starting Minecraft server on *:25565
+[06:13:32] [Server thread/INFO]: Using epoll channel type
+[06:13:32] [Server thread/WARN]: **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+[06:13:32] [Server thread/WARN]: The server will make no attempt to authenticate usernames. Beware.
+[06:13:32] [Server thread/WARN]: While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+[06:13:32] [Server thread/WARN]: To change this, set "online-mode" to "true" in the server.properties file.
+[06:13:32] [Server thread/INFO]: Preparing level "world"
+[06:13:32] [Server thread/INFO]: Preparing start region for dimension minecraft:overworld
+[06:13:34] [Worker-Main-3/INFO]: Preparing spawn area: 0%
+[06:13:34] [Worker-Main-2/INFO]: Preparing spawn area: 0%
+[06:13:34] [Worker-Main-3/INFO]: Preparing spawn area: 0%
+[06:13:34] [Worker-Main-3/INFO]: Preparing spawn area: 0%
+[06:13:34] [Worker-Main-3/INFO]: Preparing spawn area: 0%
+[06:13:34] [Worker-Main-1/INFO]: Preparing spawn area: 0%
+[06:13:35] [Worker-Main-1/INFO]: Preparing spawn area: 4%
+[06:13:35] [Worker-Main-3/INFO]: Preparing spawn area: 11%
+[06:13:36] [Worker-Main-2/INFO]: Preparing spawn area: 83%
+[06:13:36] [Server thread/INFO]: Time elapsed: 4049 ms
+[06:13:36] [Server thread/INFO]: Done (4.179s)! For help, type "help"
+[06:14:09] [Server thread/INFO]: Marked chunk [-3, -7] in minecraft:overworld to be force loaded
+[06:14:09] [Server thread/INFO]: [Not Secure] [Server] CHK1 OK minecraft:gray_concrete -43 63 -110
+[06:14:10] [Server thread/INFO]: Marked chunk [5, 23] in minecraft:overworld to be force loaded
+[06:14:10] [Server thread/INFO]: [Not Secure] [Server] CHK2 OK minecraft:gray_concrete 84 63 382
+[06:14:11] [Server thread/INFO]: Marked chunk [20, -9] in minecraft:overworld to be force loaded
+[06:14:12] [Server thread/INFO]: [Not Secure] [Server] CHK3 OK minecraft:gray_concrete 324 63 -140
+[06:14:13] [Server thread/INFO]: Marked chunk [-22, -4] in minecraft:overworld to be force loaded
+[06:14:13] [Server thread/INFO]: [Not Secure] [Server] CHK4 OK minecraft:orange_terracotta -352 75 -64
+[06:14:14] [Server thread/INFO]: No chunks were marked for force loading
+[06:14:14] [Server thread/INFO]: [Not Secure] [Server] CHK5 OK minecraft:orange_terracotta -352 71 -64
+[06:14:15] [Server thread/INFO]: Marked chunk [14, 21] in minecraft:overworld to be force loaded
+[06:14:15] [Server thread/INFO]: [Not Secure] [Server] CHK6 OK minecraft:gray_concrete 230 63 341
+[06:14:16] [Server thread/INFO]: Marked chunk [-4, 16] in minecraft:overworld to be force loaded
+[06:14:16] [Server thread/INFO]: [Not Secure] [Server] CHK7 OK minecraft:grass_block -59 63 265
+[06:14:17] [Server thread/INFO]: Marked chunk [-20, -8] in minecraft:overworld to be force loaded
+[06:14:18] [Server thread/INFO]: [Not Secure] [Server] CHK8 OK minecraft:grass_block -310 63 -122
+[06:14:19] [Server thread/INFO]: Marked chunk [-11, -19] in minecraft:overworld to be force loaded
+[06:14:19] [Server thread/INFO]: [Not Secure] [Server] CHK9 OK minecraft:light_gray_concrete -170 63 -299
+[06:14:20] [Server thread/INFO]: Marked chunk [-15, -2] in minecraft:overworld to be force loaded
+[06:14:20] [Server thread/INFO]: [Not Secure] [Server] CHK10 OK minecraft:light_gray_concrete -234 63 -20
+[06:14:21] [Server thread/INFO]: Marked chunk [7, -21] in minecraft:overworld to be force loaded
+[06:14:21] [Server thread/INFO]: [Not Secure] [Server] CHK11 OK minecraft:yellow_concrete 121 63 -336
+[06:14:22] [Server thread/INFO]: Marked chunk [15, -14] in minecraft:overworld to be force loaded
+[06:14:23] [Server thread/INFO]: [Not Secure] [Server] CHK12 OK minecraft:grass_block 251 63 -211
+[06:14:23] [Server thread/INFO]: Marked chunk [-4, 5] in minecraft:overworld to be force loaded
+[06:14:24] [Server thread/INFO]: [Not Secure] [Server] CHK13 OK minecraft:oak_leaves -59 69 84
+[06:14:25] [Server thread/INFO]: No chunks were marked for force loading
+[06:14:25] [Server thread/INFO]: [Not Secure] [Server] CHK14 OK minecraft:oak_leaves -59 68 84
+[06:14:26] [Server thread/INFO]: Marked chunk [7, 16] in minecraft:overworld to be force loaded
+[06:14:26] [Server thread/INFO]: [Not Secure] [Server] CHK15 OK minecraft:grass_block 114 63 266
+[06:14:27] [Server thread/INFO]: Marked chunk [21, -2] in minecraft:overworld to be force loaded
+[06:14:27] [Server thread/INFO]: [Not Secure] [Server] CHK16 OK minecraft:grass_block 345 63 -32
+[06:14:28] [Server thread/INFO]: Marked chunk [-16, 1] in minecraft:overworld to be force loaded
+[06:14:29] [Server thread/INFO]: [Not Secure] [Server] CHK17 OK minecraft:light_gray_concrete -246 63 18
+[06:14:29] [Server thread/INFO]: Marked chunk [-4, 17] in minecraft:overworld to be force loaded
+[06:14:30] [Server thread/INFO]: [Not Secure] [Server] CHK18 OK minecraft:gray_concrete -55 63 283
+[06:14:31] [Server thread/INFO]: Marked chunk [-23, -20] in minecraft:overworld to be force loaded
+[06:14:31] [Server thread/INFO]: [Not Secure] [Server] CHK19 OK minecraft:gray_concrete -359 72 -305
+[06:14:32] [Server thread/INFO]: No chunks were marked for force loading
+[06:14:32] [Server thread/INFO]: [Not Secure] [Server] CHK20 OK minecraft:gray_concrete -359 72 -305
+[06:14:33] [Server thread/INFO]: Marked chunk [-6, -19] in minecraft:overworld to be force loaded
+[06:14:33] [Server thread/INFO]: [Not Secure] [Server] CHK21 OK minecraft:gray_concrete -91 63 -289
+[06:14:34] [Server thread/INFO]: Marked chunk [10, -19] in minecraft:overworld to be force loaded
+[06:14:35] [Server thread/INFO]: [Not Secure] [Server] CHK22 OK minecraft:orange_terracotta 175 70 -299
+[06:14:35] [Server thread/INFO]: No chunks were marked for force loading
+[06:14:36] [Server thread/INFO]: [Not Secure] [Server] CHK23 OK minecraft:yellow_terracotta 175 65 -299
+[06:14:37] [Server thread/INFO]: Marked chunk [-1, -7] in minecraft:overworld to be force loaded
+[06:14:37] [Server thread/INFO]: [Not Secure] [Server] CHK24 OK minecraft:light_gray_concrete -8 63 -112
+[06:14:38] [Server thread/INFO]: Marked chunk [-9, -14] in minecraft:overworld to be force loaded
+[06:14:38] [Server thread/INFO]: [Not Secure] [Server] CHK25 OK minecraft:orange_terracotta -133 70 -212
+[06:14:39] [Server thread/INFO]: No chunks were marked for force loading
+[06:14:39] [Server thread/INFO]: [Not Secure] [Server] CHK26 OK minecraft:cut_sandstone -133 65 -212
+[06:14:40] [Server thread/INFO]: Marked chunk [8, 3] in minecraft:overworld to be force loaded
+[06:14:41] [Server thread/INFO]: [Not Secure] [Server] CHK27 OK minecraft:white_concrete 141 63 59
+[06:14:41] [Server thread/INFO]: Marked chunk [22, -2] in minecraft:overworld to be force loaded
+[06:14:42] [Server thread/INFO]: [Not Secure] [Server] CHK28 OK minecraft:grass_block 364 63 -32
+[06:14:43] [Server thread/INFO]: Marked chunk [22, 0] in minecraft:overworld to be force loaded
+[06:14:43] [Server thread/INFO]: [Not Secure] [Server] CHK29 OK minecraft:black_concrete 366 63 1
+[06:14:44] [Server thread/INFO]: Marked chunk [22, 3] in minecraft:overworld to be force loaded
+[06:14:44] [Server thread/INFO]: [Not Secure] [Server] CHK30 OK minecraft:grass_block 357 63 54
+[06:14:45] [Server thread/INFO]: Marked chunk [26, -2] in minecraft:overworld to be force loaded
+[06:14:45] [Server thread/INFO]: [Not Secure] [Server] CHK31 OK minecraft:grass_block 419 63 -25
+[06:14:46] [Server thread/INFO]: Marked chunk [26, 0] in minecraft:overworld to be force loaded
+[06:14:47] [Server thread/INFO]: [Not Secure] [Server] CHK32 OK minecraft:white_concrete 430 63 11
+[06:14:47] [Server thread/INFO]: Marked chunk [26, 3] in minecraft:overworld to be force loaded
+[06:14:48] [Server thread/INFO]: [Not Secure] [Server] CHK33 OK minecraft:gray_concrete 427 63 56
+[06:14:49] [Server thread/INFO]: Marked chunk [30, -2] in minecraft:overworld to be force loaded
+[06:14:49] [Server thread/INFO]: [Not Secure] [Server] CHK34 OK minecraft:grass_block 494 63 -29
+[06:14:50] [Server thread/INFO]: Marked chunk [30, 0] in minecraft:overworld to be force loaded
+[06:14:50] [Server thread/INFO]: [Not Secure] [Server] CHK35 OK minecraft:black_concrete 491 63 9
+[06:14:51] [Server thread/INFO]: Marked chunk [30, 3] in minecraft:overworld to be force loaded
+[06:14:51] [Server thread/INFO]: [Not Secure] [Server] CHK36 OK minecraft:grass_block 481 63 61
+[06:14:52] [Server thread/INFO]: Marked chunk [36, -2] in minecraft:overworld to be force loaded
+[06:14:53] [Server thread/INFO]: [Not Secure] [Server] CHK37 OK minecraft:grass_block 578 63 -26
+[06:14:53] [Server thread/INFO]: Marked chunk [36, 0] in minecraft:overworld to be force loaded
+[06:14:54] [Server thread/INFO]: [Not Secure] [Server] CHK38 OK minecraft:white_concrete 586 63 11
+[06:14:55] [Server thread/INFO]: Marked chunk [36, 3] in minecraft:overworld to be force loaded
+[06:14:55] [Server thread/INFO]: [Not Secure] [Server] CHK39 OK minecraft:grass_block 580 63 58
+[06:14:56] [Server thread/INFO]: Marked chunk [40, -2] in minecraft:overworld to be force loaded
+[06:14:56] [Server thread/INFO]: [Not Secure] [Server] CHK40 OK minecraft:grass_block 648 63 -30
+[06:14:57] [Server thread/INFO]: Marked chunk [40, 0] in minecraft:overworld to be force loaded
+[06:14:57] [Server thread/INFO]: [Not Secure] [Server] CHK41 OK minecraft:black_concrete 649 63 10
+[06:14:58] [Server thread/INFO]: Marked chunk [40, 3] in minecraft:overworld to be force loaded
+[06:14:59] [Server thread/INFO]: [Not Secure] [Server] CHK42 OK minecraft:grass_block 649 63 53
+[06:14:59] [Server thread/INFO]: [Not Secure] [Server] SPAWNCHK OK
+[06:15:08] [Server thread/INFO]: Stopping the server
+[06:15:08] [Server thread/INFO]: Stopping server
+[06:15:08] [Server thread/INFO]: Saving players
+[06:15:08] [Server thread/INFO]: Saving worlds
+[06:15:09] [Server thread/INFO]: Saving chunks for level 'ServerLevel[GTA City]'/minecraft:overworld
+[06:15:09] [Server thread/INFO]: Saving chunks for level 'ServerLevel[GTA City]'/minecraft:the_end
+[06:15:09] [Server thread/INFO]: Saving chunks for level 'ServerLevel[GTA City]'/minecraft:the_nether
+[06:15:09] [Server thread/INFO]: ThreadedAnvilChunkStorage (world): All chunks are saved
+[06:15:09] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[06:15:09] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[06:15:09] [Server thread/INFO]: ThreadedAnvilChunkStorage: All dimensions are saved
+SRVLOG_END
+
+RECON END
+
+> Task :compileJava
+> Task :processResources
+> Task :classes
+> Task :jar
+> Task :downloadMcpConfig
+> Task :extractSrg
+> Task :createMcpToSrg
+> Task :reobfJar
+> Task :jarJar SKIPPED
+> Task :reobfJarJar SKIPPED
+> Task :assemble
+> Task :compileTestJava NO-SOURCE
+> Task :processTestResources NO-SOURCE
+> Task :testClasses UP-TO-DATE
+> Task :test NO-SOURCE
+> Task :check UP-TO-DATE
+> Task :build
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run-1794550398753.json
+
+BUILD SUCCESSFUL in 2m 7s
+7 actionable tasks: 7 executed
+Archive:  build/libs/recon-1.0.0.jar
+  Length      Date    Time    Name
+---------  ---------- -----   ----
+        0  1970-01-11 22:58   META-INF/
+      113  2026-11-13 06:15   META-INF/MANIFEST.MF
+       95  2026-11-13 06:15   META-INF/mods.toml
+        0  1970-01-11 22:58   fr/
+        0  1970-01-11 22:58   fr/recon/
+      357  2026-11-13 06:15   fr/recon/Recon.class
+       80  2026-11-13 06:15   pack.mcmeta
+---------                     -------
+      645                     7 files
