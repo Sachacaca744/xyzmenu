@@ -1,0 +1,127 @@
+forceload add -43 -110
+execute if block -43 63 -110 minecraft:gray_concrete run say CHK1 OK minecraft:gray_concrete -43 63 -110
+execute unless block -43 63 -110 minecraft:gray_concrete run say CHK1 FAIL minecraft:gray_concrete -43 63 -110
+forceload add 84 382
+execute if block 84 63 382 minecraft:gray_concrete run say CHK2 OK minecraft:gray_concrete 84 63 382
+execute unless block 84 63 382 minecraft:gray_concrete run say CHK2 FAIL minecraft:gray_concrete 84 63 382
+forceload add 324 -140
+execute if block 324 63 -140 minecraft:gray_concrete run say CHK3 OK minecraft:gray_concrete 324 63 -140
+execute unless block 324 63 -140 minecraft:gray_concrete run say CHK3 FAIL minecraft:gray_concrete 324 63 -140
+forceload add -352 -64
+execute if block -352 75 -64 minecraft:orange_terracotta run say CHK4 OK minecraft:orange_terracotta -352 75 -64
+execute unless block -352 75 -64 minecraft:orange_terracotta run say CHK4 FAIL minecraft:orange_terracotta -352 75 -64
+forceload add -352 -64
+execute if block -352 71 -64 minecraft:orange_terracotta run say CHK5 OK minecraft:orange_terracotta -352 71 -64
+execute unless block -352 71 -64 minecraft:orange_terracotta run say CHK5 FAIL minecraft:orange_terracotta -352 71 -64
+forceload add 230 341
+execute if block 230 63 341 minecraft:gray_concrete run say CHK6 OK minecraft:gray_concrete 230 63 341
+execute unless block 230 63 341 minecraft:gray_concrete run say CHK6 FAIL minecraft:gray_concrete 230 63 341
+forceload add -59 265
+execute if block -59 63 265 minecraft:grass_block run say CHK7 OK minecraft:grass_block -59 63 265
+execute unless block -59 63 265 minecraft:grass_block run say CHK7 FAIL minecraft:grass_block -59 63 265
+forceload add -310 -122
+execute if block -310 63 -122 minecraft:grass_block run say CHK8 OK minecraft:grass_block -310 63 -122
+execute unless block -310 63 -122 minecraft:grass_block run say CHK8 FAIL minecraft:grass_block -310 63 -122
+forceload add -170 -299
+execute if block -170 63 -299 minecraft:light_gray_concrete run say CHK9 OK minecraft:light_gray_concrete -170 63 -299
+execute unless block -170 63 -299 minecraft:light_gray_concrete run say CHK9 FAIL minecraft:light_gray_concrete -170 63 -299
+forceload add -234 -20
+execute if block -234 63 -20 minecraft:light_gray_concrete run say CHK10 OK minecraft:light_gray_concrete -234 63 -20
+execute unless block -234 63 -20 minecraft:light_gray_concrete run say CHK10 FAIL minecraft:light_gray_concrete -234 63 -20
+forceload add 121 -336
+execute if block 121 63 -336 minecraft:yellow_concrete run say CHK11 OK minecraft:yellow_concrete 121 63 -336
+execute unless block 121 63 -336 minecraft:yellow_concrete run say CHK11 FAIL minecraft:yellow_concrete 121 63 -336
+forceload add 251 -211
+execute if block 251 63 -211 minecraft:grass_block run say CHK12 OK minecraft:grass_block 251 63 -211
+execute unless block 251 63 -211 minecraft:grass_block run say CHK12 FAIL minecraft:grass_block 251 63 -211
+forceload add -59 84
+execute if block -59 69 84 minecraft:oak_leaves run say CHK13 OK minecraft:oak_leaves -59 69 84
+execute unless block -59 69 84 minecraft:oak_leaves run say CHK13 FAIL minecraft:oak_leaves -59 69 84
+forceload add -59 84
+execute if block -59 68 84 minecraft:oak_leaves run say CHK14 OK minecraft:oak_leaves -59 68 84
+execute unless block -59 68 84 minecraft:oak_leaves run say CHK14 FAIL minecraft:oak_leaves -59 68 84
+forceload add 114 266
+execute if block 114 63 266 minecraft:grass_block run say CHK15 OK minecraft:grass_block 114 63 266
+execute unless block 114 63 266 minecraft:grass_block run say CHK15 FAIL minecraft:grass_block 114 63 266
+forceload add 345 -32
+execute if block 345 63 -32 minecraft:grass_block run say CHK16 OK minecraft:grass_block 345 63 -32
+execute unless block 345 63 -32 minecraft:grass_block run say CHK16 FAIL minecraft:grass_block 345 63 -32
+forceload add -246 18
+execute if block -246 63 18 minecraft:light_gray_concrete run say CHK17 OK minecraft:light_gray_concrete -246 63 18
+execute unless block -246 63 18 minecraft:light_gray_concrete run say CHK17 FAIL minecraft:light_gray_concrete -246 63 18
+forceload add -55 283
+execute if block -55 63 283 minecraft:gray_concrete run say CHK18 OK minecraft:gray_concrete -55 63 283
+execute unless block -55 63 283 minecraft:gray_concrete run say CHK18 FAIL minecraft:gray_concrete -55 63 283
+forceload add -359 -305
+execute if block -359 72 -305 minecraft:gray_concrete run say CHK19 OK minecraft:gray_concrete -359 72 -305
+execute unless block -359 72 -305 minecraft:gray_concrete run say CHK19 FAIL minecraft:gray_concrete -359 72 -305
+forceload add -359 -305
+execute if block -359 72 -305 minecraft:gray_concrete run say CHK20 OK minecraft:gray_concrete -359 72 -305
+execute unless block -359 72 -305 minecraft:gray_concrete run say CHK20 FAIL minecraft:gray_concrete -359 72 -305
+forceload add -91 -289
+execute if block -91 63 -289 minecraft:gray_concrete run say CHK21 OK minecraft:gray_concrete -91 63 -289
+execute unless block -91 63 -289 minecraft:gray_concrete run say CHK21 FAIL minecraft:gray_concrete -91 63 -289
+forceload add 175 -299
+execute if block 175 70 -299 minecraft:orange_terracotta run say CHK22 OK minecraft:orange_terracotta 175 70 -299
+execute unless block 175 70 -299 minecraft:orange_terracotta run say CHK22 FAIL minecraft:orange_terracotta 175 70 -299
+forceload add 175 -299
+execute if block 175 65 -299 minecraft:yellow_terracotta run say CHK23 OK minecraft:yellow_terracotta 175 65 -299
+execute unless block 175 65 -299 minecraft:yellow_terracotta run say CHK23 FAIL minecraft:yellow_terracotta 175 65 -299
+forceload add -8 -112
+execute if block -8 63 -112 minecraft:light_gray_concrete run say CHK24 OK minecraft:light_gray_concrete -8 63 -112
+execute unless block -8 63 -112 minecraft:light_gray_concrete run say CHK24 FAIL minecraft:light_gray_concrete -8 63 -112
+forceload add -133 -212
+execute if block -133 70 -212 minecraft:orange_terracotta run say CHK25 OK minecraft:orange_terracotta -133 70 -212
+execute unless block -133 70 -212 minecraft:orange_terracotta run say CHK25 FAIL minecraft:orange_terracotta -133 70 -212
+forceload add -133 -212
+execute if block -133 65 -212 minecraft:cut_sandstone run say CHK26 OK minecraft:cut_sandstone -133 65 -212
+execute unless block -133 65 -212 minecraft:cut_sandstone run say CHK26 FAIL minecraft:cut_sandstone -133 65 -212
+forceload add 141 59
+execute if block 141 63 59 minecraft:white_concrete run say CHK27 OK minecraft:white_concrete 141 63 59
+execute unless block 141 63 59 minecraft:white_concrete run say CHK27 FAIL minecraft:white_concrete 141 63 59
+forceload add 364 -32
+execute if block 364 63 -32 minecraft:grass_block run say CHK28 OK minecraft:grass_block 364 63 -32
+execute unless block 364 63 -32 minecraft:grass_block run say CHK28 FAIL minecraft:grass_block 364 63 -32
+forceload add 366 1
+execute if block 366 63 1 minecraft:black_concrete run say CHK29 OK minecraft:black_concrete 366 63 1
+execute unless block 366 63 1 minecraft:black_concrete run say CHK29 FAIL minecraft:black_concrete 366 63 1
+forceload add 357 54
+execute if block 357 63 54 minecraft:grass_block run say CHK30 OK minecraft:grass_block 357 63 54
+execute unless block 357 63 54 minecraft:grass_block run say CHK30 FAIL minecraft:grass_block 357 63 54
+forceload add 419 -25
+execute if block 419 63 -25 minecraft:grass_block run say CHK31 OK minecraft:grass_block 419 63 -25
+execute unless block 419 63 -25 minecraft:grass_block run say CHK31 FAIL minecraft:grass_block 419 63 -25
+forceload add 430 11
+execute if block 430 63 11 minecraft:white_concrete run say CHK32 OK minecraft:white_concrete 430 63 11
+execute unless block 430 63 11 minecraft:white_concrete run say CHK32 FAIL minecraft:white_concrete 430 63 11
+forceload add 427 56
+execute if block 427 63 56 minecraft:gray_concrete run say CHK33 OK minecraft:gray_concrete 427 63 56
+execute unless block 427 63 56 minecraft:gray_concrete run say CHK33 FAIL minecraft:gray_concrete 427 63 56
+forceload add 494 -29
+execute if block 494 63 -29 minecraft:grass_block run say CHK34 OK minecraft:grass_block 494 63 -29
+execute unless block 494 63 -29 minecraft:grass_block run say CHK34 FAIL minecraft:grass_block 494 63 -29
+forceload add 491 9
+execute if block 491 63 9 minecraft:black_concrete run say CHK35 OK minecraft:black_concrete 491 63 9
+execute unless block 491 63 9 minecraft:black_concrete run say CHK35 FAIL minecraft:black_concrete 491 63 9
+forceload add 481 61
+execute if block 481 63 61 minecraft:grass_block run say CHK36 OK minecraft:grass_block 481 63 61
+execute unless block 481 63 61 minecraft:grass_block run say CHK36 FAIL minecraft:grass_block 481 63 61
+forceload add 578 -26
+execute if block 578 63 -26 minecraft:grass_block run say CHK37 OK minecraft:grass_block 578 63 -26
+execute unless block 578 63 -26 minecraft:grass_block run say CHK37 FAIL minecraft:grass_block 578 63 -26
+forceload add 586 11
+execute if block 586 63 11 minecraft:white_concrete run say CHK38 OK minecraft:white_concrete 586 63 11
+execute unless block 586 63 11 minecraft:white_concrete run say CHK38 FAIL minecraft:white_concrete 586 63 11
+forceload add 580 58
+execute if block 580 63 58 minecraft:grass_block run say CHK39 OK minecraft:grass_block 580 63 58
+execute unless block 580 63 58 minecraft:grass_block run say CHK39 FAIL minecraft:grass_block 580 63 58
+forceload add 648 -30
+execute if block 648 63 -30 minecraft:grass_block run say CHK40 OK minecraft:grass_block 648 63 -30
+execute unless block 648 63 -30 minecraft:grass_block run say CHK40 FAIL minecraft:grass_block 648 63 -30
+forceload add 649 10
+execute if block 649 63 10 minecraft:black_concrete run say CHK41 OK minecraft:black_concrete 649 63 10
+execute unless block 649 63 10 minecraft:black_concrete run say CHK41 FAIL minecraft:black_concrete 649 63 10
+forceload add 649 53
+execute if block 649 63 53 minecraft:grass_block run say CHK42 OK minecraft:grass_block 649 63 53
+execute unless block 649 63 53 minecraft:grass_block run say CHK42 FAIL minecraft:grass_block 649 63 53
+execute if block 24 63 7 minecraft:light_gray_concrete run say SPAWNCHK OK
