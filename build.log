@@ -1,0 +1,158 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.8/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Task :compileJava
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+
+> Task :processResources
+> Task :classes
+> Task :jar
+> Task :downloadMcpConfig
+> Task :extractSrg
+> Task :createMcpToSrg
+> Task :reobfJar
+> Task :jarJar SKIPPED
+> Task :reobfJarJar SKIPPED
+> Task :assemble
+> Task :compileTestJava NO-SOURCE
+> Task :processTestResources NO-SOURCE
+> Task :testClasses UP-TO-DATE
+> Task :test NO-SOURCE
+> Task :check UP-TO-DATE
+> Task :build
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run-1794658517782.json
+
+BUILD SUCCESSFUL in 22s
+7 actionable tasks: 7 executed
+Archive:  build/libs/udrone-1.0.0.jar
+  Length      Date    Time    Name
+---------  ---------- -----   ----
+        0  1970-01-11 22:58   META-INF/
+      115  2026-11-14 12:15   META-INF/MANIFEST.MF
+      664  2026-11-14 12:15   META-INF/mods.toml
+        0  1970-01-11 22:58   assets/
+        0  1970-01-11 22:58   assets/udrone/
+        0  1970-01-11 22:58   assets/udrone/blockstates/
+       58  2026-11-14 12:15   assets/udrone/blockstates/charging_pad.json
+      277  2026-11-14 12:15   assets/udrone/blockstates/control_station.json
+        0  1970-01-11 22:58   assets/udrone/lang/
+     1045  2026-11-14 12:15   assets/udrone/lang/en_us.json
+     1115  2026-11-14 12:15   assets/udrone/lang/fr_fr.json
+        0  1970-01-11 22:58   assets/udrone/models/
+        0  1970-01-11 22:58   assets/udrone/models/block/
+      498  2026-11-14 12:15   assets/udrone/models/block/charging_pad.json
+     2674  2026-11-14 12:15   assets/udrone/models/block/control_station.json
+        0  1970-01-11 22:58   assets/udrone/models/item/
+      337  2026-11-14 12:15   assets/udrone/models/item/charging_pad.json
+      340  2026-11-14 12:15   assets/udrone/models/item/control_station.json
+       77  2026-11-14 12:15   assets/udrone/models/item/controller.json
+       78  2026-11-14 12:15   assets/udrone/models/item/fast_drone.json
+       79  2026-11-14 12:15   assets/udrone/models/item/heavy_drone.json
+       78  2026-11-14 12:15   assets/udrone/models/item/mini_drone.json
+       78  2026-11-14 12:15   assets/udrone/models/item/mq9_reaper.json
+       78  2026-11-14 12:15   assets/udrone/models/item/quad_drone.json
+       86  2026-11-14 12:15   assets/udrone/models/item/surveillance_drone.json
+      494  2026-11-14 12:15   assets/udrone/sounds.json
+        0  1970-01-11 22:58   assets/udrone/sounds/
+     4755  2026-11-14 12:15   assets/udrone/sounds/beep.ogg
+    24348  2026-11-14 12:15   assets/udrone/sounds/boom.ogg
+    13359  2026-11-14 12:15   assets/udrone/sounds/charge.ogg
+     5796  2026-11-14 12:15   assets/udrone/sounds/gun.ogg
+     9953  2026-11-14 12:15   assets/udrone/sounds/heavy_loop.ogg
+    14249  2026-11-14 12:15   assets/udrone/sounds/launch.ogg
+    12567  2026-11-14 12:15   assets/udrone/sounds/lost.ogg
+    13079  2026-11-14 12:15   assets/udrone/sounds/quad_loop.ogg
+     9222  2026-11-14 12:15   assets/udrone/sounds/reaper_loop.ogg
+        0  1970-01-11 22:58   assets/udrone/textures/
+        0  1970-01-11 22:58   assets/udrone/textures/block/
+      490  2026-11-14 12:15   assets/udrone/textures/block/pad_side.png
+      592  2026-11-14 12:15   assets/udrone/textures/block/pad_top.png
+      105  2026-11-14 12:15   assets/udrone/textures/block/station_kb.png
+      483  2026-11-14 12:15   assets/udrone/textures/block/station_metal.png
+      220  2026-11-14 12:15   assets/udrone/textures/block/station_screen.png
+      444  2026-11-14 12:15   assets/udrone/textures/block/station_top.png
+        0  1970-01-11 22:58   assets/udrone/textures/entity/
+    16086  2026-11-14 12:15   assets/udrone/textures/entity/fast_drone.png
+    16005  2026-11-14 12:15   assets/udrone/textures/entity/heavy_drone.png
+    16086  2026-11-14 12:15   assets/udrone/textures/entity/mini_drone.png
+    16139  2026-11-14 12:15   assets/udrone/textures/entity/mq9_reaper.png
+    16155  2026-11-14 12:15   assets/udrone/textures/entity/quad_drone.png
+    16159  2026-11-14 12:15   assets/udrone/textures/entity/surveillance_drone.png
+    16034  2026-11-14 12:15   assets/udrone/textures/entity/weapons.png
+        0  1970-01-11 22:58   assets/udrone/textures/item/
+      261  2026-11-14 12:15   assets/udrone/textures/item/controller.png
+     1919  2026-11-14 12:15   assets/udrone/textures/item/fast_drone.png
+     2196  2026-11-14 12:15   assets/udrone/textures/item/heavy_drone.png
+     1860  2026-11-14 12:15   assets/udrone/textures/item/mini_drone.png
+     1436  2026-11-14 12:15   assets/udrone/textures/item/mq9_reaper.png
+     1850  2026-11-14 12:15   assets/udrone/textures/item/quad_drone.png
+     2089  2026-11-14 12:15   assets/udrone/textures/item/surveillance_drone.png
+        0  1970-01-11 22:58   data/
+        0  1970-01-11 22:58   data/minecraft/
+        0  1970-01-11 22:58   data/minecraft/tags/
+        0  1970-01-11 22:58   data/minecraft/tags/blocks/
+        0  1970-01-11 22:58   data/minecraft/tags/blocks/mineable/
+       79  2026-11-14 12:15   data/minecraft/tags/blocks/mineable/pickaxe.json
+        0  1970-01-11 22:58   data/udrone/
+        0  1970-01-11 22:58   data/udrone/loot_tables/
+        0  1970-01-11 22:58   data/udrone/loot_tables/blocks/
+      254  2026-11-14 12:15   data/udrone/loot_tables/blocks/charging_pad.json
+      257  2026-11-14 12:15   data/udrone/loot_tables/blocks/control_station.json
+        0  1970-01-11 22:58   data/udrone/recipes/
+      375  2026-11-14 12:15   data/udrone/recipes/charging_pad.json
+      319  2026-11-14 12:15   data/udrone/recipes/control_station.json
+      366  2026-11-14 12:15   data/udrone/recipes/controller.json
+      386  2026-11-14 12:15   data/udrone/recipes/fast_drone.json
+      428  2026-11-14 12:15   data/udrone/recipes/heavy_drone.json
+      361  2026-11-14 12:15   data/udrone/recipes/mini_drone.json
+      495  2026-11-14 12:15   data/udrone/recipes/mq9_reaper.json
+      353  2026-11-14 12:15   data/udrone/recipes/quad_drone.json
+      405  2026-11-14 12:15   data/udrone/recipes/surveillance_drone.json
+        0  1970-01-11 22:58   fr/
+        0  1970-01-11 22:58   fr/udrone/
+     6153  2026-11-14 12:15   fr/udrone/Blast.class
+     1596  2026-11-14 12:15   fr/udrone/Cfg.class
+     7578  2026-11-14 12:15   fr/udrone/ControllerItem.class
+      722  2026-11-14 12:15   fr/udrone/Drone$1.class
+    40013  2026-11-14 12:15   fr/udrone/Drone.class
+     6184  2026-11-14 12:15   fr/udrone/DroneItem.class
+     3006  2026-11-14 12:15   fr/udrone/Kind.class
+     3965  2026-11-14 12:15   fr/udrone/Net$CmdMsg.class
+     3751  2026-11-14 12:15   fr/udrone/Net$ControlMsg.class
+     3138  2026-11-14 12:15   fr/udrone/Net$Entry.class
+     4519  2026-11-14 12:15   fr/udrone/Net$InputMsg.class
+     5953  2026-11-14 12:15   fr/udrone/Net$StationCmd.class
+     5957  2026-11-14 12:15   fr/udrone/Net$StationMsg.class
+     4534  2026-11-14 12:15   fr/udrone/Net.class
+     1373  2026-11-14 12:15   fr/udrone/PadBlock.class
+     4989  2026-11-14 12:15   fr/udrone/Pilot.class
+    11454  2026-11-14 12:15   fr/udrone/Reg.class
+     8003  2026-11-14 12:15   fr/udrone/Shell.class
+     3228  2026-11-14 12:15   fr/udrone/StationBE.class
+     9966  2026-11-14 12:15   fr/udrone/StationBlock.class
+     2559  2026-11-14 12:15   fr/udrone/TabHook.class
+     1808  2026-11-14 12:15   fr/udrone/Udrone.class
+     1580  2026-11-14 12:15   fr/udrone/W.class
+        0  1970-01-11 22:58   fr/udrone/client/
+     3915  2026-11-14 12:15   fr/udrone/client/ClientCtl.class
+      771  2026-11-14 12:15   fr/udrone/client/ClientEvents$1.class
+     6876  2026-11-14 12:15   fr/udrone/client/ClientEvents$ForgeBus.class
+     4644  2026-11-14 12:15   fr/udrone/client/ClientEvents$ModBus.class
+     1103  2026-11-14 12:15   fr/udrone/client/ClientEvents.class
+     1325  2026-11-14 12:15   fr/udrone/client/ClientHooks.class
+     7314  2026-11-14 12:15   fr/udrone/client/DroneRenderer.class
+     2173  2026-11-14 12:15   fr/udrone/client/DroneSound.class
+     9704  2026-11-14 12:15   fr/udrone/client/Hud.class
+     4702  2026-11-14 12:15   fr/udrone/client/MapTex.class
+     9117  2026-11-14 12:15   fr/udrone/client/Mesh.class
+      751  2026-11-14 12:15   fr/udrone/client/Models$1.class
+      909  2026-11-14 12:15   fr/udrone/client/Models$Model.class
+      443  2026-11-14 12:15   fr/udrone/client/Models$Ord.class
+      583  2026-11-14 12:15   fr/udrone/client/Models$Prop.class
+    12091  2026-11-14 12:15   fr/udrone/client/Models.class
+     3894  2026-11-14 12:15   fr/udrone/client/ShellRenderer.class
+    13099  2026-11-14 12:15   fr/udrone/client/StationScreen.class
+       61  2026-11-14 12:15   pack.mcmeta
+---------                     -------
+   471690                     126 files
