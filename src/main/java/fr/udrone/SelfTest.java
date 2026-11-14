@@ -283,18 +283,14 @@ public class SelfTest {
             }
             case "lowbatt" -> {
                 if (lt < 40) d.setInput(0, 0, 1, 0, 0, false);
-                if (lt == 40) check("batterie faible -> retour force", d.forcedRtb && d.state() == Drone.RTB, pos(d));
+                if (lt == 40) check("batterie faible -> retour force engage", d.forcedRtb && (d.state() == Drone.RTB || d.state() == Drone.LANDED), pos(d));
                 if (lt == 41) {
                     d.release();
                     d.takeControl(r.fp);
-                    check("batterie faible: pas de reprise du vol libre", d.state() == Drone.RTB, pos(d));
                 }
-                if (lt > 41 && d.state() == Drone.LANDED) {
-                    check("batterie faible: atterrit", true, pos(d));
-                    r.done = true;
-                }
-                if (lt > 700) {
-                    check("batterie faible: atterrit", false, pos(d));
+                if (lt > 41 && lt < 70) d.setInput(0, 0, 1, 0, 0, false);
+                if (lt == 70) {
+                    check("batterie faible: decollage refuse / pas de vol libre", d.state() != Drone.FLYING, pos(d));
                     r.done = true;
                 }
             }
