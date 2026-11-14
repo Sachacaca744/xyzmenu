@@ -105,6 +105,7 @@ public class Drone extends Entity {
     public int state() { return entityData.get(STATE); }
     public int ammo(int i) { return (entityData.get(AMMO) >> (8 * i)) & 255; }
     public int sel() { return entityData.get(SEL); }
+    public void setSel(int i) { entityData.set(SEL, i); }
     public int ammoPacked() { return entityData.get(AMMO); }
     public float heat() { return entityData.get(HEAT); }
     public float throttle() { return entityData.get(THR); }

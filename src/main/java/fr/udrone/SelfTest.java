@@ -362,7 +362,7 @@ public class SelfTest {
             }
             int u = lt - r.wstart;
             d.setInput(0.5f, 0, wing ? 0.3f : 0, 0, 40, true);
-            d.entityData.set(Drone.SEL, r.wi);
+            d.setSel(r.wi);
             if (r.kind.weapons[r.wi] == W.CHARGE) {
                 // la charge detruit le drone au premier tir
                 if (d.isRemoved()) {
