@@ -179,7 +179,7 @@ public class SelfTest {
     static void startPhysics(ServerLevel sl) {
         if (running) return;
         lv = sl;
-        lv.getGameRules().getRule(net.minecraft.world.level.GameRules.RULE_SPAWN_CHUNK_RADIUS).set(12, lv.getServer());
+        for (int cx = -5; cx <= 7; cx++) for (int cz = -2; cz <= 9; cz++) lv.setChunkForced(cx, cz, true);
         running = true;
         t = 0;
         pass = fail = 0;
