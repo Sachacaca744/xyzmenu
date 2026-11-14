@@ -47,7 +47,7 @@ public class MapTex {
                 if (h == Integer.MIN_VALUE) {
                     col = 0xFF1A1410 | (((px + py) & 1) == 0 ? 0x000402 : 0);
                 } else {
-                    BlockPos p = new BlockPos(x, h - 1, z);
+                    BlockPos p = new BlockPos(x, h, z);
                     LevelChunk c = lv.getChunkSource().getChunkNow(x >> 4, z >> 4);
                     BlockState bs = c.getBlockState(p);
                     MapColor mc = bs.getMapColor(lv, p);

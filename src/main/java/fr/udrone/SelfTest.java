@@ -179,6 +179,7 @@ public class SelfTest {
     static void startPhysics(ServerLevel sl) {
         if (running) return;
         lv = sl;
+        lv.getGameRules().getRule(net.minecraft.world.level.GameRules.RULE_SPAWN_CHUNK_RADIUS).set(12, lv.getServer());
         running = true;
         t = 0;
         pass = fail = 0;
@@ -373,7 +374,7 @@ public class SelfTest {
             }
             if (u == 70) {
                 int a = d.ammo(r.wi);
-                check("fly " + r.name + ": tir " + r.kind.weapons[r.wi].title, a < r.ammo0[r.wi], "munitions " + r.ammo0[r.wi] + "->" + a + " chaleur=" + d.heat());
+                check("fly " + r.name + ": tir " + r.kind.weapons[r.wi].title, a < r.ammo0[r.wi], "munitions " + r.ammo0[r.wi] + "->" + a + " chaleur=" + d.heat() + " cd=" + d.cd + " piloted=" + d.piloted() + " fire=" + d.inFire + " hp=" + d.hp() + " " + pos(d));
                 r.wi++;
                 r.wstart = lt;
                 if (r.wi >= r.kind.weapons.length) {

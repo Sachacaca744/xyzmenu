@@ -64,32 +64,32 @@ public class ClientTest {
                 case 150 -> {
                     mc.options.hideGui = true;
                     cmd("time set noon");
-                    cmd("gamemode creative");
-                    cmd("tp @s 0 -60 0 180 0");
+                    cmd("gamemode spectator");
+                    cmd("tp @s 0 -60 0 0 0");
                     cmd("udrone_selftest models");
                 }
-                case 200 -> cmd("tp @s -2 -58 -2 180 12");
+                case 200 -> cmd("tp @s -2 -57 -2 0 6");
                 case 260 -> shot("01_overview");
-                case 261 -> cmd("tp @s -14 -58 4 180 14");
+                case 261 -> cmd("tp @s -14 -59 2 0 8");
                 case 300 -> shot("02_reaper_front");
-                case 301 -> cmd("tp @s -22 -57 12 -90 8");
+                case 301 -> cmd("tp @s -24 -59 8.5 -90 8");
                 case 340 -> shot("03_reaper_side");
-                case 341 -> cmd("tp @s -8 -58.5 3.5 180 10");
+                case 341 -> cmd("tp @s -8 -59 4.5 0 8");
                 case 380 -> shot("04_heavy");
-                case 381 -> cmd("tp @s -3 -59 4.5 180 10");
+                case 381 -> cmd("tp @s -3 -59 5 0 8");
                 case 420 -> shot("05_surveil");
-                case 421 -> cmd("tp @s 1 -59 5 180 12");
+                case 421 -> cmd("tp @s 1 -59 5.5 0 8");
                 case 460 -> shot("06_quad");
-                case 461 -> cmd("tp @s 5 -59 5.5 180 12");
+                case 461 -> cmd("tp @s 5 -59 6 0 8");
                 case 500 -> shot("07_fast");
-                case 501 -> cmd("tp @s 8 -59 5.5 180 12");
+                case 501 -> cmd("tp @s 8 -59 6.3 0 8");
                 case 540 -> shot("08_mini");
                 case 541 -> {
-                    cmd("tp @s -2 -58 -4 180 -5");
+                    cmd("tp @s -2 -57 -4 0 -5");
                     cmd("udrone_selftest fly");
                 }
                 case 620 -> shot("09_flying");
-                case 640 -> cmd("tp @s -2 -58 -12 180 -10");
+                case 640 -> cmd("tp @s -2 -55 -14 0 -10");
                 case 700 -> shot("10_flying_far");
                 case 701 -> {
                     mc.options.hideGui = false;

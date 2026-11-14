@@ -268,9 +268,9 @@ json.dump({"variants": {"facing=south": {"model": "udrone:block/control_station"
                         "facing=north": {"model": "udrone:block/control_station", "y": 180},
                         "facing=east": {"model": "udrone:block/control_station", "y": 270}}}, open(f'{R}/blockstates/control_station.json', 'w'))
 json.dump({"variants": {"": {"model": "udrone:block/charging_pad"}}}, open(f'{R}/blockstates/charging_pad.json', 'w'))
-disp = {"gui": {"rotation": [30, 225, 0], "scale": 0.6}, "ground": {"scale": 0.4, "translation": [0, 3, 0]},
-        "fixed": {"scale": 0.5}, "thirdperson_righthand": {"rotation": [75, 45, 0], "translation": [0, 2.5, 0], "scale": 0.4},
-        "firstperson_righthand": {"rotation": [0, 45, 0], "scale": 0.4}}
+disp = {"gui": {"rotation": [30, 225, 0], "scale": [0.6, 0.6, 0.6]}, "ground": {"scale": [0.4, 0.4, 0.4], "translation": [0, 3, 0]},
+        "fixed": {"scale": [0.5, 0.5, 0.5]}, "thirdperson_righthand": {"rotation": [75, 45, 0], "translation": [0, 2.5, 0], "scale": [0.4, 0.4, 0.4]},
+        "firstperson_righthand": {"rotation": [0, 45, 0], "scale": [0.4, 0.4, 0.4]}}
 for n in ['control_station', 'charging_pad']:
     m = {"parent": f"udrone:block/{n}", "display": disp}
     json.dump(m, open(f'{R}/models/item/{n}.json', 'w'))

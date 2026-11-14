@@ -66,6 +66,7 @@ public class Drone extends Entity {
     double spd, fallV, loiterY;
     float fpitch;
     int landHold;
+    float thrCmd;
 
     // --- client
     public float propAng, propAngO, tiltP, tiltPO, tiltR, tiltRO;
@@ -324,6 +325,7 @@ public class Drone extends Entity {
         inYaw = getYRot();
         inPitch = 0;
         inFire = false;
+        if (kind.wing) thrCmd = (float) Math.min(1.0, spd / kind.vmax);
         Pilot.CTRL.put(p.getUUID(), this);
         Net.CH.send(PacketDistributor.PLAYER.with(() -> p), new Net.ControlMsg(getId()));
         return true;
@@ -661,7 +663,7 @@ public class Drone extends Entity {
     // ------------------------------------------------------------ avion
     private void planeMove(ServerLevel sl, int st, Player pilot, Vec3 src, boolean power) {
         double vmax = kind.vmax, stall = vmax * 0.30;
-        float thr = throttle();
+        float thr = thrCmd;
         double turn = 0, climb = 0;
         float yaw = getYRot();
         boolean ground = onGround();
@@ -711,6 +713,7 @@ public class Drone extends Entity {
                         spd = 0;
                         setDeltaMovement(Vec3.ZERO);
                     }
+                    thrCmd = 0;
                     slewThrottle(0.1f);
                     return;
                 }
@@ -755,6 +758,7 @@ public class Drone extends Entity {
             hurtCrash(-fallV * 0.6);
             fallV = 0;
         }
+        thrCmd = thr;
         slewThrottle(thr);
     }
 
