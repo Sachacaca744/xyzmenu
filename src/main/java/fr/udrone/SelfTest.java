@@ -201,7 +201,7 @@ public class SelfTest {
         for (Run r : runs) {
             if (r.mode.equals("lowbatt")) {
                 CompoundTag tg = new CompoundTag();
-                tg.putInt("Batt", (int) (r.kind.battery * 0.125));
+                tg.putInt("Batt", (int) (r.kind.battery * 0.1205));
                 tg.putFloat("Hp", r.kind.hp);
                 tg.putInt("Ammo", r.kind.packedAmmo());
                 spawn(r, tg);
@@ -351,7 +351,7 @@ public class SelfTest {
             }
         } else if (r.ph == 1) {
             int u = lt - 90;
-            d.setInput(1, wing ? -0.2f : 0, wing ? 0.4f : 0, 0, 0, false);
+            d.setInput(1, wing ? -1f : 0, wing ? 0.2f : 0, 0, 0, false);
             if (u == 100) {
                 double dd = Math.hypot(d.getX() - r.pos0.x, d.getZ() - r.pos0.z);
                 check("fly " + r.name + ": deplacement horizontal", dd > (wing ? 15 : 4), String.format("dist=%.1f ", dd) + pos(d));
@@ -369,7 +369,7 @@ public class SelfTest {
                 return;
             }
             int u = lt - r.wstart;
-            d.setInput(0.5f, 0, wing ? 0.3f : 0, 0, 40, true);
+            d.setInput(0.5f, wing ? -1f : 0, wing ? 0.1f : 0, 0, 40, true);
             d.setSel(r.wi);
             if (r.kind.weapons[r.wi] == W.CHARGE) {
                 // la charge detruit le drone au premier tir

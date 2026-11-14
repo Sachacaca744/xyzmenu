@@ -140,7 +140,7 @@ public class StationScreen extends Screen {
 
         // carte
         int mx0 = x0 + 116, my0 = y0 + 30, ms = MapTex.N;
-        g.drawString(f, "CARTE  1px=1bloc  N en haut", mx0, y0 + 22, Hud.DIM);
+        g.drawString(f, "CARTE (N en haut)", mx0, y0 + 22, Hud.DIM);
         g.fill(mx0 - 1, my0 - 1, mx0 + ms + 1, my0 + ms + 1, Hud.GREEN);
         if (map != null) g.blit(map.rl, mx0, my0, 0, 0, ms, ms, MapTex.N, MapTex.N);
         for (int i = 0; i <= 4; i++) {
