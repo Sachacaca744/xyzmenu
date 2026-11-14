@@ -201,7 +201,7 @@ public class SelfTest {
         for (Run r : runs) {
             if (r.mode.equals("lowbatt")) {
                 CompoundTag tg = new CompoundTag();
-                tg.putInt("Batt", (int) (r.kind.battery * 0.10));
+                tg.putInt("Batt", (int) (r.kind.battery * 0.125));
                 tg.putFloat("Hp", r.kind.hp);
                 tg.putInt("Ammo", r.kind.packedAmmo());
                 spawn(r, tg);
@@ -282,9 +282,14 @@ public class SelfTest {
                 }
             }
             case "lowbatt" -> {
-                if (lt < 30) d.setInput(0, 0, 1, 0, 0, false);
-                if (lt == 30) check("batterie faible -> retour force", d.forcedRtb && d.state() == Drone.RTB, pos(d));
-                if (lt > 30 && d.state() == Drone.LANDED) {
+                if (lt < 40) d.setInput(0, 0, 1, 0, 0, false);
+                if (lt == 40) check("batterie faible -> retour force", d.forcedRtb && d.state() == Drone.RTB, pos(d));
+                if (lt == 41) {
+                    d.release();
+                    d.takeControl(r.fp);
+                    check("batterie faible: pas de reprise du vol libre", d.state() == Drone.RTB, pos(d));
+                }
+                if (lt > 41 && d.state() == Drone.LANDED) {
                     check("batterie faible: atterrit", true, pos(d));
                     r.done = true;
                 }
@@ -330,6 +335,8 @@ public class SelfTest {
 
     static void flyStep(Run r, Drone d, int lt) {
         boolean wing = r.kind.wing;
+        if (r.ph < 4) d.testSrc = d.position();
+        else if (r.ph == 4 && lt - r.wstart == 29) d.testSrc = r.fp.position();
         if (r.d.isRemoved() && r.ph < 100) {
             check("fly " + r.name + ": drone retire (charge) apres tir", r.kind == Kind.FAST, "");
             r.done = true;

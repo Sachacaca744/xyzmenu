@@ -572,7 +572,7 @@ public class Drone extends Entity {
         float thrT = 0f;
 
         if (st == LANDED) {
-            if (pilot != null && power && (inU > 0.2f) && battery() > kind.battery * 0.03) {
+            if (pilot != null && power && (inU > 0.2f) && !forcedRtb && battery() > kind.battery * 0.12) {
                 setState(FLYING);
                 st = FLYING;
             } else {
@@ -669,7 +669,7 @@ public class Drone extends Entity {
         boolean ground = onGround();
 
         if (st == LANDED) {
-            if (pilot != null && power && inF > 0.1f) {
+            if (pilot != null && power && inF > 0.1f && !forcedRtb && battery() > kind.battery * 0.12) {
                 setState(FLYING);
                 st = FLYING;
             } else {
