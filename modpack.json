@@ -132,6 +132,10 @@
     {
       "file": "ugta-1.0.0.jar",
       "sha256": "0f976ddde4134fafa4a7de7df9d70b0cf207a7c3d101196bab63e1d8a6be1139"
+    },
+    {
+      "file": "udrone-1.0.0.jar",
+      "sha256": "ddcf894d96b6264ede840c8b7f29cd538ef104cef5092db05e7669a206aa81f1"
     }
   ],
   "files": [],
