@@ -29,7 +29,7 @@ public class ClientEvents {
     public static final KeyMapping WEAPON = new KeyMapping("key.udrone.weapon", InputConstants.KEY_R, CAT);
     public static final KeyMapping RTB = new KeyMapping("key.udrone.rtb", InputConstants.KEY_H, CAT);
     public static final KeyMapping NEXT = new KeyMapping("key.udrone.next", InputConstants.KEY_N, CAT);
-    public static final KeyMapping ZOOM = new KeyMapping("key.udrone.zoom", InputConstants.KEY_Z, CAT);
+    public static final KeyMapping ZOOM = new KeyMapping("key.udrone.zoom", InputConstants.KEY_V, CAT);
 
     @Mod.EventBusSubscriber(modid = Udrone.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class ModBus {
