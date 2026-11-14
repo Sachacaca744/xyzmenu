@@ -21,5 +21,12 @@ public class Udrone {
         Net.register();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Cfg.SPEC);
         MinecraftForge.EVENT_BUS.register(Pilot.class);
+        if (System.getProperty("udrone.selftest") != null) {
+            try {
+                Class.forName("fr.udrone.SelfTest").getMethod("init").invoke(null);
+            } catch (Throwable t) {
+                System.out.println("SELFTEST: init impossible " + t);
+            }
+        }
     }
 }

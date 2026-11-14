@@ -284,7 +284,12 @@ public class Drone extends Entity {
     }
 
     // ---------------------------------------------------------------- controle
+    /** Crochets de test automatique (nuls en jeu normal). */
+    public Player testPilot;
+    public Vec3 testSrc;
+
     Player pilot(ServerLevel sl) {
+        if (testPilot != null && entityData.get(PILOT).isPresent()) return testPilot;
         Optional<UUID> id = entityData.get(PILOT);
         return id.isPresent() ? sl.getPlayerByUUID(id.get()) : null;
     }
@@ -372,6 +377,7 @@ public class Drone extends Entity {
     }
 
     Vec3 linkSource(ServerLevel sl, Player pilot) {
+        if (testSrc != null) return testSrc;
         if (station != null && sl.isLoaded(station) && sl.getBlockEntity(station) instanceof StationBE)
             return Vec3.atCenterOf(station);
         if (pilot != null) return pilot.position();

@@ -1,0 +1,65 @@
+name: Test mod
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  servertest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: 8.8
+      - name: Serveur
+        run: |
+          mkdir -p run-server && echo "eula=true" > run-server/eula.txt
+          printf 'online-mode=false\nlevel-type=minecraft\\:flat\ngenerate-structures=false\nspawn-protection=0\n' > run-server/server.properties
+          timeout 900 gradle runServer -Pwithtest --console=plain --no-daemon 2>&1 | tee server.log || true
+      - name: Publier
+        if: always()
+        run: |
+          mkdir -p /tmp/lg && cp server.log /tmp/lg/ || true
+          cp -r run-server/logs /tmp/lg/serverlogs 2>/dev/null || true
+          cd /tmp/lg && git init -q && git checkout -q -b l && git add . && git -c user.name=ci -c user.email=ci@e.com commit -qm log
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" "l:refs/heads/logs-server-${GITHUB_REF_NAME}"
+  clienttest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: 8.8
+      - name: Dependances graphiques
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq xvfb libgl1-mesa-dri libglx-mesa0 libopenal1 mesa-utils
+      - name: Client
+        env:
+          MESA_GL_VERSION_OVERRIDE: "4.5"
+          MESA_GLSL_VERSION_OVERRIDE: "450"
+          LIBGL_ALWAYS_SOFTWARE: "1"
+        run: |
+          mkdir -p run-client
+          printf 'onboardAccessibility:false\nskipMultiplayerWarning:true\ntutorialStep:none\nguiScale:3\nfancyGraphics:false\nrenderDistance:8\nsoundCategory_master:0.0\n' > run-client/options.txt
+          timeout 1200 xvfb-run -a -s "-screen 0 1280x720x24" gradle runClient -Pwithtest --console=plain --no-daemon 2>&1 | tee client.log || true
+      - name: Publier
+        if: always()
+        run: |
+          mkdir -p /tmp/lg && cp client.log /tmp/lg/ || true
+          cp run-client/screenshots/*.png /tmp/lg/ 2>/dev/null || true
+          cp run-client/*.png /tmp/lg/ 2>/dev/null || true
+          cp -r run-client/logs /tmp/lg/clientlogs 2>/dev/null || true
+          cp run-client/crash-reports/* /tmp/lg/ 2>/dev/null || true
+          cd /tmp/lg && git init -q && git checkout -q -b l && git add . && git -c user.name=ci -c user.email=ci@e.com commit -qm log
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" "l:refs/heads/logs-client-${GITHUB_REF_NAME}"

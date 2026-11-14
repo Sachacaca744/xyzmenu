@@ -16,6 +16,26 @@ java {
 
 minecraft {
     mappings channel: 'official', version: '1.20.1'
+    runs {
+        server {
+            workingDirectory project.file('run-server')
+            property 'forge.logging.console.level', 'info'
+            property 'udrone.selftest', 'auto'
+            mods { udrone { source sourceSets.main } }
+        }
+        client {
+            workingDirectory project.file('run-client')
+            property 'forge.logging.console.level', 'info'
+            property 'udrone.selftest', 'client'
+            property 'udrone.clienttest', 'true'
+            mods { udrone { source sourceSets.main } }
+        }
+    }
+}
+
+// Les classes de test automatique ne sont incluses que si -Pwithtest
+if (!project.hasProperty('withtest')) {
+    sourceSets.main.java.exclude '**/SelfTest.java', '**/client/ClientTest.java'
 }
 
 dependencies {
