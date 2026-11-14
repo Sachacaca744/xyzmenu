@@ -1,0 +1,1 @@
+{"variants": {"facing=south": {"model": "udrone:block/control_station"}, "facing=west": {"model": "udrone:block/control_station", "y": 90}, "facing=north": {"model": "udrone:block/control_station", "y": 180}, "facing=east": {"model": "udrone:block/control_station", "y": 270}}}

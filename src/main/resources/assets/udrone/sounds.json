@@ -1,0 +1,47 @@
+{
+ "gun": {
+  "sounds": [
+   "udrone:gun"
+  ]
+ },
+ "boom": {
+  "sounds": [
+   "udrone:boom"
+  ]
+ },
+ "launch": {
+  "sounds": [
+   "udrone:launch"
+  ]
+ },
+ "beep": {
+  "sounds": [
+   "udrone:beep"
+  ]
+ },
+ "lost": {
+  "sounds": [
+   "udrone:lost"
+  ]
+ },
+ "charge": {
+  "sounds": [
+   "udrone:charge"
+  ]
+ },
+ "quad_loop": {
+  "sounds": [
+   "udrone:quad_loop"
+  ]
+ },
+ "heavy_loop": {
+  "sounds": [
+   "udrone:heavy_loop"
+  ]
+ },
+ "reaper_loop": {
+  "sounds": [
+   "udrone:reaper_loop"
+  ]
+ }
+}

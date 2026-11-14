@@ -1,0 +1,30 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "category": "equipment",
+ "ingredients": [
+  {
+   "item": "udrone:quad_drone"
+  },
+  {
+   "item": "minecraft:iron_block"
+  },
+  {
+   "item": "minecraft:iron_block"
+  },
+  {
+   "item": "minecraft:tnt"
+  },
+  {
+   "item": "minecraft:dispenser"
+  },
+  {
+   "item": "minecraft:iron_ingot"
+  },
+  {
+   "item": "minecraft:iron_ingot"
+  }
+ ],
+ "result": {
+  "item": "udrone:heavy_drone"
+ }
+}

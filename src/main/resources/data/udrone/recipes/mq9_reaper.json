@@ -1,0 +1,36 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "category": "equipment",
+ "ingredients": [
+  {
+   "item": "udrone:heavy_drone"
+  },
+  {
+   "item": "minecraft:elytra"
+  },
+  {
+   "item": "minecraft:diamond"
+  },
+  {
+   "item": "minecraft:diamond"
+  },
+  {
+   "item": "minecraft:diamond"
+  },
+  {
+   "item": "minecraft:iron_block"
+  },
+  {
+   "item": "minecraft:iron_block"
+  },
+  {
+   "item": "minecraft:tnt"
+  },
+  {
+   "item": "minecraft:tnt"
+  }
+ ],
+ "result": {
+  "item": "udrone:mq9_reaper"
+ }
+}
