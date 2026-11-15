@@ -180,7 +180,7 @@ public class SelfTest {
         int i = 0;
         for (String[] s : sc) {
             boolean far = s[0].equals("missile") || s[0].equals("flak_far");
-            Run r = far ? mk(s[0], Kind.valueOf(s[1]), s[0].equals("missile") ? -90 : -170, -100, s[0]) : mk(s[0], Kind.valueOf(s[1]), -90 + (i % 8) * 24, (i / 8) * 60 - 30, s[0]);
+            Run r = far ? mk(s[0], Kind.valueOf(s[1]), s[0].equals("missile") ? -250 : -170, -100, s[0]) : mk(s[0], Kind.valueOf(s[1]), -90 + (i % 8) * 24, (i / 8) * 60 - 30, s[0]);
             r.t0 = t + delay.getOrDefault(s[0], 0);
             runs.add(r);
             i++;
