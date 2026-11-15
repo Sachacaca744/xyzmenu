@@ -1,0 +1,30 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "ingredients": [
+  {
+   "item": "uwar:heavy_bomb"
+  },
+  {
+   "item": "minecraft:nether_star"
+  },
+  {
+   "item": "minecraft:netherite_ingot"
+  },
+  {
+   "item": "minecraft:tnt"
+  },
+  {
+   "item": "minecraft:tnt"
+  },
+  {
+   "item": "minecraft:tnt"
+  },
+  {
+   "item": "minecraft:tnt"
+  }
+ ],
+ "result": {
+  "item": "uwar:nuclear_bomb",
+  "count": 1
+ }
+}

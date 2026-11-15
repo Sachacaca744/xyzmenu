@@ -778,9 +778,14 @@ public class Aircraft extends Entity {
                 launch(sl, w, pilot, o, vv, null, pt);
                 sl.playSound(null, o.x, o.y, o.z, Reg.LAUNCH.get(), SoundSource.NEUTRAL, 3.2f, 0.45f);
             }
-            case BOMB, BAY -> {
-                Vec3 o = base.add(left.scale(side * (w == W.BAY ? 0.5 : 0.8))).add(0, -1.1, 0);
+            case BOMB, BAY, NUKE -> {
+                Vec3 o = base.add(left.scale(side * (w == W.BAY || w == W.NUKE ? 0.5 : 0.8))).add(0, -1.1, 0);
                 launch(sl, w, pilot, o, vel, null, null);
+                if (w == W.NUKE) {
+                    if (pilot instanceof Player pp) pp.displayClientMessage(Component.literal("BOMBE NUCLEAIRE LARGUEE - eloignez-vous a plus de 2 km !"), true);
+                    for (net.minecraft.server.level.ServerPlayer sp2 : sl.getServer().getPlayerList().getPlayers())
+                        sp2.displayClientMessage(Component.literal("ALERTE : bombe nucleaire larguee !"), false);
+                }
                 sl.playSound(null, o.x, o.y, o.z, SoundEvents.TNT_PRIMED, SoundSource.NEUTRAL, 1.0f, w == W.BAY ? 0.6f : 0.8f);
             }
         }

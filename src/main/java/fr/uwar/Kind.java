@@ -3,13 +3,13 @@ package fr.uwar;
 public enum Kind {
     HELI("attack_heli", "Helicoptere d'attaque AH-64", 2.4f, 2.6f, 2, 180f, 1400f, 0.9f, 3,
             W.ROCKET.bit() | W.MISSILE.bit(),
-            new int[]{600, 38, 8, 0, 4, 4, 0, 0, 4, 0}, 1f, 1f, 0.6f, 0.25f, 1f),
+            new int[]{600, 38, 8, 0, 4, 4, 0, 0, 4, 0, 1}, 1f, 1f, 0.6f, 0.25f, 1f),
     JET("fighter_jet", "Avion de chasse F-16", 2.6f, 1.6f, 1, 120f, 1600f, 1.0f, 4,
             W.ROCKET.bit() | W.MISSILE.bit() | W.BOMB.bit(),
-            new int[]{900, 14, 6, 4, 6, 6, 2, 2, 4, 12}, 1f, 1f, 0.6f, 0.25f, 1f),
+            new int[]{900, 14, 6, 4, 6, 6, 2, 2, 4, 12, 1}, 1f, 1f, 0.6f, 0.25f, 1f),
     MINI("mini_fighter", "Mini chasseur", 1.5f, 1.0f, 1, 70f, 1000f, 0.8f, 2,
             W.ROCKET.bit() | W.MISSILE.bit(),
-            new int[]{500, 8, 4, 2, 4, 4, 0, 0, 0, 0}, 0.62f, 1.9f, 0.35f, 0.12f, 0.9f);
+            new int[]{500, 8, 4, 2, 4, 4, 0, 0, 0, 0, 0}, 0.62f, 1.9f, 0.35f, 0.12f, 0.9f);
 
     public final String id, name;
     public final float w, h, maxHp, fuelCap, fuelRate;

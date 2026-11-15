@@ -108,6 +108,7 @@ items = {
  'ballistic_missile': ('Missile balistique', 'Ballistic Missile'),
  'buster_missile': ('Missile anti-bunker', 'Bunker Buster Missile'),
  'heavy_bomb': ('Bombe lourde (soute)', 'Heavy Bomb (bay)'),
+ 'nuclear_bomb': ('Bombe nucléaire', 'Nuclear Bomb'),
 }
 for idx, code in enumerate(['fr_fr', 'en_us']):
     L = {}
@@ -146,5 +147,6 @@ shapeless('cruise_missile', ['uwar:air_missile', 'uwar:fuel_can', 'minecraft:tnt
 shapeless('ballistic_missile', ['uwar:fuel_can', 'uwar:fuel_can', 'minecraft:tnt', 'minecraft:tnt', 'minecraft:tnt', 'minecraft:iron_block', 'minecraft:redstone'], 'ballistic_missile')
 shapeless('buster_missile', ['uwar:air_missile', 'minecraft:tnt', 'minecraft:tnt', 'minecraft:iron_block', 'minecraft:gunpowder'], 'buster_missile')
 shapeless('heavy_bomb', ['uwar:aerial_bomb', 'minecraft:tnt', 'minecraft:iron_ingot', 'minecraft:gunpowder'], 'heavy_bomb')
+shapeless('nuclear_bomb', ['uwar:heavy_bomb', 'minecraft:nether_star', 'minecraft:netherite_ingot', 'minecraft:tnt', 'minecraft:tnt', 'minecraft:tnt', 'minecraft:tnt'], 'nuclear_bomb')
 shaped('mini_fighter', ['IBI', 'GFG', ' R '], {'B': 'minecraft:iron_block', 'I': 'minecraft:iron_ingot', 'F': 'minecraft:furnace', 'G': 'minecraft:glass', 'R': 'minecraft:redstone'}, 'mini_fighter')
 print('ok')

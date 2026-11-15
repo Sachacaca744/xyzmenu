@@ -49,7 +49,7 @@ public class SelfTest {
         Vec3 start;
         int t0, ph, mark;
         boolean done;
-        Entity c1;
+        Entity c1, c2, c3, c4;
         double d0, d1;
         float f0;
         int i0;
@@ -114,6 +114,10 @@ public class SelfTest {
                     if (src.getPlayerOrException().getVehicle() instanceof Aircraft ac)
                         for (W w : ac.loaded()) ac.setAmmo(w, ac.cap(w));
                 }
+                case "nuke" -> {
+                    double sc = a.length > 1 ? Double.parseDouble(a[1]) : 0.05;
+                    Nuke.detonate(sl, new Vec3(0, -60, 0), null, sc);
+                }
                 case "unride" -> src.getPlayerOrException().stopRiding();
                 default -> src.sendFailure(Component.literal("?"));
             }
@@ -175,12 +179,12 @@ public class SelfTest {
         runs.clear();
         String[][] sc = {{"cruise", "JET"}, {"ballistic", "JET"}, {"heli_fly", "HELI"}, {"jet_fly", "JET"}, {"cannon", "HELI"}, {"rocket", "HELI"}, {"missile", "HELI"}, {"bomb", "JET"},
                 {"empty", "HELI"}, {"supply", "HELI"}, {"fuel_out", "HELI"}, {"destroy", "HELI"}, {"crash", "JET"}, {"persist", "JET"},
-                {"pickup", "HELI"}, {"place", "JET"}, {"jet_weapons", "JET"}, {"mini_fly", "MINI"}, {"mini_arms", "MINI"}, {"flak_far", "HELI"}, {"loadout", "HELI"}, {"ir", "HELI"}, {"flak", "HELI"}, {"buster", "HELI"}, {"bay", "JET"}};
-        java.util.Map<String, Integer> delay = java.util.Map.of("missile", 100, "ir", 300, "flak", 500, "buster", 700, "flak_far", 1300);
+                {"pickup", "HELI"}, {"place", "JET"}, {"jet_weapons", "JET"}, {"mini_fly", "MINI"}, {"mini_arms", "MINI"}, {"flak_far", "HELI"}, {"loadout", "HELI"}, {"ir", "HELI"}, {"flak", "HELI"}, {"buster", "HELI"}, {"bay", "JET"}, {"nuke", "JET"}};
+        java.util.Map<String, Integer> delay = java.util.Map.of("missile", 100, "ir", 300, "flak", 500, "buster", 700, "flak_far", 1300, "nuke", 1600);
         int i = 0;
         for (String[] s : sc) {
-            boolean far = s[0].equals("missile") || s[0].equals("flak_far");
-            Run r = far ? mk(s[0], Kind.valueOf(s[1]), s[0].equals("missile") ? -250 : -170, -100, s[0]) : mk(s[0], Kind.valueOf(s[1]), -90 + (i % 8) * 24, (i / 8) * 60 - 30, s[0]);
+            boolean far = s[0].equals("missile") || s[0].equals("flak_far") || s[0].equals("nuke");
+            Run r = far ? mk(s[0], Kind.valueOf(s[1]), s[0].equals("nuke") ? -100 : s[0].equals("missile") ? -250 : -170, s[0].equals("nuke") ? 100 : -100, s[0]) : mk(s[0], Kind.valueOf(s[1]), -90 + (i % 8) * 24, (i / 8) * 60 - 30, s[0]);
             r.t0 = t + delay.getOrDefault(s[0], 0);
             runs.add(r);
             i++;
@@ -215,7 +219,7 @@ public class SelfTest {
                 r.done = true;
             }
         }
-        if (t > 2600 && !all) {
+        if (t > 3800 && !all) {
             for (Run r : runs) if (!r.done) check("timeout " + r.name, false, "ph=" + r.ph);
             all = true;
         }
@@ -753,6 +757,72 @@ public class SelfTest {
                     check(w.name() + " detruit la cible a 170 blocs", !((LivingEntity) r.c1).isAlive(), "pv=" + ((LivingEntity) r.c1).getHealth());
                     boolean air = lv.getBlockState(BlockPos.containing(r.start.x, r.start.y - 1, r.start.z + 170)).isAir();
                     check(w.name() + " : cratere (blocs detruits)", air, "bloc=" + lv.getBlockState(BlockPos.containing(r.start.x, r.start.y - 1, r.start.z + 170)));
+                    fin(r);
+                }
+            }
+            case "nuke" -> {
+                double x0 = r.start.x, z0 = r.start.z;
+                int y = (int) r.start.y;
+                if (lt == 1) {
+                    Nuke.scaleOverride = 0.02;
+                    clearCows();
+                    String err = a.setLoadout(r.fp, W.CANNON.bit() | W.NUKE.bit());
+                    a.setAmmo(W.NUKE, 1);
+                    a.nextWeapon(1);
+                    check("NUKE installee et selectionnee (chasseur)", err == null && a.selected() == W.NUKE, "err=" + err);
+                    check("NUKE refusee sur le mini chasseur", !Kind.MINI.canCarry(W.NUKE) && Kind.HELI.canCarry(W.NUKE), "");
+                    r.c1 = cow(x0 + 5, y, z0);
+                    r.c2 = cow(x0 + 60, y, z0);
+                    r.c3 = cow(x0 + 150, y, z0);
+                    r.c4 = cow(x0 + 260, y, z0);
+                    var pl = net.minecraft.world.level.block.Blocks.OAK_PLANKS.defaultBlockState();
+                    var lf = net.minecraft.world.level.block.Blocks.OAK_LEAVES.defaultBlockState().setValue(net.minecraft.world.level.block.LeavesBlock.PERSISTENT, true);
+                    lv.setBlock(new BlockPos((int) x0 + 25, y, (int) z0), pl, 2);
+                    lv.setBlock(new BlockPos((int) x0 + 70, y, (int) z0), pl, 2);
+                    lv.setBlock(new BlockPos((int) x0 + 70, y + 3, (int) z0), lf, 2);
+                    lv.setBlock(new BlockPos((int) x0 + 150, y, (int) z0), pl, 2);
+                    lv.setBlock(new BlockPos((int) x0 + 150, y + 3, (int) z0), lf, 2);
+                    lv.setBlock(new BlockPos((int) x0 + 230, y + 3, (int) z0), lf, 2);
+                }
+                if (lt == 2) a.inFire = true;
+                if (lt == 4) a.inFire = false;
+                if (lt == 40) {
+                    check("NUKE : munition consommee", a.ammo(W.NUKE) == 0, "" + a.ammo(W.NUKE));
+                    check("NUKE : explosion enregistree dans le monde", !Nuke.data(lv).sites.isEmpty(), "");
+                    check("NUKE : vache dans le cratere morte", !r.c1.isAlive(), "");
+                    check("NUKE : vache zone souffle morte", !r.c2.isAlive(), "");
+                    check("NUKE : vache zone 5-10 km morte", !r.c3.isAlive(), "");
+                    check("NUKE : vache hors zone vivante", r.c4.isAlive(), "");
+                    check("NUKE : le pilote est mort (souffle)", !r.fp.isAlive(), "");
+                    check("NUKE : l'avion est detruit", a.isRemoved() || a.hp() <= 0, "hp=" + a.hp());
+                }
+                if (lt == 300) {
+                    r.c1 = EntityType.VILLAGER.create(lv);
+                    r.c1.moveTo(x0 + 25, y, z0, 0, 0);
+                    ((LivingEntity) r.c1).setHealth(20f);
+                    lv.addFreshEntity(r.c1);
+                    r.c2 = cow(x0 + 150, y, z0);
+                    r.c3 = cow(x0 + 260, y, z0);
+                }
+                if (lt == 380) {
+                    check("NUKE : poison permanent (zone 0,5-2 km)", ((LivingEntity) r.c1).hasEffect(net.minecraft.world.effect.MobEffects.POISON), "");
+                    check("NUKE : nouveaux animaux morts en zone 5-10 km", !r.c2.isAlive(), "");
+                    check("NUKE : animaux hors zone survivent", r.c3.isAlive(), "");
+                }
+                if (lt == 1000) {
+                    check("NUKE : traitement des blocs termine", !Nuke.busy(), "");
+                    check("NUKE : cratere", lv.getBlockState(new BlockPos((int) x0 + 3, y - 3, (int) z0)).isAir(), "bloc=" + lv.getBlockState(new BlockPos((int) x0 + 3, y - 3, (int) z0)));
+                    var carb = lv.getBlockState(new BlockPos((int) x0 + 25, y - 1, (int) z0)).getBlock();
+                    check("NUKE : sol carbonise (zone 0,5-2 km)", carb == net.minecraft.world.level.block.Blocks.BLACKSTONE || carb == net.minecraft.world.level.block.Blocks.SMOOTH_BASALT || carb == net.minecraft.world.level.block.Blocks.COAL_BLOCK, "bloc=" + carb);
+                    check("NUKE : planches carbonisees detruites", lv.getBlockState(new BlockPos((int) x0 + 25, y, (int) z0)).isAir(), "");
+                    check("NUKE : souffle detruit les constructions (zone 2-5 km)", lv.getBlockState(new BlockPos((int) x0 + 70, y, (int) z0)).isAir(), "");
+                    check("NUKE : souffle detruit les feuilles", lv.getBlockState(new BlockPos((int) x0 + 70, y + 3, (int) z0)).isAir(), "");
+                    check("NUKE : le sol n'est pas carbonise en zone souffle", lv.getBlockState(new BlockPos((int) x0 + 70, y - 1, (int) z0)).getBlock() == net.minecraft.world.level.block.Blocks.GRASS_BLOCK,
+                            "bloc=" + lv.getBlockState(new BlockPos((int) x0 + 70, y - 1, (int) z0)));
+                    check("NUKE : zone 5-10 km : constructions intactes", lv.getBlockState(new BlockPos((int) x0 + 150, y, (int) z0)).is(net.minecraft.world.level.block.Blocks.OAK_PLANKS), "");
+                    check("NUKE : zone 5-10 km : arbres sans feuilles", lv.getBlockState(new BlockPos((int) x0 + 150, y + 3, (int) z0)).isAir(), "");
+                    check("NUKE : hors zone : feuilles intactes", lv.getBlockState(new BlockPos((int) x0 + 230, y + 3, (int) z0)).getBlock() instanceof net.minecraft.world.level.block.LeavesBlock, "");
+                    Nuke.scaleOverride = -1;
                     fin(r);
                 }
             }

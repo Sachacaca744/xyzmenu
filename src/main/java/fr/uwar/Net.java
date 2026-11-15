@@ -18,6 +18,7 @@ public class Net {
         CH.registerMessage(0, InputMsg.class, InputMsg::encode, InputMsg::decode, InputMsg::handle);
         CH.registerMessage(1, CmdMsg.class, CmdMsg::encode, CmdMsg::decode, CmdMsg::handle);
         CH.registerMessage(2, LoadoutMsg.class, LoadoutMsg::encode, LoadoutMsg::decode, LoadoutMsg::handle);
+        CH.registerMessage(3, NukeFlash.class, NukeFlash::encode, NukeFlash::decode, NukeFlash::handle);
     }
 
     static Aircraft piloted(ServerPlayer sp) {
@@ -80,6 +81,16 @@ public class Net {
                     if (err != null) sp.displayClientMessage(net.minecraft.network.chat.Component.literal(err), true);
                 }
             });
+            ctx.get().setPacketHandled(true);
+        }
+    }
+
+    /** Serveur -> clients : flash blanc de l'explosion nucleaire. */
+    public record NukeFlash(float x, float y, float z, float sc) {
+        static void encode(NukeFlash m, FriendlyByteBuf b) { b.writeFloat(m.x); b.writeFloat(m.y); b.writeFloat(m.z); b.writeFloat(m.sc); }
+        static NukeFlash decode(FriendlyByteBuf b) { return new NukeFlash(b.readFloat(), b.readFloat(), b.readFloat(), b.readFloat()); }
+        static void handle(NukeFlash m, Supplier<NetworkEvent.Context> ctx) {
+            ctx.get().enqueueWork(() -> net.minecraftforge.fml.DistExecutor.unsafeRunWhenOn(net.minecraftforge.api.distmarker.Dist.CLIENT, () -> () -> fr.uwar.client.NukeFx.flash(m.x, m.y, m.z, m.sc)));
             ctx.get().setPacketHandled(true);
         }
     }

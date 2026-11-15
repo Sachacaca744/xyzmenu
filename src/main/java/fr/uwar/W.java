@@ -21,7 +21,9 @@ public enum W {
     BUSTER("Missile anti-bunker", "Anti-bunker", 55f, 7.5f, 2.1f, 40, 1, "buster_missile", true,
             "Enorme explosion qui arrache beaucoup de blocs la ou il touche."),
     BAY("Soute a bombes lourdes", "Soute lourde", 60f, 5.5f, 0f, 6, 1, "heavy_bomb", true,
-            "Tapis de bombes : maintenir le tir pour larguer. Detruit les blocs.");
+            "Tapis de bombes : maintenir le tir pour larguer. Detruit les blocs."),
+    NUKE("Bombe nucleaire", "NUCLEAIRE", 0f, 0f, 0f, 200, 1, "nuclear_bomb", true,
+            "500 m : cratere. 0,5-2 km : carbonise + poison permanent. 2-5 km : souffle qui detruit tout. 5-10 km : arbres sans feuilles, animaux morts.");
 
     public final String label, shortName, desc, item;
     public final float dmg, radius, speed;
@@ -51,7 +53,7 @@ public enum W {
     }
 
     public boolean bombLike() {
-        return this == BOMB || this == BAY;
+        return this == BOMB || this == BAY || this == NUKE;
     }
 
     /** Vitesse du modele a l'ecran. */
@@ -61,6 +63,7 @@ public enum W {
             case BALLISTIC -> 2.4f;
             case BUSTER -> 1.5f;
             case BAY -> 1.6f;
+            case NUKE -> 2.4f;
             case FLAK -> 1.25f;
             default -> 1.2f;
         };

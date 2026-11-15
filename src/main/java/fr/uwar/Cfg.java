@@ -10,6 +10,8 @@ public class Cfg {
     public static final ForgeConfigSpec.BooleanValue UNLIMITED_AMMO;
     public static final ForgeConfigSpec.BooleanValue LOCK_PLAYERS;
     public static final ForgeConfigSpec.BooleanValue HEAVY_BLOCKS;
+    public static final ForgeConfigSpec.DoubleValue NUKE_SCALE;
+    public static final ForgeConfigSpec.BooleanValue NUKE_ENABLED;
 
     static {
         ForgeConfigSpec.Builder b = new ForgeConfigSpec.Builder();
@@ -25,6 +27,10 @@ public class Cfg {
                 .define("lockPlayers", false);
         HEAVY_BLOCKS = b.comment("Les armes lourdes (croisiere, balistique, anti-bunker, soute a bombes) detruisent les blocs")
                 .define("heavyBlockDamage", true);
+        NUKE_SCALE = b.comment("Echelle des zones de la bombe nucleaire (1.0 = 500 m / 2 km / 5 km / 10 km ; 0.1 = 50 m / 200 m / 500 m / 1 km)")
+                .defineInRange("nukeScale", 1.0, 0.01, 1.0);
+        NUKE_ENABLED = b.comment("false = la bombe nucleaire devient une grosse explosion normale")
+                .define("nukeEnabled", true);
         SPEC = b.build();
     }
 }

@@ -192,6 +192,11 @@ public class Shell extends Projectile {
     private void explode() {
         if (level() instanceof ServerLevel sl) {
             W w = weapon();
+            if (w == W.NUKE) {
+                Nuke.detonate(sl, position(), getOwner());
+                discard();
+                return;
+            }
             Blast.boom(sl, position(), w.radius, w.dmg, this, getOwner(), w.heavy);
         }
         discard();

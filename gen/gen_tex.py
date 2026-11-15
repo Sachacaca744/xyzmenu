@@ -244,7 +244,8 @@ mk(ic_ammo(0, 'missile', (230, 232, 236), (60, 70, 80), (120, 130, 140)), 'cruis
 mk(ic_ammo(0, 'missile', (70, 78, 60), (200, 40, 40), (40, 46, 36)), 'ballistic_missile')
 mk(ic_ammo(0, 'missile', (60, 62, 66), (240, 120, 20), (200, 120, 20)), 'buster_missile')
 mk(ic_ammo(0, 'bomb', (70, 76, 62), None, None), 'heavy_bomb')
-ITEMS = ['mini_fighter', 'ir_missile', 'flak_missile', 'cruise_missile', 'ballistic_missile', 'buster_missile', 'heavy_bomb', 'attack_heli', 'fighter_jet', 'cannon_ammo', 'rocket_pod', 'air_missile', 'aerial_bomb', 'fuel_can', 'repair_kit']
+mk(ic_ammo(0, 'bomb', (225, 205, 40), None, (40, 40, 40)), 'nuclear_bomb')
+ITEMS = ['mini_fighter', 'ir_missile', 'flak_missile', 'cruise_missile', 'ballistic_missile', 'buster_missile', 'heavy_bomb', 'nuclear_bomb', 'attack_heli', 'fighter_jet', 'cannon_ammo', 'rocket_pod', 'air_missile', 'aerial_bomb', 'fuel_can', 'repair_kit']
 for n in ITEMS:
     json.dump({"parent": "item/generated", "textures": {"layer0": f"uwar:item/{n}"}}, open(f'{R}/models/item/{n}.json', 'w'), indent=1)
 print('textures ok')
