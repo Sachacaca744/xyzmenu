@@ -9,7 +9,7 @@ import fr.uwar.Uwar;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.CalculateDetachedCameraDistanceEvent;
+import net.minecraftforge.client.event.ViewportEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.MovementInputUpdateEvent;
@@ -88,10 +88,33 @@ public class ClientEvents {
             }
         }
 
+        private static java.lang.reflect.Method MOVE;
+        private static boolean moveTried;
+
+        /** Recule la camera de la 3e personne : sinon elle est a l'interieur du fuselage. */
         @SubscribeEvent
-        public static void camDist(CalculateDetachedCameraDistanceEvent e) {
-            if (e.getCamera().getEntity() != null && e.getCamera().getEntity().getVehicle() instanceof Aircraft a)
-                e.setDistance(a.kind.heli() ? 13f : 15f);
+        public static void camDist(ViewportEvent.ComputeCameraAngles e) {
+            var cam = e.getCamera();
+            if (!cam.isDetached() || cam.getEntity() == null || !(cam.getEntity().getVehicle() instanceof Aircraft a)) return;
+            if (!moveTried) {
+                moveTried = true;
+                for (String n : new String[]{"m_90568_", "move"}) {
+                    try {
+                        MOVE = net.minecraft.client.Camera.class.getDeclaredMethod(n, double.class, double.class, double.class);
+                        MOVE.setAccessible(true);
+                        break;
+                    } catch (Throwable t) {
+                        MOVE = null;
+                    }
+                }
+                System.out.println("UWAR: reglage camera 3e personne " + (MOVE != null ? "ok" : "indisponible"));
+            }
+            if (MOVE == null) return;
+            try {
+                MOVE.invoke(cam, a.kind.heli() ? -9.0 : -11.0, a.kind.heli() ? 1.5 : 1.8, 0.0);
+            } catch (Throwable t) {
+                MOVE = null;
+            }
         }
 
         @SubscribeEvent
