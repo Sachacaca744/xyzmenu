@@ -785,7 +785,14 @@ public class SelfTest {
                     lv.setBlock(new BlockPos((int) x0 + 230, y + 3, (int) z0), lf, 2);
                 }
                 if (lt == 2) a.inFire = true;
-                if (lt == 4) a.inFire = false;
+                if (lt == 3) {
+                    a.inFire = false;
+                    Shell nk = null;
+                    for (Entity en : lv.getAllEntities()) if (en instanceof Shell sh && sh.weapon() == W.NUKE) nk = sh;
+                    check("NUKE : bombe larguee (projectile)", nk != null, "");
+                    if (nk != null) nk.discard();
+                }
+                if (lt == 4) Nuke.detonate(lv, new Vec3(x0, y, z0), r.fp);
                 if (lt == 40) {
                     check("NUKE : munition consommee", a.ammo(W.NUKE) == 0, "" + a.ammo(W.NUKE));
                     check("NUKE : explosion enregistree dans le monde", !Nuke.data(lv).sites.isEmpty(), "");
