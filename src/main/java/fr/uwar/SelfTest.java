@@ -195,7 +195,7 @@ public class SelfTest {
             all = false;
             try {
                 if (r.a != null && r.a.testPilot != null && !r.a.isRemoved())
-                    r.a.setInput(r.a.thrust, r.a.inBoost, r.a.inFire, r.a.inU > 0, r.a.aimYaw, r.a.aimPitch);
+                    r.a.setInput(r.a.thrust, r.a.inBoost, r.a.inFire, r.a.inU > 0, r.a.aimYaw, r.a.aimPitch, 0f);
                 step(r, t - r.t0);
             } catch (Throwable ex) {
                 ex.printStackTrace();
@@ -372,9 +372,9 @@ public class SelfTest {
             }
             case "rocket" -> {
                 if (lt == 1) {
-                    r.c1 = cow(r.start.x, r.start.y, r.start.z + 30);
+                    r.c1 = cow(r.start.x + 1.7, r.start.y, r.start.z + 30);
                     a.nextWeapon(1);
-                    a.aimPitch = -1.5f;
+                    a.aimPitch = -1.0f;
                     a.inFire = true;
                     r.i0 = a.ammo(W.ROCKET);
                 }
@@ -544,6 +544,7 @@ public class SelfTest {
             }
             case "place" -> {
                 if (lt == 1) {
+                    a.discard();
                     ItemStack s = new ItemStack(Reg.AIRCRAFT_ITEMS.get(r.kind).get());
                     r.fp.setItemInHand(InteractionHand.MAIN_HAND, s);
                     BlockPos ground = BlockPos.containing(r.start).below();
@@ -551,9 +552,9 @@ public class SelfTest {
                     var res = s.getItem().useOn(new UseOnContext(lv, r.fp, InteractionHand.MAIN_HAND, s,
                             new BlockHitResult(Vec3.atCenterOf(ground).add(0, 0.5, 0), Direction.UP, ground, false)));
                     var list = lv.getEntitiesOfClass(Aircraft.class, new net.minecraft.world.phys.AABB(r.start, r.start).inflate(10));
-                    check("l'objet pose un appareil", list.size() == before + 1, "res=" + res + " n=" + list.size());
+                    check("l'objet pose un appareil", list.size() == 1, "res=" + res + " n=" + list.size());
                     Aircraft n = null;
-                    for (Aircraft x : list) if (x != a) n = x;
+                    for (Aircraft x : list) n = x;
                     if (n != null) {
                         check("appareil pose : 40% carburant + 150 obus", Math.abs(n.fuel() - n.kind.fuelCap * 0.4f) < 1 && n.ammo(W.CANNON) == 150, "fuel=" + n.fuel() + " mun=" + n.ammo(W.CANNON));
                         n.discard();

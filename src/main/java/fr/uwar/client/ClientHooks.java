@@ -20,7 +20,8 @@ public class ClientHooks {
         a.inFire = ok && o.keyAttack.isDown();
         a.aimYaw = mc.player.getYRot();
         a.aimPitch = mc.player.getXRot();
-        Net.CH.sendToServer(new Net.InputMsg(a.thrust, a.inBoost, a.inFire, a.inU > 0, a.aimYaw, a.aimPitch));
+        Net.CH.sendToServer(new Net.InputMsg(a.thrust, a.inBoost, a.inFire, a.inU > 0, a.aimYaw, a.aimPitch, a.pendingImpact));
+        a.pendingImpact = 0f;
     }
 
     public static Aircraft mine() {

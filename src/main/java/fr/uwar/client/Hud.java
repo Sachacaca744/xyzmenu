@@ -152,10 +152,9 @@ public class Hud {
         }
         if (a.ammo(a.selected()) <= 0) g.drawCenteredString(f, "MUNITIONS VIDES - R : RECHARGER", cx, wy, AMBER);
 
-        String help = a.kind.heli()
-                ? "ZQSD/WASD vol  Espace monter  Ctrl descendre  Clic gauche tirer  G arme  R recharger  Maj sortir"
-                : "W/S gaz  Souris cap  Espace postcombustion  Ctrl frein  Clic gauche tirer  G arme  R recharger  Maj sortir";
-        g.drawCenteredString(f, help, cx, h - 12, 0x8858FF7A);
+        String h1 = a.kind.heli() ? "ZQSD/WASD : vol   Espace : monter   Ctrl : descendre   Souris : cap" : "W/S : gaz   Souris : cap et assiette   Espace : postcombustion   Ctrl : frein";
+        g.drawCenteredString(f, h1, cx, h - 58, 0x8858FF7A);
+        g.drawCenteredString(f, "Clic gauche : tirer   G : arme suivante   R : recharger   Maj : sortir", cx, h - 48, 0x8858FF7A);
     }
 
     static double agl(Aircraft a) {

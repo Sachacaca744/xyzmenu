@@ -25,19 +25,19 @@ public class Net {
     }
 
     /** Client -> serveur : etat des commandes (chaque tick). */
-    public record InputMsg(float thr, boolean boost, boolean fire, boolean up, float yaw, float pitch) {
+    public record InputMsg(float thr, boolean boost, boolean fire, boolean up, float yaw, float pitch, float impact) {
         static void encode(InputMsg m, FriendlyByteBuf b) {
             b.writeFloat(m.thr); b.writeBoolean(m.boost); b.writeBoolean(m.fire); b.writeBoolean(m.up);
-            b.writeFloat(m.yaw); b.writeFloat(m.pitch);
+            b.writeFloat(m.yaw); b.writeFloat(m.pitch); b.writeFloat(m.impact);
         }
         static InputMsg decode(FriendlyByteBuf b) {
-            return new InputMsg(b.readFloat(), b.readBoolean(), b.readBoolean(), b.readBoolean(), b.readFloat(), b.readFloat());
+            return new InputMsg(b.readFloat(), b.readBoolean(), b.readBoolean(), b.readBoolean(), b.readFloat(), b.readFloat(), b.readFloat());
         }
         static void handle(InputMsg m, Supplier<NetworkEvent.Context> ctx) {
             ServerPlayer sp = ctx.get().getSender();
             ctx.get().enqueueWork(() -> {
                 Aircraft a = piloted(sp);
-                if (a != null) a.setInput(m.thr, m.boost, m.fire, m.up, m.yaw, m.pitch);
+                if (a != null) a.setInput(m.thr, m.boost, m.fire, m.up, m.yaw, m.pitch, m.impact);
             });
             ctx.get().setPacketHandled(true);
         }

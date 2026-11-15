@@ -72,7 +72,7 @@ public class AircraftRenderer extends EntityRenderer<Aircraft> {
             }
         }
         float rot = Mth.lerp(pt, a.rotorO, a.rotor);
-        if (a.kind.heli()) {
+        if (a.kind.heli() && !inside) {
             VertexConsumer vt = null;
             ps.pushPose();
             ps.translate(m.rx, m.ry, m.rz);
@@ -95,7 +95,7 @@ public class AircraftRenderer extends EntityRenderer<Aircraft> {
                 }
                 ps.popPose();
             }
-        } else if (a.engineOn() && (a.thr() > 0.35f || a.boosting())) {
+        } else if (!a.kind.heli() && a.engineOn() && (a.thr() > 0.35f || a.boosting())) {
             float k = a.boosting() ? 1.25f : 0.5f + a.thr() * 0.6f;
             float pul = 1f + 0.08f * (float) Math.sin((a.tickCount + pt) * 2.7f);
             ps.pushPose();

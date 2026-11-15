@@ -66,12 +66,13 @@ public class Aircraft extends Entity {
     public float speedF, thrust;
     public float roll, rollO, rotor, rotorO;
     public float flapO;
+    /** Choc mesure par la physique du pilote (vitesse perdue), envoye au serveur qui applique les degats. */
+    public float pendingImpact;
 
     // serveur
     private int cooldown, crashCd, lockTick, clickCd;
     private boolean alt;
     private Vec3 lastPos;
-    private double prevSp, prevDy;
     public Vec3 vel = Vec3.ZERO;
     public int shots;
 
@@ -152,8 +153,9 @@ public class Aircraft extends Entity {
         level().playSound(null, getX(), getY(), getZ(), Reg.BEEP.get(), SoundSource.NEUTRAL, 0.5f, 1.6f);
     }
 
-    public void setInput(float thr, boolean boost, boolean fire, boolean up, float yaw, float pitch) {
+    public void setInput(float thr, boolean boost, boolean fire, boolean up, float yaw, float pitch, float impact) {
         lastInputTick = tickCount;
+        if (impact > pendingImpact) pendingImpact = Math.min(impact, 4f);
         inFire = fire;
         inBoost = boost;
         aimYaw = yaw;
@@ -477,7 +479,13 @@ public class Aircraft extends Entity {
             vy = Math.max(v.y - 0.035, -0.32);
         }
         setDeltaMovement(vx, vy, vz);
+        double hb = Math.hypot(vx, vz);
         move(MoverType.SELF, getDeltaMovement());
+        double hbAfter = Math.hypot(getDeltaMovement().x, getDeltaMovement().z);
+        float imp = 0f;
+        if (horizontalCollision) imp = (float) (hb - hbAfter);
+        if (verticalCollision && vy < -0.45) imp = Math.max(imp, (float) -vy);
+        if (imp > 0.4f) pendingImpact = Math.max(pendingImpact, imp);
         if (grounded() && getDeltaMovement().y < 0) setDeltaMovement(getDeltaMovement().multiply(0.8, 0, 0.8));
         setXRot(Mth.lerp(0.08f, getXRot(), on ? (float) (inF * 13) : 0f));
         float rt = on ? -inS * 10f + Mth.clamp(dyaw, -20f, 20f) * 0.4f : 0f;
@@ -517,8 +525,13 @@ public class Aircraft extends Entity {
         double vy = dy * speedF - (1f - lift) * 0.12;
         setDeltaMovement(dx * speedF, vy, dz * speedF);
         move(MoverType.SELF, getDeltaMovement());
-        if (horizontalCollision) speedF *= 0.3f;
-        else if (verticalCollision && dy * speedF < -0.35) speedF *= 0.3f;
+        if (horizontalCollision && speedF > 0.3f) {
+            pendingImpact = Math.max(pendingImpact, speedF * 0.8f);
+            speedF *= 0.3f;
+        } else if (verticalCollision && dy * speedF < -0.35) {
+            pendingImpact = Math.max(pendingImpact, (float) (-dy * speedF));
+            speedF *= 0.3f;
+        }
         float rt = on ? Mth.clamp(dyaw, -30f, 30f) * 1.6f : 0f;
         roll = Mth.lerp(0.12f, roll, rt);
     }
@@ -542,23 +555,17 @@ public class Aircraft extends Entity {
         Vec3 p = position();
         vel = lastPos == null ? Vec3.ZERO : p.subtract(lastPos);
         lastPos = p;
-        double sp = vel.length(), dy = vel.y;
         if (crashCd > 0) crashCd--;
-        if (sp < 6 && crashCd == 0 && !isRemoved()) {
-            double imp = 0;
-            if (prevSp > 0.45 && sp < prevSp * 0.4) imp = prevSp - sp;
-            else if (prevDy < -0.45 && dy > prevDy * 0.3) imp = -prevDy - Math.abs(dy);
-            if (imp > 0.35) {
-                crashCd = 10;
-                level().playSound(null, getX(), getY(), getZ(), SoundEvents.GENERIC_EXPLODE, SoundSource.NEUTRAL, 0.8f, 1.4f);
-                if (level() instanceof ServerLevel sl) sl.sendParticles(ParticleTypes.EXPLOSION, getX(), getY() + 0.5, getZ(), 2, 1, 0.5, 1, 0);
-                if (imp > 0.8) for (Entity e : getPassengers()) e.hurt(level().damageSources().flyIntoWall(), (float) ((imp - 0.7) * 30));
-                hurt(level().damageSources().generic(), (float) (imp * 55));
-                if (isRemoved()) return;
-            }
+        float imp = pendingImpact;
+        pendingImpact = 0f;
+        if (imp > 0.35f && crashCd == 0 && !isRemoved() && c != null) {
+            crashCd = 10;
+            level().playSound(null, getX(), getY(), getZ(), SoundEvents.GENERIC_EXPLODE, SoundSource.NEUTRAL, 0.8f, 1.4f);
+            if (level() instanceof ServerLevel sl) sl.sendParticles(ParticleTypes.EXPLOSION, getX(), getY() + 0.5, getZ(), 2, 1, 0.5, 1, 0);
+            if (imp > 0.8) for (Entity e : getPassengers()) e.hurt(level().damageSources().flyIntoWall(), (imp - 0.7f) * 30f);
+            hurt(level().damageSources().generic(), imp * 80f);
+            if (isRemoved()) return;
         }
-        prevSp = sp;
-        prevDy = dy;
 
         // carburant
         if (on) {
