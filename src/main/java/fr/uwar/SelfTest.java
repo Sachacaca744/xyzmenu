@@ -179,7 +179,7 @@ public class SelfTest {
         java.util.Map<String, Integer> delay = java.util.Map.of("missile", 100, "ir", 300, "flak", 500, "buster", 700, "cruise", 900, "ballistic", 1100, "flak_far", 1300);
         int i = 0;
         for (String[] s : sc) {
-            boolean far = s[0].equals("cruise") || s[0].equals("ballistic") || s[0].equals("flak_far");
+            boolean far = s[0].equals("missile") || s[0].equals("ir") || s[0].equals("flak") || s[0].equals("buster") || s[0].equals("flak_far");
             Run r = far ? mk(s[0], Kind.valueOf(s[1]), -90, -100, s[0]) : mk(s[0], Kind.valueOf(s[1]), -90 + (i % 8) * 24, (i / 8) * 60 - 30, s[0]);
             r.t0 = t + delay.getOrDefault(s[0], 0);
             runs.add(r);
