@@ -18,12 +18,21 @@ public class Blast {
         boom(sl, p, radius, dmg, src, owner, false);
     }
 
-    private static final net.minecraft.world.level.ExplosionDamageCalculator NO_ENTITY_DAMAGE = new net.minecraft.world.level.ExplosionDamageCalculator() {
-        @Override
-        public boolean shouldDamageEntity(net.minecraft.world.level.Explosion e, Entity en) {
-            return false;
+    /** Cratere : retire les blocs dans une sphere (hors blocs tres resistants), sans les faire dropper ni faire de particules. */
+    static void crater(ServerLevel sl, Vec3 p, float r) {
+        int ri = (int) Math.ceil(r);
+        net.minecraft.core.BlockPos c = net.minecraft.core.BlockPos.containing(p);
+        var air = net.minecraft.world.level.block.Blocks.AIR.defaultBlockState();
+        for (int x = -ri; x <= ri; x++) for (int y = -ri; y <= ri; y++) for (int z = -ri; z <= ri; z++) {
+            double d = Math.sqrt(x * x + y * y + z * z);
+            if (d > r) continue;
+            if (d > r * 0.75 && sl.random.nextFloat() < (d / r - 0.75) * 3.0) continue;
+            net.minecraft.core.BlockPos bp = c.offset(x, y, z);
+            var st = sl.getBlockState(bp);
+            if (st.isAir() || st.getDestroySpeed(sl, bp) < 0 || st.getBlock().getExplosionResistance() > 100f) continue;
+            sl.setBlock(bp, st.getFluidState().isEmpty() ? air : st.getFluidState().createLegacyBlock(), 3);
         }
-    };
+    }
 
     public static void boom(ServerLevel sl, Vec3 p, float radius, float dmg, Entity src, Entity owner, boolean heavy) {
         sl.playSound(null, p.x, p.y, p.z, Reg.BOOM.get(), SoundSource.NEUTRAL, 4.0f, 0.9f + sl.random.nextFloat() * 0.2f);
@@ -59,6 +68,6 @@ public class Blast {
             if (radius >= 3f && f > 0.5f) e.setSecondsOnFire(2);
         }
         boolean blocks = heavy ? Cfg.HEAVY_BLOCKS.get() : Cfg.BLOCK_DAMAGE.get();
-        if (blocks) sl.explode(null, null, NO_ENTITY_DAMAGE, p.x, p.y, p.z, heavy ? radius * 0.85f : radius * 0.8f, false, Level.ExplosionInteraction.TNT);
+        if (blocks) crater(sl, p, heavy ? radius * 0.85f : radius * 0.7f);
     }
 }

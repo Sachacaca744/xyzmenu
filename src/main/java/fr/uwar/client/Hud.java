@@ -120,11 +120,11 @@ public class Hud {
 
         // point vise (croisiere / balistique)
         if (a.selected() == W.CRUISE || a.selected() == W.BALLISTIC) {
-            Vec3 pt = a.aimPoint(mc.level, eye, a.aimDir());
-            int[] s = project(pt, w, h);
+            Vec3 apt = a.aimPoint(mc.level, eye, a.aimDir());
+            int[] s = project(apt, w, h);
             if (s != null) {
                 box(g, s[0], s[1], 10, AMBER);
-                g.drawString(f, "POINT VISE " + Math.round(pt.distanceTo(eye)) + " m", s[0] + 14, s[1] - 4, AMBER, false);
+                g.drawString(f, "POINT VISE " + Math.round(apt.distanceTo(eye)) + " m", s[0] + 14, s[1] - 4, AMBER, false);
             }
         }
 
