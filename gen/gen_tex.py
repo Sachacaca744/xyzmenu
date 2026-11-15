@@ -128,6 +128,8 @@ PAL = {
                      camo=[(70, 78, 54), (52, 60, 40), (98, 84, 56), (38, 44, 34)]),
  'fighter_jet': dict(ha=(132, 138, 148), hb=(96, 102, 112), acc=(200, 40, 30), met=(50, 52, 58), lens=(70, 100, 130),
                      camo=[(132, 138, 148), (104, 112, 124), (84, 92, 104), (150, 156, 164)]),
+ 'mini_fighter': dict(ha=(98, 106, 122), hb=(70, 76, 92), acc=(240, 120, 30), met=(46, 48, 56), lens=(110, 150, 190),
+                     camo=[(98, 106, 122), (72, 80, 100), (124, 130, 142), (58, 64, 80)]),
  'weapons': dict(ha=(120, 124, 120), hb=(84, 90, 84), acc=(230, 120, 30), met=(60, 64, 60), lens=(40, 70, 130),
                  camo=[(120, 124, 120), (96, 100, 96), (84, 90, 84), (140, 144, 140)]),
 }
@@ -224,6 +226,11 @@ def ic_ammo(color, kind, body=(210, 214, 218), nose=(200, 50, 40), fin=(160, 60,
 
 mk(ic_heli, 'attack_heli')
 mk(ic_jet, 'fighter_jet')
+def ic_mini(d, S):
+    P(d, [(.5, .16), (.55, .38), (.57, .52), (.86, .72), (.86, .8), (.57, .74), (.55, .86), (.66, .92), (.66, .96), (.34, .96), (.34, .92), (.45, .86), (.43, .74), (.14, .8), (.14, .72), (.43, .52), (.45, .38)], S, (100, 110, 130))
+    P(d, [(.47, .3), (.53, .3), (.54, .42), (.46, .42)], S, (120, 170, 210))
+    P(d, [(.48, .62), (.52, .62), (.52, .9), (.48, .9)], S, (240, 130, 40))
+mk(ic_mini, 'mini_fighter')
 mk(ic_ammo(0, 'belt'), 'cannon_ammo')
 mk(ic_ammo(0, 'pod'), 'rocket_pod')
 mk(ic_ammo(0, 'missile'), 'air_missile')
@@ -237,7 +244,7 @@ mk(ic_ammo(0, 'missile', (230, 232, 236), (60, 70, 80), (120, 130, 140)), 'cruis
 mk(ic_ammo(0, 'missile', (70, 78, 60), (200, 40, 40), (40, 46, 36)), 'ballistic_missile')
 mk(ic_ammo(0, 'missile', (60, 62, 66), (240, 120, 20), (200, 120, 20)), 'buster_missile')
 mk(ic_ammo(0, 'bomb', (70, 76, 62), None, None), 'heavy_bomb')
-ITEMS = ['ir_missile', 'flak_missile', 'cruise_missile', 'ballistic_missile', 'buster_missile', 'heavy_bomb', 'attack_heli', 'fighter_jet', 'cannon_ammo', 'rocket_pod', 'air_missile', 'aerial_bomb', 'fuel_can', 'repair_kit']
+ITEMS = ['mini_fighter', 'ir_missile', 'flak_missile', 'cruise_missile', 'ballistic_missile', 'buster_missile', 'heavy_bomb', 'attack_heli', 'fighter_jet', 'cannon_ammo', 'rocket_pod', 'air_missile', 'aerial_bomb', 'fuel_can', 'repair_kit']
 for n in ITEMS:
     json.dump({"parent": "item/generated", "textures": {"layer0": f"uwar:item/{n}"}}, open(f'{R}/models/item/{n}.json', 'w'), indent=1)
 print('textures ok')

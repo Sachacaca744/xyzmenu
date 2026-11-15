@@ -146,7 +146,7 @@ public class Hud {
 
         // alertes
         int wy = 40;
-        if (!a.kind.heli() && !a.grounded() && a.speedF < 0.45f && a.engineOn() == a.engineOn() && a.fuel() > 0) {
+        if (!a.kind.heli() && !a.grounded() && a.speedF < a.kind.stall + 0.2f && a.fuel() > 0) {
             if (blink) g.drawCenteredString(f, "DECROCHAGE", cx, wy, RED);
             wy += 12;
         }

@@ -39,7 +39,7 @@ public class AircraftSound extends AbstractTickableSoundInstance {
             pitch = 0.85f + t * 0.3f;
         } else {
             volume = 3.2f * (0.4f + 0.6f * Math.min(1f, t + (a.boosting() ? 0.4f : 0f)));
-            pitch = 0.7f + t * 0.45f + (a.boosting() ? 0.15f : 0f);
+            pitch = 0.7f + t * 0.45f + (a.boosting() ? 0.15f : 0f) + (a.kind.sc < 1f ? 0.3f : 0f);
         }
     }
 }

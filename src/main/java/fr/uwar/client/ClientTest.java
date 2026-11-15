@@ -94,6 +94,12 @@ public class ClientTest {
                 case 540 -> shot("08_jet_34_rear");
                 case 541 -> cmd("tp @s 14 -40 15 0 90");
                 case 580 -> shot("09_jet_top");
+                case 581 -> cmd("tp @s 34 -58 -4 0 6");
+                case 586 -> shot("09b_mini_front");
+                case 587 -> cmd("tp @s 48 -57 15 90 8");
+                case 592 -> shot("09c_mini_side");
+                case 593 -> cmd("tp @s 28 -55 28 -150 12");
+                case 598 -> shot("09d_mini_34_rear");
                 // ---- vol reel de l'helicoptere (client = autorite de vol)
                 case 600 -> {
                     cmd("gamemode creative");
@@ -203,6 +209,29 @@ public class ClientTest {
                 }
                 case 1400 -> {
                     log("jet fin");
+                    mc.options.keyUp.setDown(false);
+                    mc.options.keyDown.setDown(false);
+                    cmd("uwar_selftest unride");
+                }
+                case 1420 -> cmd("tp @s 34 -60 10 0 0");
+                case 1430 -> cmd("uwar_selftest ride mini");
+                case 1450 -> {
+                    mc.player.setXRot(-14f);
+                    mc.player.setYRot(0f);
+                    mc.options.keyUp.setDown(true);
+                    mc.options.setCameraType(CameraType.THIRD_PERSON_BACK);
+                }
+                case 1560 -> {
+                    log("mini en vol");
+                    shot("22_mini_vol");
+                    mc.player.setYRot(90f);
+                }
+                case 1590 -> {
+                    shot("23_mini_virage");
+                    log("mini virage");
+                }
+                case 1620 -> {
+                    log("mini fin");
                     System.out.println("CLIENTTEST: termine");
                     mc.stop();
                 }
@@ -213,6 +242,6 @@ public class ClientTest {
             ex.printStackTrace();
             System.out.println("CLIENTTEST: exception " + ex);
         }
-        if (t > 2400) System.exit(3);
+        if (t > 3200) System.exit(3);
     }
 }

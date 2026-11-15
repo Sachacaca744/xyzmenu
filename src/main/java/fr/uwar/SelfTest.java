@@ -93,10 +93,10 @@ public class SelfTest {
             switch (a[0]) {
                 case "models" -> {
                     ServerPlayer sp = src.getPlayerOrException();
-                    for (int i = 0; i < 2; i++) {
+                    for (int i = 0; i < 3; i++) {
                         Kind k = Kind.values()[i];
                         Aircraft ac = new Aircraft(Reg.AIRCRAFTS.get(k).get(), sl, k);
-                        ac.moveTo(i == 0 ? -12 : 14, -60, 15, 180, 0);
+                        ac.moveTo(i == 0 ? -12 : i == 1 ? 14 : 34, -60, 15, 180, 0);
                         ac.applyStack(Aircraft.makeStack(k, true));
                         ac.yRotO = 180;
                         sl.addFreshEntity(ac);
@@ -170,7 +170,7 @@ public class SelfTest {
         runs.clear();
         String[][] sc = {{"cruise", "JET"}, {"ballistic", "JET"}, {"heli_fly", "HELI"}, {"jet_fly", "JET"}, {"cannon", "HELI"}, {"rocket", "HELI"}, {"missile", "HELI"}, {"bomb", "JET"},
                 {"empty", "HELI"}, {"supply", "HELI"}, {"fuel_out", "HELI"}, {"destroy", "HELI"}, {"crash", "JET"}, {"persist", "JET"},
-                {"pickup", "HELI"}, {"place", "JET"}, {"jet_weapons", "JET"}, {"loadout", "HELI"}, {"ir", "HELI"}, {"flak", "HELI"}, {"buster", "HELI"}, {"bay", "JET"}};
+                {"pickup", "HELI"}, {"place", "JET"}, {"jet_weapons", "JET"}, {"mini_fly", "MINI"}, {"mini_arms", "MINI"}, {"flak_far", "HELI"}, {"loadout", "HELI"}, {"ir", "HELI"}, {"flak", "HELI"}, {"buster", "HELI"}, {"bay", "JET"}};
         int i = 0;
         for (String[] s : sc) {
             Run r = mk(s[0], Kind.valueOf(s[1]), -90 + (i % 8) * 24, (i / 8) * 60 - 30, s[0]);
@@ -565,6 +565,87 @@ public class SelfTest {
                         check("appareil pose : 40% carburant + 150 obus", Math.abs(n.fuel() - n.kind.fuelCap * 0.4f) < 1 && n.ammo(W.CANNON) == 150, "fuel=" + n.fuel() + " mun=" + n.ammo(W.CANNON));
                         n.discard();
                     }
+                    fin(r);
+                }
+            }
+            case "mini_fly" -> {
+                switch (r.ph) {
+                    case 0 -> {
+                        if (lt == 1) {
+                            a.inF = 1;
+                            a.aimPitch = -20;
+                            r.d0 = a.getY();
+                        }
+                        if (a.getY() > r.d0 + 5) {
+                            check("mini chasseur decolle", true, st(a));
+                            r.ph = 1;
+                            r.mark = lt;
+                        } else if (lt > 300) {
+                            check("mini chasseur decolle", false, st(a));
+                            fin(r);
+                        }
+                    }
+                    case 1 -> {
+                        a.aimPitch = -3;
+                        if (lt == r.mark + 40) {
+                            r.d1 = a.getYRot();
+                            a.aimYaw = net.minecraft.util.Mth.wrapDegrees(a.getYRot() + 90);
+                            r.f0 = a.getYRot();
+                            r.ph = 2;
+                            r.mark = lt;
+                        }
+                    }
+                    case 2 -> {
+                        a.aimPitch = -3;
+                        if (lt == r.mark + 17) {
+                            float turned = Math.abs(net.minecraft.util.Mth.wrapDegrees(a.getYRot() - r.f0));
+                            check("mini chasseur : virage de 90 degres en 17 ticks (agile)", turned >= 85, "tourne=" + turned + " " + st(a));
+                            a.aimYaw = a.getYRot();
+                            check("mini chasseur : taille reduite", a.kind.sc < 0.7f && a.getBbWidth() < 2.0f, "bb=" + a.getBbWidth());
+                            fin(r);
+                        }
+                    }
+                }
+            }
+            case "mini_arms" -> {
+                if (lt == 1) {
+                    r.c1 = cow(r.start.x, r.start.y, r.start.z + 30);
+                    a.aimPitch = 0;
+                    a.inFire = true;
+                    r.i0 = a.ammo(W.CANNON);
+                    check("mini : config par defaut roquettes + missile", a.has(W.ROCKET) && a.has(W.MISSILE) && a.slotsUsed() == 2, "lo=" + a.loadout());
+                }
+                if (lt == 30) {
+                    a.inFire = false;
+                    check("mini : canon touche la cible", r.i0 - a.ammo(W.CANNON) >= 8 && (!r.c1.isAlive() || ((LivingEntity) r.c1).getHealth() < ((LivingEntity) r.c1).getMaxHealth()), "mun=" + a.ammo(W.CANNON));
+                    String e1 = a.setLoadout(r.fp, W.CANNON.bit() | W.IR.bit() | W.FLAK.bit() | W.ROCKET.bit());
+                    check("mini : 2 emplacements seulement", e1 != null, "err=" + e1);
+                    String e2 = a.setLoadout(r.fp, W.CANNON.bit() | W.CRUISE.bit());
+                    check("mini : pas de missile de croisiere", e2 != null, "err=" + e2);
+                    String e3 = a.setLoadout(r.fp, W.CANNON.bit() | W.IR.bit() | W.FLAK.bit());
+                    check("mini : IR + fragmentation acceptes", e3 == null && a.has(W.IR) && a.has(W.FLAK), "err=" + e3);
+                    fin(r);
+                }
+            }
+            case "flak_far" -> {
+                if (lt == 1) {
+                    a.setLoadout(r.fp, W.CANNON.bit() | W.FLAK.bit());
+                    a.setAmmo(W.FLAK, 4);
+                    r.c1 = cow(r.start.x, r.start.y, r.start.z + 196);
+                    a.nextWeapon(1);
+                    a.aimPitch = 0;
+                    a.inFire = true;
+                    r.i0 = a.ammo(W.FLAK);
+                    check("fragmentation : portee d'explosion 200 m", Shell.FLAK_RANGE == 200, "" + Shell.FLAK_RANGE);
+                }
+                if (lt == 3) a.inFire = false;
+                if (lt == 50) {
+                    boolean still = false;
+                    for (Entity en : lv.getAllEntities()) if (en instanceof Shell sh && sh.weapon() == W.FLAK) still = true;
+                    check("fragmentation : ne explose PAS a 50 blocs (toujours en vol)", still && ((LivingEntity) r.c1).isAlive(), "");
+                }
+                if (lt == 200) {
+                    check("fragmentation : explose a ~200 blocs et detruit la cible", !((LivingEntity) r.c1).isAlive() && a.ammo(W.FLAK) == r.i0 - 1, "pv=" + ((LivingEntity) r.c1).getHealth());
                     fin(r);
                 }
             }

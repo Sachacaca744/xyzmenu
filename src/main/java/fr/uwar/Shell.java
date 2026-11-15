@@ -35,6 +35,9 @@ public class Shell extends Projectile {
     private double cruiseY;
     private boolean diving;
     public static final double BALLISTIC_G = 0.04;
+    public static final double FLAK_RANGE = 200;
+    private static final net.minecraft.server.level.TicketType<net.minecraft.world.level.ChunkPos> KEEP =
+            net.minecraft.server.level.TicketType.create("uwar_shell", java.util.Comparator.comparingLong(net.minecraft.world.level.ChunkPos::toLong), 40);
 
     public Shell(EntityType<? extends Shell> t, Level l) {
         super(t, l);
@@ -84,6 +87,11 @@ public class Shell extends Projectile {
         Vec3 v = getDeltaMovement();
         if (!level().isClientSide) {
             if (launchPos == null) launchPos = position();
+            if (life % 5 == 1 && level() instanceof ServerLevel kl) {
+                // garde la zone chargee autour du projectile : il continue de voler meme loin du joueur
+                var cp = new net.minecraft.world.level.ChunkPos(blockPosition());
+                kl.getChunkSource().addRegionTicket(KEEP, cp, 2, cp);
+            }
             switch (w) {
                 case MISSILE, FLAK, BUSTER -> {
                     double sp = Math.min(w.speed, v.length() + 0.18);
@@ -160,7 +168,7 @@ public class Shell extends Projectile {
             }
             setPos(getX() + v.x, getY() + v.y, getZ() + v.z);
             travelled += v.length();
-            if (w == W.FLAK && travelled >= 50) {
+            if (w == W.FLAK && travelled >= FLAK_RANGE) {
                 explode();
                 return;
             }

@@ -95,6 +95,7 @@ json.dump(sj, open(f'{A}/sounds.json', 'w'), indent=1)
 items = {
  'attack_heli': ("Hélicoptère d'attaque AH-64", 'AH-64 Attack Helicopter'),
  'fighter_jet': ('Avion de chasse F-16', 'F-16 Fighter Jet'),
+ 'mini_fighter': ('Mini chasseur', 'Mini Fighter'),
  'cannon_ammo': ('Munitions canon 20 mm', '20 mm Cannon Ammo'),
  'rocket_pod': ('Nacelle de roquettes', 'Rocket Pod'),
  'air_missile': ('Missile guidé', 'Guided Missile'),
@@ -102,7 +103,7 @@ items = {
  'fuel_can': ('Bidon de carburant aviation', 'Aviation Fuel Can'),
  'repair_kit': ('Kit de réparation', 'Repair Kit'),
  'ir_missile': ('Missile infrarouge', 'Infrared Missile'),
- 'flak_missile': ('Missile à fragmentation (50 m)', 'Fragmentation Missile (50 m)'),
+ 'flak_missile': ('Missile à fragmentation (200 m)', 'Fragmentation Missile (200 m)'),
  'cruise_missile': ('Missile de croisière', 'Cruise Missile'),
  'ballistic_missile': ('Missile balistique', 'Ballistic Missile'),
  'buster_missile': ('Missile anti-bunker', 'Bunker Buster Missile'),
@@ -114,6 +115,7 @@ for idx, code in enumerate(['fr_fr', 'en_us']):
         L[f'item.uwar.{k}'] = v[idx]
     L['entity.uwar.attack_heli'] = items['attack_heli'][idx]
     L['entity.uwar.fighter_jet'] = items['fighter_jet'][idx]
+    L['entity.uwar.mini_fighter'] = items['mini_fighter'][idx]
     L['entity.uwar.shell'] = ['Munition aérienne', 'Aircraft ordnance'][idx]
     L['key.categories.uwar'] = 'UWar - Aviation'
     L['key.uwar.weapon'] = ['Arme suivante', 'Next weapon'][idx]
@@ -144,4 +146,5 @@ shapeless('cruise_missile', ['uwar:air_missile', 'uwar:fuel_can', 'minecraft:tnt
 shapeless('ballistic_missile', ['uwar:fuel_can', 'uwar:fuel_can', 'minecraft:tnt', 'minecraft:tnt', 'minecraft:tnt', 'minecraft:iron_block', 'minecraft:redstone'], 'ballistic_missile')
 shapeless('buster_missile', ['uwar:air_missile', 'minecraft:tnt', 'minecraft:tnt', 'minecraft:iron_block', 'minecraft:gunpowder'], 'buster_missile')
 shapeless('heavy_bomb', ['uwar:aerial_bomb', 'minecraft:tnt', 'minecraft:iron_ingot', 'minecraft:gunpowder'], 'heavy_bomb')
+shaped('mini_fighter', ['IBI', 'GFG', ' R '], {'B': 'minecraft:iron_block', 'I': 'minecraft:iron_ingot', 'F': 'minecraft:furnace', 'G': 'minecraft:glass', 'R': 'minecraft:redstone'}, 'mini_fighter')
 print('ok')

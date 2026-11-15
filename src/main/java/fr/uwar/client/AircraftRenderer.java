@@ -68,6 +68,7 @@ public class AircraftRenderer extends EntityRenderer<Aircraft> {
         float bodyYaw = Mth.rotLerp(pt, a.yRotO, a.getYRot());
         ps.pushPose();
         ps.mulPose(Axis.YP.rotationDegrees(-bodyYaw));
+        ps.scale(a.kind.sc, a.kind.sc, a.kind.sc);
         ps.translate(0, m.pivotY, 0);
         ps.mulPose(Axis.XP.rotationDegrees(Mth.lerp(pt, a.xRotO, a.getXRot())));
         ps.mulPose(Axis.ZP.rotationDegrees(Mth.lerp(pt, a.rollO, a.roll)));

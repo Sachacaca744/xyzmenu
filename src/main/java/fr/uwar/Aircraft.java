@@ -189,7 +189,7 @@ public class Aircraft extends Entity {
         aimPitch = pitch;
         if (!level().isClientSide) {
             entityData.set(THR, Mth.clamp(thr, 0f, 1f));
-            entityData.set(BOOST, boost && kind == Kind.JET && fuel() > 20f);
+            entityData.set(BOOST, boost && !kind.heli() && fuel() > 20f);
         }
     }
 
@@ -362,6 +362,7 @@ public class Aircraft extends Entity {
     private double[] seat(int i) {
         // {lateral(gauche +), hauteur, avant}
         if (kind == Kind.HELI) return i == 0 ? new double[]{0, 0.45, 1.25} : new double[]{0, 0.30, 2.55};
+        if (kind == Kind.MINI) return new double[]{0, 0.05, 0.9};
         return new double[]{0, 0.42, 1.7};
     }
 
@@ -466,9 +467,9 @@ public class Aircraft extends Entity {
             rotor -= 3600f;
             rotorO -= 3600f;
         }
-        if (engineOn() && kind == Kind.JET && boosting() && tickCount % 1 == 0) {
+        if (engineOn() && !kind.heli() && boosting()) {
             double a = getYRot() * Mth.DEG_TO_RAD;
-            level().addParticle(ParticleTypes.FLAME, getX() + Math.sin(a) * 6.0, getY() + 1.0, getZ() - Math.cos(a) * 6.0, 0, 0, 0);
+            level().addParticle(ParticleTypes.FLAME, getX() + Math.sin(a) * 6.0 * kind.sc, getY() + kind.sc, getZ() - Math.cos(a) * 6.0 * kind.sc, 0, 0, 0);
         }
         if (engineOn() && kind.heli() && grounded()) {
             double ang = random.nextDouble() * Math.PI * 2;
@@ -535,7 +536,7 @@ public class Aircraft extends Entity {
             thrust = Mth.clamp(thrust, 0f, 1f);
         } else thrust = Math.max(0f, thrust - 0.01f);
         boolean boost = on && inBoost && fuel() > 20f;
-        double tgt = on ? (0.04 + thrust * 1.5) * (boost ? 1.5 : 1.0) : 0.0;
+        double tgt = on ? (0.04 + thrust * 1.5) * (boost ? 1.5 : 1.0) * kind.speedMul : 0.0;
         if (tgt > speedF) speedF += (float) ((tgt - speedF) * 0.03 + 0.002);
         else speedF += (float) ((tgt - speedF) * 0.015);
         if (ground) {
@@ -545,13 +546,13 @@ public class Aircraft extends Entity {
 
         float dyaw = Mth.wrapDegrees(aimYaw - getYRot());
         if (on || speedF > 0.3f) {
-            float yr = ground ? (speedF > 0.03f ? 2.0f : 0f) : 3.2f;
+            float yr = (ground ? (speedF > 0.03f ? 2.0f : 0f) : 3.2f) * kind.turn;
             setYRot(getYRot() + Mth.clamp(dyaw, -yr, yr));
             float pt = Mth.clamp(aimPitch, -70f, 70f);
-            if (ground && speedF < 0.6f) pt = 0f;
-            setXRot(getXRot() + Mth.clamp(pt - getXRot(), -2.6f, 2.6f));
+            if (ground && speedF < kind.liftoff) pt = 0f;
+            setXRot(getXRot() + Mth.clamp(pt - getXRot(), -2.6f * kind.turn, 2.6f * kind.turn));
         }
-        float lift = Mth.clamp((speedF - 0.25f) / 0.55f, 0f, 1f);
+        float lift = Mth.clamp((speedF - kind.stall) / 0.55f, 0f, 1f);
         if (!ground) setXRot(Math.min(85f, getXRot() + (1f - lift) * 1.6f));
         double yr = getYRot() * Mth.DEG_TO_RAD, xr = getXRot() * Mth.DEG_TO_RAD;
         double dx = -Math.sin(yr) * Math.cos(xr), dy = -Math.sin(xr), dz = Math.cos(yr) * Math.cos(xr);
@@ -565,7 +566,7 @@ public class Aircraft extends Entity {
             pendingImpact = Math.max(pendingImpact, (float) (-dy * speedF));
             speedF *= 0.3f;
         }
-        float rt = on ? Mth.clamp(dyaw, -30f, 30f) * 1.6f : 0f;
+        float rt = on ? Mth.clamp(dyaw, -30f, 30f) * 1.6f * Math.min(kind.turn, 1.5f) : 0f;
         roll = Mth.lerp(0.12f, roll, rt);
     }
 
@@ -746,14 +747,14 @@ public class Aircraft extends Entity {
         double side = alt ? 1 : -1;
         Vec3 base = position().add(0, kind.h * 0.55, 0);
         switch (w) {
-            case CANNON -> fireCannon(sl, pilot, base.add(dir.scale(2.6)).add(0, kind.heli() ? -0.7 : -0.1, 0), dir);
+            case CANNON -> fireCannon(sl, pilot, base.add(dir.scale(2.6 * Math.max(kind.sc, 0.8f))).add(0, kind.heli() ? -0.7 : -0.1, 0), dir);
             case ROCKET -> {
-                Vec3 o = base.add(left.scale(side * (kind.heli() ? 1.7 : 3.6))).add(dir.scale(2.2)).add(0, -0.4, 0);
+                Vec3 o = base.add(left.scale(side * (kind.heli() ? 1.7 : 3.6 * kind.sc))).add(dir.scale(2.2)).add(0, -0.4, 0);
                 launch(sl, w, pilot, o, dir.scale(w.speed).add(vel.scale(0.4)), null, null);
                 sl.playSound(null, o.x, o.y, o.z, Reg.LAUNCH.get(), SoundSource.NEUTRAL, 1.6f, 1.2f);
             }
             case MISSILE, IR, FLAK, BUSTER -> {
-                Vec3 o = base.add(left.scale(side * (kind.heli() ? 2.5 : 5.0))).add(dir.scale(1.5)).add(0, -0.6, 0);
+                Vec3 o = base.add(left.scale(side * (kind.heli() ? 2.5 : 5.0 * kind.sc))).add(dir.scale(1.5)).add(0, -0.6, 0);
                 launch(sl, w, pilot, o, dir.scale(0.9).add(vel.scale(0.5)), lockedUuid(sl), null);
                 sl.playSound(null, o.x, o.y, o.z, Reg.LAUNCH.get(), SoundSource.NEUTRAL, w == W.BUSTER ? 2.6f : 2.0f, w == W.BUSTER ? 0.6f : 0.9f);
             }

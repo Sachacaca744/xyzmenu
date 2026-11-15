@@ -1,0 +1,29 @@
+{
+ "type": "minecraft:crafting_shaped",
+ "pattern": [
+  "IBI",
+  "GFG",
+  " R "
+ ],
+ "key": {
+  "B": {
+   "item": "minecraft:iron_block"
+  },
+  "I": {
+   "item": "minecraft:iron_ingot"
+  },
+  "F": {
+   "item": "minecraft:furnace"
+  },
+  "G": {
+   "item": "minecraft:glass"
+  },
+  "R": {
+   "item": "minecraft:redstone"
+  }
+ },
+ "result": {
+  "item": "uwar:mini_fighter",
+  "count": 1
+ }
+}
