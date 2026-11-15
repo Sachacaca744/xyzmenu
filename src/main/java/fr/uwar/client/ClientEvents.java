@@ -9,6 +9,7 @@ import fr.uwar.Uwar;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.CalculateDetachedCameraDistanceEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.MovementInputUpdateEvent;
@@ -85,6 +86,12 @@ public class ClientEvents {
                 e.setCanceled(true);
                 e.setSwingHand(false);
             }
+        }
+
+        @SubscribeEvent
+        public static void camDist(CalculateDetachedCameraDistanceEvent e) {
+            if (e.getCamera().getEntity() != null && e.getCamera().getEntity().getVehicle() instanceof Aircraft a)
+                e.setDistance(a.kind.heli() ? 13f : 15f);
         }
 
         @SubscribeEvent
