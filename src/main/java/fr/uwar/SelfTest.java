@@ -167,7 +167,7 @@ public class SelfTest {
     static void start(ServerLevel sl) {
         if (running) return;
         lv = sl;
-        for (int cx = -8; cx <= 12; cx++) for (int cz = -8; cz <= 12; cz++) lv.setChunkForced(cx, cz, true);
+        for (int cx = -16; cx <= 12; cx++) for (int cz = -8; cz <= 12; cz++) lv.setChunkForced(cx, cz, true);
         lv.getChunkSource().getChunk(0, 0, net.minecraft.world.level.chunk.ChunkStatus.FULL, true);
         running = true;
         t = 0;
