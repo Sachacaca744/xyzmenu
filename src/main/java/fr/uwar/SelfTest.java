@@ -176,7 +176,7 @@ public class SelfTest {
         String[][] sc = {{"cruise", "JET"}, {"ballistic", "JET"}, {"heli_fly", "HELI"}, {"jet_fly", "JET"}, {"cannon", "HELI"}, {"rocket", "HELI"}, {"missile", "HELI"}, {"bomb", "JET"},
                 {"empty", "HELI"}, {"supply", "HELI"}, {"fuel_out", "HELI"}, {"destroy", "HELI"}, {"crash", "JET"}, {"persist", "JET"},
                 {"pickup", "HELI"}, {"place", "JET"}, {"jet_weapons", "JET"}, {"mini_fly", "MINI"}, {"mini_arms", "MINI"}, {"flak_far", "HELI"}, {"loadout", "HELI"}, {"ir", "HELI"}, {"flak", "HELI"}, {"buster", "HELI"}, {"bay", "JET"}};
-        java.util.Map<String, Integer> delay = java.util.Map.of("missile", 100, "ir", 300, "flak", 500, "buster", 700, "cruise", 900, "ballistic", 1100, "flak_far", 1300);
+        java.util.Map<String, Integer> delay = java.util.Map.of("missile", 100, "ir", 300, "flak", 500, "buster", 700, "flak_far", 1300);
         int i = 0;
         for (String[] s : sc) {
             boolean far = s[0].equals("missile") || s[0].equals("flak_far");
@@ -412,6 +412,7 @@ public class SelfTest {
                     r.i0 = a.ammo(W.MISSILE);
                 }
                 if (lt == 20) {
+                    for (Entity en : lv.getEntities(a, a.getBoundingBox().inflate(150))) System.out.println("DBG missile near id=" + en.getId() + " " + en.getType() + " at " + en.position() + " me=" + a.position());
                     check("missile verrouille la cible", a.lockId() == r.c1.getId(), "lock=" + a.lockId() + " cible=" + r.c1.getId());
                     a.inFire = true;
                 }
