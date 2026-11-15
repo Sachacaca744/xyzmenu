@@ -34,6 +34,7 @@ public class Blast {
         List<Entity> list = sl.getEntities(src, box, e -> e instanceof LivingEntity || e instanceof Aircraft);
         for (Entity e : list) {
             if (e == src) continue;
+            if (owner != null && e == owner.getVehicle()) continue;
             double d = e.position().add(0, e.getBbHeight() * 0.5, 0).distanceTo(p);
             if (d > radius) continue;
             float f = (float) (1.0 - d / radius);
