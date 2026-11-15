@@ -136,6 +136,10 @@
     {
       "file": "udrone-1.0.0.jar",
       "sha256": "edcfd5ed85e8b86f675ec0a93ca9f20fd2184bf2401d70484a60adfb161c9edc"
+    },
+    {
+      "file": "uwar-1.0.0.jar",
+      "sha256": "12acba081477666f4669903bce2f8c59f5935382d43a1fdaddc0f53a509df126"
     }
   ],
   "files": [],
