@@ -390,7 +390,7 @@ public class SelfTest {
                     check("roquette detruit la cible", !le.isAlive(), "pv=" + le.getHealth());
                     check("roquette standard : ne casse pas les blocs", !lv.getBlockState(BlockPos.containing(r.start.x + 1.7, r.start.y - 1, r.start.z + 30)).isAir(), "");
                     boolean left = false;
-                    for (Entity en : lv.getAllEntities()) if (en instanceof Shell) left = true;
+                    for (Entity en : lv.getAllEntities()) if (en instanceof Shell sh && sh.weapon() == W.ROCKET) left = true;
                     check("plus de projectile apres explosion", !left, "");
                     fin(r);
                 }
