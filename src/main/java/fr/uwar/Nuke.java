@@ -324,6 +324,8 @@ public class Nuke {
             for (ServerPlayer p : lv.getChunkSource().chunkMap.getPlayers(cp, false))
                 p.connection.send(new ClientboundLevelChunkWithLightPacket(c, lv.getLightEngine(), null, null));
         }
+        if (System.getProperty("uwar.selftest") != null && cp.z == 6 && cp.x >= -9 && cp.x <= 2)
+            System.out.println("NUKEDBG chunk " + cp + " any=" + any + " site=(" + s.x + "," + s.y + "," + s.z + ") sc=" + s.sc + " top0=" + c.getHeight(Heightmap.Types.WORLD_SURFACE, 8, 8));
         chunksDone++;
         return true;
     }
