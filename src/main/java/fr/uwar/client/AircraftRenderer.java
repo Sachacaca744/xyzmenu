@@ -50,6 +50,14 @@ public class AircraftRenderer extends EntityRenderer<Aircraft> {
         }
     }
 
+    private static void station(PoseStack ps, float[] p, float sc, Mesh mesh, VertexConsumer vc, int light) {
+        ps.pushPose();
+        ps.translate(p[0], p[1], p[2]);
+        ps.scale(sc, sc, sc);
+        draw(mesh, ps.last(), vc, light, 1f);
+        ps.popPose();
+    }
+
     @Override
     public void render(Aircraft a, float yaw, float pt, PoseStack ps, MultiBufferSource buf, int light) {
         Models.Model m = Models.get(a.kind);
@@ -69,6 +77,15 @@ public class AircraftRenderer extends EntityRenderer<Aircraft> {
             if (a.grounded() || (a.kind.heli() && a.getDeltaMovement().lengthSqr() < 0.02)) draw(m.gear, ps.last(), vc, light, 1f);
             for (Models.Ord o : m.ord) {
                 if (a.ammo(W.values()[o.weapon]) > o.idx) draw(o.m, ps.last(), vc, light, 1f);
+            }
+            int ms = 0, bs = 0;
+            for (W w : a.loaded()) {
+                int n = Math.min(2, a.ammo(w));
+                if (w.missileLike()) {
+                    for (int k = 0; k < n && ms < m.missSt.size(); k++) station(ps, m.missSt.get(ms++), w.visScale(), Models.missile, vc, light);
+                } else if (w.bombLike()) {
+                    for (int k = 0; k < n && bs < m.bombSt.size(); k++) station(ps, m.bombSt.get(bs++), w.visScale() * 1.15f, Models.bomb, vc, light);
+                }
             }
         }
         float rot = Mth.lerp(pt, a.rotorO, a.rotor);

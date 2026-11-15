@@ -21,6 +21,7 @@ public class Models {
         public final Mesh rotor = new Mesh(), rotorDisc = new Mesh(), tail = new Mesh(), tailDisc = new Mesh();
         public float rx, ry, rz, tx, ty, tz;
         public final List<Ord> ord = new ArrayList<>();
+        public final List<float[]> missSt = new ArrayList<>(), bombSt = new ArrayList<>();
         public float pivotY = 1.3f;
     }
 
@@ -141,8 +142,8 @@ public class Models {
         for (int s = -1; s <= 1; s += 2) {
             int i = s < 0 ? 0 : 1;
             ord(m, 1, i, s * 1.1f, 0.88f, 0.4f, 1.8f, 2);
-            ord(m, 2, i * 2, s * 1.75f, 0.92f, 0.45f, 1.2f, 0);
-            ord(m, 2, i * 2 + 1, s * 2.2f, 0.92f, 0.45f, 1.2f, 0);
+            m.missSt.add(new float[]{s * 1.75f, 0.92f, 0.45f});
+            m.missSt.add(new float[]{s * 2.2f, 0.92f, 0.45f});
         }
         m.pivotY = 1.4f;
         return m;
@@ -191,10 +192,10 @@ public class Models {
         // munitions
         for (int s = -1; s <= 1; s += 2) {
             int i = s < 0 ? 0 : 1;
-            ord(m, 2, i, s * 5.1f, 1.0f, -2.8f, 1.5f, 0);
-            ord(m, 2, i + 2, s * 2.7f, 0.78f, -1.0f, 1.4f, 0);
-            ord(m, 3, i, s * 1.6f, 0.55f, 0.1f, 1.4f, 1);
-            ord(m, 3, i + 2, s * 3.5f, 0.7f, -1.2f, 1.4f, 1);
+            m.missSt.add(new float[]{s * 5.1f, 1.0f, -2.8f});
+            m.missSt.add(new float[]{s * 2.7f, 0.78f, -1.0f});
+            m.bombSt.add(new float[]{s * 1.6f, 0.55f, 0.1f});
+            m.bombSt.add(new float[]{s * 3.5f, 0.7f, -1.2f});
             ord(m, 1, i, s * 4.2f, 0.82f, -2.0f, 1.8f, 2);
         }
         m.pivotY = 1.0f;

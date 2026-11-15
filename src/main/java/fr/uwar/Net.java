@@ -17,6 +17,7 @@ public class Net {
     public static void register() {
         CH.registerMessage(0, InputMsg.class, InputMsg::encode, InputMsg::decode, InputMsg::handle);
         CH.registerMessage(1, CmdMsg.class, CmdMsg::encode, CmdMsg::decode, CmdMsg::handle);
+        CH.registerMessage(2, LoadoutMsg.class, LoadoutMsg::encode, LoadoutMsg::decode, LoadoutMsg::handle);
     }
 
     static Aircraft piloted(ServerPlayer sp) {
@@ -60,6 +61,23 @@ public class Net {
                     case C_RELOAD -> a.reloadFrom(sp);
                     default -> {
                     }
+                }
+            });
+            ctx.get().setPacketHandled(true);
+        }
+    }
+
+    /** Client -> serveur : nouvelle configuration d'armement (interface touche 5). */
+    public record LoadoutMsg(int id, int mask) {
+        static void encode(LoadoutMsg m, FriendlyByteBuf b) { b.writeVarInt(m.id); b.writeVarInt(m.mask); }
+        static LoadoutMsg decode(FriendlyByteBuf b) { return new LoadoutMsg(b.readVarInt(), b.readVarInt()); }
+        static void handle(LoadoutMsg m, Supplier<NetworkEvent.Context> ctx) {
+            ServerPlayer sp = ctx.get().getSender();
+            ctx.get().enqueueWork(() -> {
+                if (sp == null) return;
+                if (sp.level().getEntity(m.id) instanceof Aircraft a && (sp.getVehicle() == a || a.distanceTo(sp) < 12)) {
+                    String err = a.setLoadout(sp, m.mask);
+                    if (err != null) sp.displayClientMessage(net.minecraft.network.chat.Component.literal(err), true);
                 }
             });
             ctx.get().setPacketHandled(true);

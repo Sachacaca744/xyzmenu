@@ -49,10 +49,14 @@ public class Aircraft extends Entity {
     static final EntityDataAccessor<Integer> SEL = SynchedEntityData.defineId(Aircraft.class, EntityDataSerializers.INT);
     static final EntityDataAccessor<Integer> LOCK = SynchedEntityData.defineId(Aircraft.class, EntityDataSerializers.INT);
     static final EntityDataAccessor<Boolean> ENGINE = SynchedEntityData.defineId(Aircraft.class, EntityDataSerializers.BOOLEAN);
-    static final EntityDataAccessor<Integer> AM0 = SynchedEntityData.defineId(Aircraft.class, EntityDataSerializers.INT);
-    static final EntityDataAccessor<Integer> AM1 = SynchedEntityData.defineId(Aircraft.class, EntityDataSerializers.INT);
-    static final EntityDataAccessor<Integer> AM2 = SynchedEntityData.defineId(Aircraft.class, EntityDataSerializers.INT);
-    static final EntityDataAccessor<Integer> AM3 = SynchedEntityData.defineId(Aircraft.class, EntityDataSerializers.INT);
+    static final EntityDataAccessor<Integer> LOADOUT = SynchedEntityData.defineId(Aircraft.class, EntityDataSerializers.INT);
+    @SuppressWarnings("unchecked")
+    static final EntityDataAccessor<Integer>[] AM = new EntityDataAccessor[W.values().length];
+
+    static {
+        for (int i = 0; i < AM.length; i++) AM[i] = SynchedEntityData.defineId(Aircraft.class, EntityDataSerializers.INT);
+    }
+
     static final EntityDataAccessor<Boolean> BOOST = SynchedEntityData.defineId(Aircraft.class, EntityDataSerializers.BOOLEAN);
 
     public final Kind kind;
@@ -99,10 +103,8 @@ public class Aircraft extends Entity {
         entityData.define(SEL, 0);
         entityData.define(LOCK, -1);
         entityData.define(ENGINE, false);
-        entityData.define(AM0, 0);
-        entityData.define(AM1, 0);
-        entityData.define(AM2, 0);
-        entityData.define(AM3, 0);
+        entityData.define(LOADOUT, W.CANNON.bit());
+        for (EntityDataAccessor<Integer> a : AM) entityData.define(a, 0);
         entityData.define(BOOST, false);
     }
 
@@ -115,42 +117,67 @@ public class Aircraft extends Entity {
     public boolean boosting() { return entityData.get(BOOST); }
     public int lockId() { return entityData.get(LOCK); }
 
+    public int loadout() { return entityData.get(LOADOUT); }
+    public boolean has(W w) { return (loadout() & w.bit()) != 0; }
+
+    public int slotsUsed() { return Integer.bitCount(loadout() & ~W.CANNON.bit()); }
+
     public W selected() {
-        int i = Mth.clamp(entityData.get(SEL), 0, kind.weapons.length - 1);
-        return kind.weapons[i];
+        W w = W.values()[Mth.clamp(entityData.get(SEL), 0, W.values().length - 1)];
+        return has(w) ? w : W.CANNON;
     }
 
-    public int selIndex() { return Mth.clamp(entityData.get(SEL), 0, kind.weapons.length - 1); }
-
-    public int ammo(W w) {
-        return switch (w) {
-            case CANNON -> entityData.get(AM0);
-            case ROCKET -> entityData.get(AM1);
-            case MISSILE -> entityData.get(AM2);
-            case BOMB -> entityData.get(AM3);
-        };
+    /** Armes de la configuration actuelle, dans l'ordre. */
+    public java.util.List<W> loaded() {
+        java.util.List<W> l = new java.util.ArrayList<>();
+        for (W w : W.values()) if (has(w)) l.add(w);
+        return l;
     }
 
-    public int cap(W w) { return kind.cap[w.ordinal()]; }
+    public int ammo(W w) { return entityData.get(AM[w.ordinal()]); }
 
-    public void setAmmo(W w, int n) {
-        n = Mth.clamp(n, 0, cap(w));
-        switch (w) {
-            case CANNON -> entityData.set(AM0, n);
-            case ROCKET -> entityData.set(AM1, n);
-            case MISSILE -> entityData.set(AM2, n);
-            case BOMB -> entityData.set(AM3, n);
-        }
-    }
+    /** Capacite pour cette arme (0 si elle n'est pas installee). */
+    public int cap(W w) { return has(w) ? kind.cap[w.ordinal()] : 0; }
+
+    public void setAmmo(W w, int n) { entityData.set(AM[w.ordinal()], Mth.clamp(n, 0, kind.cap[w.ordinal()])); }
 
     public void setFuel(float f) { entityData.set(FUEL, Mth.clamp(f, 0f, kind.fuelCap)); }
     public void setHp(float h) { entityData.set(HP, Mth.clamp(h, 0f, kind.maxHp)); }
 
     public void nextWeapon(int d) {
-        int n = kind.weapons.length;
-        entityData.set(SEL, ((selIndex() + d) % n + n) % n);
+        int n = W.values().length, idx = selected().ordinal();
+        for (int k = 0; k < n; k++) {
+            idx = ((idx + d) % n + n) % n;
+            if (has(W.values()[idx])) break;
+        }
+        entityData.set(SEL, idx);
         entityData.set(LOCK, -1);
         level().playSound(null, getX(), getY(), getZ(), Reg.BEEP.get(), SoundSource.NEUTRAL, 0.5f, 1.6f);
+    }
+
+    /** Change la configuration d'armement. Retourne un message d'erreur, ou null si OK. */
+    public String setLoadout(Player p, int mask) {
+        mask |= W.CANNON.bit();
+        for (W w : W.values()) if ((mask & w.bit()) != 0 && !kind.canCarry(w)) return w.label + " : impossible sur cet appareil";
+        if (Integer.bitCount(mask & ~W.CANNON.bit()) > kind.slots) return "Trop d'armes : " + kind.slots + " emplacements maximum";
+        if (!grounded() && !p.getAbilities().instabuild) return "Pose l'appareil au sol pour changer l'armement";
+        int old = loadout();
+        if (mask == old) return null;
+        for (W w : W.values()) {
+            if ((old & w.bit()) != 0 && (mask & w.bit()) == 0) {
+                int items = ammo(w) / w.perItem;
+                setAmmo(w, 0);
+                if (items > 0 && w != W.CANNON) {
+                    ItemStack st = new ItemStack(Reg.AMMO.get(w).get(), items);
+                    if (!p.getInventory().add(st)) p.drop(st, false);
+                }
+            }
+        }
+        entityData.set(LOADOUT, mask);
+        entityData.set(LOCK, -1);
+        if (!has(W.values()[entityData.get(SEL)])) entityData.set(SEL, W.CANNON.ordinal());
+        level().playSound(null, getX(), getY(), getZ(), SoundEvents.ANVIL_USE, SoundSource.NEUTRAL, 0.5f, 1.2f);
+        return null;
     }
 
     public void setInput(float thr, boolean boost, boolean fire, boolean up, float yaw, float pitch, float impact) {
@@ -174,7 +201,10 @@ public class Aircraft extends Entity {
             CompoundTag t = s.getOrCreateTagElement("ac");
             t.putFloat("Hp", k.maxHp);
             t.putFloat("Fuel", k.fuelCap);
-            t.putIntArray("Am", k.cap.clone());
+            t.putInt("Lo", k.defaultLoadout);
+            int[] a = new int[W.values().length];
+            for (W w : W.values()) if ((k.defaultLoadout & w.bit()) != 0) a[w.ordinal()] = k.cap[w.ordinal()];
+            t.putIntArray("Am", a);
             s.setHoverName(Component.literal(k.name + " (equipe)").withStyle(st -> st.withItalic(false)));
         }
         return s;
@@ -183,11 +213,13 @@ public class Aircraft extends Entity {
     public void applyStack(ItemStack s) {
         CompoundTag t = s.getTagElement("ac");
         if (t == null) {
+            entityData.set(LOADOUT, kind.defaultLoadout);
             setHp(kind.maxHp);
             setFuel(kind.fuelCap * 0.4f);
             setAmmo(W.CANNON, 150);
             return;
         }
+        entityData.set(LOADOUT, t.contains("Lo") ? (t.getInt("Lo") | W.CANNON.bit()) : kind.defaultLoadout);
         setHp(t.getFloat("Hp"));
         setFuel(t.getFloat("Fuel"));
         int[] a = t.getIntArray("Am");
@@ -199,7 +231,8 @@ public class Aircraft extends Entity {
         CompoundTag t = s.getOrCreateTagElement("ac");
         t.putFloat("Hp", hp());
         t.putFloat("Fuel", fuel());
-        int[] a = new int[4];
+        t.putInt("Lo", loadout());
+        int[] a = new int[W.values().length];
         for (W w : W.values()) a[w.ordinal()] = ammo(w);
         t.putIntArray("Am", a);
         return s;
@@ -215,7 +248,7 @@ public class Aircraft extends Entity {
             switch (si.type) {
                 case AMMO -> {
                     W w = si.weapon;
-                    if (cap(w) <= 0) msg = kind.name + " ne peut pas emporter : " + w.label;
+                    if (cap(w) <= 0) msg = w.label + " : non installe (touche 5 pour configurer l'armement)";
                     else if (ammo(w) >= cap(w)) msg = w.label + " : deja plein (" + ammo(w) + ")";
                     else {
                         setAmmo(w, ammo(w) + w.perItem);
@@ -262,7 +295,7 @@ public class Aircraft extends Entity {
                 if (p.getAbilities().instabuild) break;
             }
         }
-        for (W w : kind.weapons) sb.append(w.label).append(' ').append(ammo(w)).append('/').append(cap(w)).append("  ");
+        for (W w : loaded()) sb.append(w.shortName).append(' ').append(ammo(w)).append('/').append(cap(w)).append("  ");
         p.displayClientMessage(Component.literal(used == 0 ? "Rien a charger dans l'inventaire | " + sb
                 : "Rechargement termine | " + sb + "Carburant " + Math.round(fuel() * 100 / kind.fuelCap) + " %"), true);
     }
@@ -581,7 +614,7 @@ public class Aircraft extends Entity {
         if (cooldown > 0) cooldown--;
         if (clickCd > 0) clickCd--;
         if (on) {
-            if (selected() == W.MISSILE && tickCount % 4 == 0) updateLock();
+            if (lockWeapon(selected()) && tickCount % 4 == 0) updateLock(selected());
             if (inFire && cooldown <= 0) fire(c);
         } else if (lockId() != -1) entityData.set(LOCK, -1);
     }
@@ -601,20 +634,42 @@ public class Aircraft extends Entity {
         return new Vec3(Math.cos(a), 0, Math.sin(a));
     }
 
-    private void updateLock() {
+    public static boolean lockWeapon(W w) {
+        return w == W.MISSILE || w == W.IR || w == W.FLAK || w == W.BUSTER || w == W.CRUISE;
+    }
+
+    private void updateLock(W w) {
+        double minCos = switch (w) {
+            case IR -> 0.78;
+            case FLAK -> 0.90;
+            case BUSTER -> 0.965;
+            case CRUISE -> 0.96;
+            default -> 0.94;
+        };
+        double range = switch (w) {
+            case IR -> 180;
+            case CRUISE -> 170;
+            case FLAK -> 150;
+            case BUSTER -> 100;
+            default -> 135;
+        };
         Vec3 o = position().add(0, kind.h * 0.5, 0), d = aimDir();
         Entity best = null;
         double bs = -1;
-        AABB box = new AABB(o, o).inflate(135);
+        AABB box = new AABB(o, o).inflate(range);
         for (Entity e : level().getEntities(this, box, this::lockable)) {
             Vec3 to = e.getBoundingBox().getCenter().subtract(o);
             double dist = to.length();
-            if (dist < 8 || dist > 135) continue;
+            if (dist < 8 || dist > range) continue;
             double cos = to.normalize().dot(d);
-            if (cos < 0.94) continue;
+            if (cos < minCos) continue;
             BlockHitResult br = level().clip(new ClipContext(o, e.getBoundingBox().getCenter(), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
             if (br.getType() != HitResult.Type.MISS) continue;
-            double score = cos + (e instanceof Enemy ? 0.02 : 0) + (e instanceof Aircraft ? 0.01 : 0);
+            double score = cos + (e instanceof Enemy ? 0.02 : 0);
+            if (e instanceof Aircraft ac) score += w == W.FLAK ? 0.3 : 0.01;
+            if (w == W.IR) {
+                score += heat(e);
+            }
             if (score > bs) {
                 bs = score;
                 best = e;
@@ -627,12 +682,49 @@ public class Aircraft extends Entity {
         }
     }
 
+    /** Signature thermique d'une cible (pour le missile infrarouge). */
+    public static double heat(Entity e) {
+        double h = 0;
+        if (e instanceof Aircraft ac && ac.engineOn()) h += 0.5 + (ac.boosting() ? 0.3 : 0.0) + ac.thr() * 0.2;
+        if (e.isOnFire()) h += 0.25;
+        if (e instanceof net.minecraft.world.entity.monster.Blaze || e instanceof net.minecraft.world.entity.monster.MagmaCube) h += 0.3;
+        return h;
+    }
+
     private boolean lockable(Entity e) {
         if (!e.isAlive() || e.isSpectator() || hasPassenger(e) || e.getVehicle() == this) return false;
         if (e instanceof Aircraft a) return a != this;
         if (e instanceof Player && !Cfg.LOCK_PLAYERS.get()) return false;
         if (e instanceof ArmorStand) return false;
         return e instanceof LivingEntity;
+    }
+
+    private UUID lockedUuid(ServerLevel sl) {
+        if (lockId() == -1) return null;
+        Entity t = sl.getEntity(lockId());
+        return t == null ? null : t.getUUID();
+    }
+
+    private Shell launch(ServerLevel sl, W w, LivingEntity pilot, Vec3 o, Vec3 v, UUID target, Vec3 point) {
+        Shell s = new Shell(Reg.SHELL.get(), sl);
+        s.setPos(o.x, o.y, o.z);
+        s.setup(w, pilot, this, v, target);
+        if (point != null) s.setPoint(point);
+        sl.addFreshEntity(s);
+        return s;
+    }
+
+    /** Point vise au sol (pour croisiere / balistique) : impact du rayon de visee, sinon le sol 170 blocs devant. */
+    public Vec3 aimPoint(Level lv, Vec3 from, Vec3 dir) {
+        double range = 170;
+        Vec3 end = from.add(dir.scale(range));
+        BlockHitResult br = lv.clip(new ClipContext(from, end, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
+        if (br.getType() != HitResult.Type.MISS) return br.getLocation();
+        if (!lv.isClientSide) {
+            net.minecraft.core.BlockPos bp = lv.getHeightmapPos(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING, net.minecraft.core.BlockPos.containing(end));
+            return new Vec3(end.x, bp.getY(), end.z);
+        }
+        return end;
     }
 
     private void fire(LivingEntity pilot) {
@@ -656,33 +748,39 @@ public class Aircraft extends Entity {
         switch (w) {
             case CANNON -> fireCannon(sl, pilot, base.add(dir.scale(2.6)).add(0, kind.heli() ? -0.7 : -0.1, 0), dir);
             case ROCKET -> {
-                Shell s = new Shell(Reg.SHELL.get(), sl);
                 Vec3 o = base.add(left.scale(side * (kind.heli() ? 1.7 : 3.6))).add(dir.scale(2.2)).add(0, -0.4, 0);
-                s.setPos(o.x, o.y, o.z);
-                s.setup(W.ROCKET, pilot, this, dir.scale(w.speed).add(vel.scale(0.4)), null);
-                sl.addFreshEntity(s);
+                launch(sl, w, pilot, o, dir.scale(w.speed).add(vel.scale(0.4)), null, null);
                 sl.playSound(null, o.x, o.y, o.z, Reg.LAUNCH.get(), SoundSource.NEUTRAL, 1.6f, 1.2f);
             }
-            case MISSILE -> {
-                Shell s = new Shell(Reg.SHELL.get(), sl);
+            case MISSILE, IR, FLAK, BUSTER -> {
                 Vec3 o = base.add(left.scale(side * (kind.heli() ? 2.5 : 5.0))).add(dir.scale(1.5)).add(0, -0.6, 0);
-                s.setPos(o.x, o.y, o.z);
-                UUID tg = null;
-                if (lockId() != -1) {
-                    Entity t = sl.getEntity(lockId());
-                    if (t != null) tg = t.getUUID();
-                }
-                s.setup(W.MISSILE, pilot, this, dir.scale(0.9).add(vel.scale(0.5)), tg);
-                sl.addFreshEntity(s);
-                sl.playSound(null, o.x, o.y, o.z, Reg.LAUNCH.get(), SoundSource.NEUTRAL, 2.0f, 0.9f);
+                launch(sl, w, pilot, o, dir.scale(0.9).add(vel.scale(0.5)), lockedUuid(sl), null);
+                sl.playSound(null, o.x, o.y, o.z, Reg.LAUNCH.get(), SoundSource.NEUTRAL, w == W.BUSTER ? 2.6f : 2.0f, w == W.BUSTER ? 0.6f : 0.9f);
             }
-            case BOMB -> {
-                Shell s = new Shell(Reg.SHELL.get(), sl);
-                Vec3 o = base.add(left.scale(side * 0.8)).add(0, -1.1, 0);
-                s.setPos(o.x, o.y, o.z);
-                s.setup(W.BOMB, pilot, this, vel, null);
-                sl.addFreshEntity(s);
-                sl.playSound(null, o.x, o.y, o.z, SoundEvents.TNT_PRIMED, SoundSource.NEUTRAL, 1.0f, 0.8f);
+            case CRUISE -> {
+                Vec3 o = base.add(0, 0.2, 0).add(dir.scale(2.0));
+                Vec3 pt = aimPoint(sl, base, dir);
+                Vec3 h = new Vec3(dir.x, 0, dir.z).normalize();
+                launch(sl, w, pilot, o, h.scale(0.5).add(0, 0.9, 0), lockedUuid(sl), pt);
+                sl.playSound(null, o.x, o.y, o.z, Reg.LAUNCH.get(), SoundSource.NEUTRAL, 3.0f, 0.5f);
+            }
+            case BALLISTIC -> {
+                Vec3 o = base.add(0, 1.2, 0).add(dir.scale(1.0));
+                Vec3 pt = aimPoint(sl, base, dir);
+                double dx = pt.x - o.x, dz = pt.z - o.z;
+                double d = Math.max(25.0, Math.hypot(dx, dz));
+                double th = Math.toRadians(60), g = Shell.BALLISTIC_G;
+                double den = Math.max(2.0, d * Math.tan(th) - (pt.y - o.y));
+                double v = Math.sqrt(g * d * d / (2 * Math.cos(th) * Math.cos(th) * den));
+                double hl = Math.max(1e-4, Math.hypot(dx, dz));
+                Vec3 vv = new Vec3(dx / hl * v * Math.cos(th), v * Math.sin(th), dz / hl * v * Math.cos(th));
+                launch(sl, w, pilot, o, vv, null, pt);
+                sl.playSound(null, o.x, o.y, o.z, Reg.LAUNCH.get(), SoundSource.NEUTRAL, 3.2f, 0.45f);
+            }
+            case BOMB, BAY -> {
+                Vec3 o = base.add(left.scale(side * (w == W.BAY ? 0.5 : 0.8))).add(0, -1.1, 0);
+                launch(sl, w, pilot, o, vel, null, null);
+                sl.playSound(null, o.x, o.y, o.z, SoundEvents.TNT_PRIMED, SoundSource.NEUTRAL, 1.0f, w == W.BAY ? 0.6f : 0.8f);
             }
         }
         shots++;
@@ -750,6 +848,7 @@ public class Aircraft extends Entity {
     protected void readAdditionalSaveData(CompoundTag t) {
         setHp(t.getFloat("Hp"));
         setFuel(t.getFloat("Fuel"));
+        entityData.set(LOADOUT, t.contains("Lo") ? (t.getInt("Lo") | W.CANNON.bit()) : kind.defaultLoadout);
         for (W w : W.values()) setAmmo(w, t.getInt("A" + w.ordinal()));
         entityData.set(SEL, t.getInt("Sel"));
     }
@@ -760,6 +859,7 @@ public class Aircraft extends Entity {
         t.putFloat("Fuel", fuel());
         for (W w : W.values()) t.putInt("A" + w.ordinal(), ammo(w));
         t.putInt("Sel", entityData.get(SEL));
+        t.putInt("Lo", loadout());
     }
 
     @Override

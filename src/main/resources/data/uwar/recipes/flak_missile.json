@@ -1,0 +1,21 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "ingredients": [
+  {
+   "item": "uwar:air_missile"
+  },
+  {
+   "item": "minecraft:gunpowder"
+  },
+  {
+   "item": "minecraft:gunpowder"
+  },
+  {
+   "item": "minecraft:flint"
+  }
+ ],
+ "result": {
+  "item": "uwar:flak_missile",
+  "count": 1
+ }
+}

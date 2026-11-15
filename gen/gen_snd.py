@@ -101,6 +101,12 @@ items = {
  'aerial_bomb': ('Bombe aérienne', 'Aerial Bomb'),
  'fuel_can': ('Bidon de carburant aviation', 'Aviation Fuel Can'),
  'repair_kit': ('Kit de réparation', 'Repair Kit'),
+ 'ir_missile': ('Missile infrarouge', 'Infrared Missile'),
+ 'flak_missile': ('Missile à fragmentation (50 m)', 'Fragmentation Missile (50 m)'),
+ 'cruise_missile': ('Missile de croisière', 'Cruise Missile'),
+ 'ballistic_missile': ('Missile balistique', 'Ballistic Missile'),
+ 'buster_missile': ('Missile anti-bunker', 'Bunker Buster Missile'),
+ 'heavy_bomb': ('Bombe lourde (soute)', 'Heavy Bomb (bay)'),
 }
 for idx, code in enumerate(['fr_fr', 'en_us']):
     L = {}
@@ -111,6 +117,7 @@ for idx, code in enumerate(['fr_fr', 'en_us']):
     L['entity.uwar.shell'] = ['Munition aérienne', 'Aircraft ordnance'][idx]
     L['key.categories.uwar'] = 'UWar - Aviation'
     L['key.uwar.weapon'] = ['Arme suivante', 'Next weapon'][idx]
+    L['key.uwar.loadout'] = ['Interface d\'armement', 'Weapon loadout screen'][idx]
     L['key.uwar.reload'] = ['Recharger depuis l\'inventaire', 'Reload from inventory'][idx]
     json.dump(L, open(f'{A}/lang/{code}.json', 'w'), indent=1, ensure_ascii=False)
 
@@ -131,4 +138,10 @@ shapeless('fuel_can', ['minecraft:iron_ingot', 'minecraft:coal', 'minecraft:coal
 shapeless('repair_kit', ['minecraft:iron_ingot', 'minecraft:iron_ingot', 'minecraft:redstone', 'minecraft:copper_ingot'], 'repair_kit')
 shaped('attack_heli', ['BBB', 'IFI', 'GRG'], {'B': 'minecraft:iron_block', 'I': 'minecraft:iron_ingot', 'F': 'minecraft:blast_furnace', 'G': 'minecraft:glass', 'R': 'minecraft:redstone'}, 'attack_heli')
 shaped('fighter_jet', ['IBI', 'BFB', 'GRG'], {'B': 'minecraft:iron_block', 'I': 'minecraft:iron_ingot', 'F': 'minecraft:blast_furnace', 'G': 'minecraft:glass', 'R': 'minecraft:redstone'}, 'fighter_jet')
+shapeless('ir_missile', ['uwar:air_missile', 'minecraft:blaze_powder'], 'ir_missile')
+shapeless('flak_missile', ['uwar:air_missile', 'minecraft:gunpowder', 'minecraft:gunpowder', 'minecraft:flint'], 'flak_missile')
+shapeless('cruise_missile', ['uwar:air_missile', 'uwar:fuel_can', 'minecraft:tnt', 'minecraft:tnt', 'minecraft:iron_ingot'], 'cruise_missile')
+shapeless('ballistic_missile', ['uwar:fuel_can', 'uwar:fuel_can', 'minecraft:tnt', 'minecraft:tnt', 'minecraft:tnt', 'minecraft:iron_block', 'minecraft:redstone'], 'ballistic_missile')
+shapeless('buster_missile', ['uwar:air_missile', 'minecraft:tnt', 'minecraft:tnt', 'minecraft:iron_block', 'minecraft:gunpowder'], 'buster_missile')
+shapeless('heavy_bomb', ['uwar:aerial_bomb', 'minecraft:tnt', 'minecraft:iron_ingot', 'minecraft:gunpowder'], 'heavy_bomb')
 print('ok')

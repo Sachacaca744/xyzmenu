@@ -110,6 +110,10 @@ public class SelfTest {
                         if (en instanceof Aircraft ac && ac.kind == k && (best == null || ac.distanceTo(sp) < best.distanceTo(sp))) best = ac;
                     if (best != null) sp.startRiding(best, true);
                 }
+                case "fill" -> {
+                    if (src.getPlayerOrException().getVehicle() instanceof Aircraft ac)
+                        for (W w : ac.loaded()) ac.setAmmo(w, ac.cap(w));
+                }
                 case "unride" -> src.getPlayerOrException().stopRiding();
                 default -> src.sendFailure(Component.literal("?"));
             }
@@ -164,9 +168,9 @@ public class SelfTest {
         t = 0;
         pass = fail = 0;
         runs.clear();
-        String[][] sc = {{"heli_fly", "HELI"}, {"jet_fly", "JET"}, {"cannon", "HELI"}, {"rocket", "HELI"}, {"missile", "HELI"}, {"bomb", "JET"},
+        String[][] sc = {{"cruise", "JET"}, {"ballistic", "JET"}, {"heli_fly", "HELI"}, {"jet_fly", "JET"}, {"cannon", "HELI"}, {"rocket", "HELI"}, {"missile", "HELI"}, {"bomb", "JET"},
                 {"empty", "HELI"}, {"supply", "HELI"}, {"fuel_out", "HELI"}, {"destroy", "HELI"}, {"crash", "JET"}, {"persist", "JET"},
-                {"pickup", "HELI"}, {"place", "JET"}, {"jet_weapons", "JET"}};
+                {"pickup", "HELI"}, {"place", "JET"}, {"jet_weapons", "JET"}, {"loadout", "HELI"}, {"ir", "HELI"}, {"flak", "HELI"}, {"buster", "HELI"}, {"bay", "JET"}};
         int i = 0;
         for (String[] s : sc) {
             Run r = mk(s[0], Kind.valueOf(s[1]), -90 + (i % 8) * 24, (i / 8) * 60 - 30, s[0]);
@@ -384,6 +388,7 @@ public class SelfTest {
                     check("roquettes consommees", r.i0 - a.ammo(W.ROCKET) >= 1, r.i0 + " -> " + a.ammo(W.ROCKET));
                     LivingEntity le = (LivingEntity) r.c1;
                     check("roquette detruit la cible", !le.isAlive(), "pv=" + le.getHealth());
+                    check("roquette standard : ne casse pas les blocs", !lv.getBlockState(BlockPos.containing(r.start.x + 1.7, r.start.y - 1, r.start.z + 30)).isAir(), "");
                     boolean left = false;
                     for (Entity en : lv.getAllEntities()) if (en instanceof Shell) left = true;
                     check("plus de projectile apres explosion", !left, "");
@@ -420,6 +425,7 @@ public class SelfTest {
                     check("bombe selectionnee", a.selected() == W.BOMB, "arme=" + a.selected());
                     check("bombe consommee", a.ammo(W.BOMB) == r.i0 - 1, r.i0 + " -> " + a.ammo(W.BOMB));
                     check("bombe detruit la cible", !((LivingEntity) r.c1).isAlive(), "pv=" + ((LivingEntity) r.c1).getHealth());
+                    check("bombe standard : ne casse pas les blocs", !lv.getBlockState(BlockPos.containing(r.start.x + 3, r.start.y - 1, r.start.z)).isAir(), "");
                     check("la bombe n'abime pas son propre appareil", a.hp() >= a.kind.maxHp - 0.1f, "hp=" + a.hp());
                     fin(r);
                 }
@@ -559,6 +565,118 @@ public class SelfTest {
                         check("appareil pose : 40% carburant + 150 obus", Math.abs(n.fuel() - n.kind.fuelCap * 0.4f) < 1 && n.ammo(W.CANNON) == 150, "fuel=" + n.fuel() + " mun=" + n.ammo(W.CANNON));
                         n.discard();
                     }
+                    fin(r);
+                }
+            }
+            case "loadout" -> {
+                if (lt == 1) {
+                    a.setAmmo(W.ROCKET, 38);
+                    int mask = W.CANNON.bit() | W.IR.bit() | W.FLAK.bit() | W.BUSTER.bit();
+                    String err = a.setLoadout(r.fp, mask);
+                    check("config armement acceptee au sol", err == null && a.has(W.IR) && a.has(W.FLAK) && a.has(W.BUSTER) && !a.has(W.ROCKET) && !a.has(W.MISSILE), "err=" + err + " lo=" + a.loadout());
+                    int items = 0;
+                    for (int i = 0; i < r.fp.getInventory().getContainerSize(); i++) {
+                        ItemStack st = r.fp.getInventory().getItem(i);
+                        if (st.getItem() == Reg.AMMO.get(W.ROCKET).get()) items += st.getCount();
+                    }
+                    check("arme retiree : munitions rendues en objets", items == 6 && a.ammo(W.ROCKET) == 0, "objets=" + items);
+                    String e2 = a.setLoadout(r.fp, mask | W.MISSILE.bit());
+                    check("trop d'armes refuse", e2 != null && !a.has(W.MISSILE), "err=" + e2);
+                    String e3 = a.setLoadout(r.fp, W.CANNON.bit() | W.CRUISE.bit());
+                    check("arme impossible sur l'helico refusee", e3 != null && !a.has(W.CRUISE), "err=" + e3);
+                    a.nextWeapon(1);
+                    W w1 = a.selected();
+                    a.nextWeapon(1);
+                    W w2 = a.selected();
+                    a.nextWeapon(1);
+                    W w3 = a.selected();
+                    a.nextWeapon(1);
+                    check("cycle limite aux armes installees", w1 == W.IR && w2 == W.FLAK && w3 == W.BUSTER && a.selected() == W.CANNON, w1 + " " + w2 + " " + w3 + " " + a.selected());
+                    ItemStack pod = new ItemStack(Reg.AMMO.get(W.ROCKET).get(), 2);
+                    a.supply(r.fp, pod);
+                    check("munition d'une arme non installee refusee", pod.getCount() == 2 && a.ammo(W.ROCKET) == 0, "n=" + pod.getCount());
+                    ItemStack s2 = a.toStack();
+                    Aircraft c = new Aircraft(Reg.AIRCRAFTS.get(r.kind).get(), lv, r.kind);
+                    c.applyStack(s2);
+                    check("la config suit l'objet (ramassage)", c.loadout() == a.loadout(), c.loadout() + " vs " + a.loadout());
+                    a.moveTo(a.getX(), a.getY() + 10, a.getZ());
+                    a.setDeltaMovement(0, 0, 0);
+                    String e4 = a.setLoadout(r.fp, W.CANNON.bit());
+                    check("config refusee en vol", e4 != null && a.has(W.IR), "err=" + e4);
+                    fin(r);
+                }
+            }
+            case "ir", "flak", "buster" -> {
+                W w = r.mode.equals("ir") ? W.IR : r.mode.equals("flak") ? W.FLAK : W.BUSTER;
+                if (lt == 1) {
+                    String err = a.setLoadout(r.fp, W.CANNON.bit() | w.bit());
+                    a.setAmmo(w, 4);
+                    double dz = w == W.FLAK ? 45 : w == W.BUSTER ? 30 : 60;
+                    r.c1 = cow(r.start.x + (w == W.IR ? 4 : 0), r.start.y, r.start.z + dz);
+                    r.d0 = r.c1.getX();
+                    r.d1 = r.c1.getZ();
+                    a.nextWeapon(1);
+                    r.i0 = a.ammo(w);
+                    check(w.name() + " installe et selectionne", err == null && a.selected() == w, "err=" + err + " sel=" + a.selected());
+                }
+                if (lt == 20) {
+                    check(w.name() + " verrouille la cible", a.lockId() == r.c1.getId(), "lock=" + a.lockId());
+                    a.inFire = true;
+                }
+                if (lt == 22) a.inFire = false;
+                if (lt == 130) {
+                    check(w.name() + " consomme 1", a.ammo(w) == r.i0 - 1, r.i0 + " -> " + a.ammo(w));
+                    check(w.name() + " detruit la cible", !((LivingEntity) r.c1).isAlive(), "pv=" + ((LivingEntity) r.c1).getHealth());
+                    if (w == W.BUSTER) {
+                        boolean air = lv.getBlockState(BlockPos.containing(r.d0, r.start.y - 1, r.d1)).isAir();
+                        check("anti-bunker : arrache les blocs a l'impact", air, "bloc=" + lv.getBlockState(BlockPos.containing(r.d0, r.start.y - 1, r.d1)));
+                    }
+                    fin(r);
+                }
+            }
+            case "cruise", "ballistic" -> {
+                W w = r.mode.equals("cruise") ? W.CRUISE : W.BALLISTIC;
+                if (lt == 1) {
+                    String err = a.setLoadout(r.fp, W.CANNON.bit() | w.bit());
+                    a.setAmmo(w, 2);
+                    r.c1 = cow(r.start.x, r.start.y, r.start.z + 170);
+                    a.nextWeapon(1);
+                    a.aimPitch = 0;
+                    r.i0 = a.ammo(w);
+                    check(w.name() + " installe et selectionne", err == null && a.selected() == w, "err=" + err);
+                    Vec3 pt = a.aimPoint(lv, a.position().add(0, a.kind.h * 0.55, 0), a.aimDir());
+                    check(w.name() + " : point vise au sol a 170 blocs", Math.abs(pt.z - (r.start.z + 170)) < 3 && Math.abs(pt.y - r.start.y) < 2, "pt=" + pt);
+                    a.inFire = true;
+                }
+                if (lt == 3) a.inFire = false;
+                if (lt == 12) {
+                    boolean found = false;
+                    for (Entity en : lv.getAllEntities()) if (en instanceof Shell sh && sh.weapon() == w) found = true;
+                    check(w.name() + " en vol", found, "");
+                }
+                if (lt == 330) {
+                    check(w.name() + " consomme 1", a.ammo(w) == r.i0 - 1, r.i0 + " -> " + a.ammo(w));
+                    check(w.name() + " detruit la cible a 170 blocs", !((LivingEntity) r.c1).isAlive(), "pv=" + ((LivingEntity) r.c1).getHealth());
+                    boolean air = lv.getBlockState(BlockPos.containing(r.start.x, r.start.y - 1, r.start.z + 170)).isAir();
+                    check(w.name() + " : cratere (blocs detruits)", air, "bloc=" + lv.getBlockState(BlockPos.containing(r.start.x, r.start.y - 1, r.start.z + 170)));
+                    fin(r);
+                }
+            }
+            case "bay" -> {
+                if (lt == 1) {
+                    String err = a.setLoadout(r.fp, W.CANNON.bit() | W.BAY.bit());
+                    a.setAmmo(W.BAY, 6);
+                    r.c1 = cow(r.start.x + 3, r.start.y, r.start.z);
+                    a.nextWeapon(1);
+                    r.i0 = a.ammo(W.BAY);
+                    check("soute lourde installee", err == null && a.selected() == W.BAY, "err=" + err);
+                    a.inFire = true;
+                }
+                if (lt == 14) a.inFire = false;
+                if (lt == 70) {
+                    check("soute : plusieurs bombes larguees en maintenant le tir", r.i0 - a.ammo(W.BAY) >= 2, r.i0 + " -> " + a.ammo(W.BAY));
+                    check("soute : detruit la cible", !((LivingEntity) r.c1).isAlive(), "");
+                    check("soute : detruit les blocs", lv.getBlockState(BlockPos.containing(r.start.x + 3, r.start.y - 1, r.start.z)).isAir(), "");
                     fin(r);
                 }
             }

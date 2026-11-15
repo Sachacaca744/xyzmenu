@@ -15,6 +15,17 @@ import java.util.List;
 /** Explosion personnalisee : effets visuels, son, degats aux entites (blocs selon la config). */
 public class Blast {
     public static void boom(ServerLevel sl, Vec3 p, float radius, float dmg, Entity src, Entity owner) {
+        boom(sl, p, radius, dmg, src, owner, false);
+    }
+
+    private static final net.minecraft.world.level.ExplosionDamageCalculator NO_ENTITY_DAMAGE = new net.minecraft.world.level.ExplosionDamageCalculator() {
+        @Override
+        public boolean shouldDamageEntity(net.minecraft.world.level.Explosion e, Entity en) {
+            return false;
+        }
+    };
+
+    public static void boom(ServerLevel sl, Vec3 p, float radius, float dmg, Entity src, Entity owner, boolean heavy) {
         sl.playSound(null, p.x, p.y, p.z, Reg.BOOM.get(), SoundSource.NEUTRAL, 4.0f, 0.9f + sl.random.nextFloat() * 0.2f);
         sl.sendParticles(ParticleTypes.FLASH, p.x, p.y, p.z, 1, 0, 0, 0, 0);
         if (radius >= 3f) sl.sendParticles(ParticleTypes.EXPLOSION_EMITTER, p.x, p.y, p.z, 1, 0, 0, 0, 0);
@@ -47,6 +58,7 @@ public class Blast {
             }
             if (radius >= 3f && f > 0.5f) e.setSecondsOnFire(2);
         }
-        if (Cfg.BLOCK_DAMAGE.get()) sl.explode(null, p.x, p.y, p.z, radius * 0.8f, Level.ExplosionInteraction.TNT);
+        boolean blocks = heavy ? Cfg.HEAVY_BLOCKS.get() : Cfg.BLOCK_DAMAGE.get();
+        if (blocks) sl.explode(null, null, NO_ENTITY_DAMAGE, p.x, p.y, p.z, heavy ? radius * 0.85f : radius * 0.8f, false, Level.ExplosionInteraction.TNT);
     }
 }

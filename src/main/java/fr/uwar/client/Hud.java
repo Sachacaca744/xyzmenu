@@ -104,21 +104,32 @@ public class Hud {
         bar(g, x0 + 36, y0 + 61, 62, 6, hk, hk < 0.3f ? RED : hk < 0.6f ? AMBER : GREEN);
 
         // armes
-        int ax = w - 150, ay = h / 2 - 34;
-        g.fill(ax - 6, ay - 4, w - 12, ay + 14 + a.kind.weapons.length * 12, BG);
-        g.drawString(f, "ARMEMENT", ax, ay, DIM, false);
-        for (int i = 0; i < a.kind.weapons.length; i++) {
-            W wp = a.kind.weapons[i];
-            boolean sel = i == a.selIndex();
+        java.util.List<W> ld = a.loaded();
+        int ax = w - 178, ay = h / 2 - 34;
+        g.fill(ax - 6, ay - 4, w - 12, ay + 14 + ld.size() * 12, BG);
+        g.drawString(f, "ARMEMENT  (5 : config)", ax, ay, DIM, false);
+        for (int i = 0; i < ld.size(); i++) {
+            W wp = ld.get(i);
+            boolean sel = wp == a.selected();
             int am = a.ammo(wp);
             int col = sel ? (am > 0 ? GREEN : RED) : DIM;
-            g.drawString(f, (sel ? "> " : "  ") + wp.label, ax, ay + 12 + i * 12, col, false);
+            g.drawString(f, (sel ? "> " : "  ") + wp.shortName, ax, ay + 12 + i * 12, col, false);
             String s = am + "/" + a.cap(wp);
             g.drawString(f, s, w - 18 - f.width(s), ay + 12 + i * 12, col, false);
         }
 
+        // point vise (croisiere / balistique)
+        if (a.selected() == W.CRUISE || a.selected() == W.BALLISTIC) {
+            Vec3 pt = a.aimPoint(mc.level, eye, a.aimDir());
+            int[] s = project(pt, w, h);
+            if (s != null) {
+                box(g, s[0], s[1], 10, AMBER);
+                g.drawString(f, "POINT VISE " + Math.round(pt.distanceTo(eye)) + " m", s[0] + 14, s[1] - 4, AMBER, false);
+            }
+        }
+
         // verrouillage missile
-        if (a.selected() == W.MISSILE) {
+        if (Aircraft.lockWeapon(a.selected())) {
             Entity tg = mc.level.getEntity(a.lockId());
             if (tg != null) {
                 int[] s = project(tg.getBoundingBox().getCenter(), w, h);

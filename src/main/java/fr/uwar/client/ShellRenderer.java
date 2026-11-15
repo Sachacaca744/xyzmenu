@@ -38,7 +38,8 @@ public class ShellRenderer extends EntityRenderer<Shell> {
         ps.pushPose();
         ps.mulPose(Axis.YP.rotationDegrees(-yy));
         ps.mulPose(Axis.XP.rotationDegrees(pp));
-        Mesh m = w == W.MISSILE ? Models.missile : w == W.BOMB ? Models.bomb : Models.rocket;
+        Mesh m = w.missileLike() ? Models.missile : w.bombLike() ? Models.bomb : Models.rocket;
+        if (w.missileLike() || w.bombLike()) ps.scale(w.visScale(), w.visScale(), w.visScale());
         AircraftRenderer.draw(m, ps.last(), buf.getBuffer(RenderType.entityCutoutNoCull(TEX)), light, 1f);
         ps.popPose();
     }

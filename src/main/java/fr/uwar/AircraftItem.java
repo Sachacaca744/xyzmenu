@@ -49,7 +49,7 @@ public class AircraftItem extends Item {
             tip.add(Component.literal("Coque " + Math.round(t.getFloat("Hp") * 100 / kind.maxHp) + " %  |  Carburant " + Math.round(t.getFloat("Fuel") * 100 / kind.fuelCap) + " %"));
             int[] a = t.getIntArray("Am");
             StringBuilder sb = new StringBuilder();
-            for (W w : kind.weapons) if (a.length > w.ordinal()) sb.append(w.label).append(' ').append(a[w.ordinal()]).append("  ");
+            for (W w : W.values()) if (a.length > w.ordinal() && a[w.ordinal()] > 0) sb.append(w.shortName).append(' ').append(a[w.ordinal()]).append("  ");
             tip.add(Component.literal(sb.toString()));
         } else {
             tip.add(Component.literal("Livre avec 40 % de carburant et 150 obus de canon"));

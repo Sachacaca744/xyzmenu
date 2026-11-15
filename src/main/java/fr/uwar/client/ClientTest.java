@@ -100,7 +100,20 @@ public class ClientTest {
                     cmd("tp @s -12 -60 10 0 0");
                 }
                 case 620 -> cmd("uwar_selftest ride heli");
-                case 650 -> {
+                case 645 -> {
+                    mc.options.hideGui = false;
+                    var v = mc.player.getVehicle();
+                    if (v instanceof fr.uwar.Aircraft ac) mc.setScreen(new LoadoutScreen(ac));
+                }
+                case 648 -> {
+                    if (mc.player.getVehicle() instanceof fr.uwar.Aircraft ac)
+                        Net.CH.sendToServer(new Net.LoadoutMsg(ac.getId(), fr.uwar.W.CANNON.bit() | fr.uwar.W.IR.bit() | fr.uwar.W.BUSTER.bit() | fr.uwar.W.FLAK.bit()));
+                }
+                case 652 -> {
+                    shot("20_ecran_armement_helico");
+                    mc.setScreen(null);
+                }
+                case 653 -> {
                     mc.options.hideGui = false;
                     mc.options.setCameraType(CameraType.FIRST_PERSON);
                     log("embarque heli");
@@ -138,6 +151,20 @@ public class ClientTest {
                 // ---- vol reel de l'avion de chasse
                 case 900 -> cmd("tp @s 14 -60 10 0 0");
                 case 920 -> cmd("uwar_selftest ride jet");
+                case 925 -> {
+                    if (mc.player.getVehicle() instanceof fr.uwar.Aircraft ac) mc.setScreen(new LoadoutScreen(ac));
+                }
+                case 928 -> {
+                    if (mc.player.getVehicle() instanceof fr.uwar.Aircraft ac)
+                        Net.CH.sendToServer(new Net.LoadoutMsg(ac.getId(), fr.uwar.W.CANNON.bit() | fr.uwar.W.CRUISE.bit() | fr.uwar.W.BALLISTIC.bit() | fr.uwar.W.IR.bit() | fr.uwar.W.BAY.bit()));
+                }
+                case 931 -> cmd("uwar_selftest fill");
+                case 934 -> {
+                    shot("21_ecran_armement_avion");
+                    mc.setScreen(null);
+                    Net.CH.sendToServer(new Net.CmdMsg(Net.C_WEAPON));
+                    Net.CH.sendToServer(new Net.CmdMsg(Net.C_WEAPON));
+                }
                 case 940 -> {
                     mc.player.setXRot(-14f);
                     mc.player.setYRot(0f);

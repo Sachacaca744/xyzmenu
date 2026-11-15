@@ -7,10 +7,17 @@
  "item.uwar.aerial_bomb": "Bombe aérienne",
  "item.uwar.fuel_can": "Bidon de carburant aviation",
  "item.uwar.repair_kit": "Kit de réparation",
+ "item.uwar.ir_missile": "Missile infrarouge",
+ "item.uwar.flak_missile": "Missile à fragmentation (50 m)",
+ "item.uwar.cruise_missile": "Missile de croisière",
+ "item.uwar.ballistic_missile": "Missile balistique",
+ "item.uwar.buster_missile": "Missile anti-bunker",
+ "item.uwar.heavy_bomb": "Bombe lourde (soute)",
  "entity.uwar.attack_heli": "Hélicoptère d'attaque AH-64",
  "entity.uwar.fighter_jet": "Avion de chasse F-16",
  "entity.uwar.shell": "Munition aérienne",
  "key.categories.uwar": "UWar - Aviation",
  "key.uwar.weapon": "Arme suivante",
+ "key.uwar.loadout": "Interface d'armement",
  "key.uwar.reload": "Recharger depuis l'inventaire"
 }

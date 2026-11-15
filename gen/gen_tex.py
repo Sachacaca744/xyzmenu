@@ -186,7 +186,7 @@ def ic_jet(d, S):
     P(d, [(.46, .24), (.54, .24), (.55, .4), (.45, .4)], S, (60, 110, 150))
     P(d, [(.48, .6), (.52, .6), (.52, .95), (.48, .95)], S, (110, 116, 126))
 
-def ic_ammo(color, kind):
+def ic_ammo(color, kind, body=(210, 214, 218), nose=(200, 50, 40), fin=(160, 60, 50)):
     def f(d, S):
         if kind == 'belt':
             for i in range(5):
@@ -201,12 +201,12 @@ def ic_ammo(color, kind):
                     cx, cy = .32 + i * .18, .38 + j * .26
                     d.ellipse([((cx - .07) * S, (cy - .07) * S), ((cx + .07) * S, (cy + .07) * S)], fill=(230, 120, 30), outline=(20, 20, 20))
         elif kind == 'missile':
-            P(d, [(.1, .46), (.7, .46), (.9, .5), (.7, .54), (.1, .54)], S, (210, 214, 218))
-            P(d, [(.1, .46), (.2, .46), (.12, .3), (.08, .3)], S, (160, 60, 50))
-            P(d, [(.1, .54), (.2, .54), (.12, .7), (.08, .7)], S, (160, 60, 50))
-            P(d, [(.7, .46), (.9, .5), (.7, .54)], S, (200, 50, 40))
+            P(d, [(.1, .44), (.7, .44), (.9, .5), (.7, .56), (.1, .56)], S, body)
+            P(d, [(.1, .44), (.2, .44), (.12, .26), (.08, .26)], S, fin)
+            P(d, [(.1, .56), (.2, .56), (.12, .74), (.08, .74)], S, fin)
+            P(d, [(.7, .44), (.9, .5), (.7, .56)], S, nose)
         elif kind == 'bomb':
-            d.ellipse([(.2 * S, .35 * S), (.85 * S, .65 * S)], fill=(90, 96, 90), outline=(20, 20, 20))
+            d.ellipse([(.2 * S, .35 * S), (.85 * S, .65 * S)], fill=body if body != (210, 214, 218) else (90, 96, 90), outline=(20, 20, 20))
             P(d, [(.1, .42), (.25, .42), (.2, .28), (.1, .3)], S, (140, 140, 140))
             P(d, [(.1, .58), (.25, .58), (.2, .72), (.1, .7)], S, (140, 140, 140))
             d.rectangle([(.5 * S, .35 * S), (.58 * S, .65 * S)], fill=(230, 190, 40))
@@ -231,7 +231,13 @@ mk(ic_ammo(0, 'bomb'), 'aerial_bomb')
 mk(ic_ammo(0, 'fuel'), 'fuel_can')
 mk(ic_ammo(0, 'repair'), 'repair_kit')
 
-ITEMS = ['attack_heli', 'fighter_jet', 'cannon_ammo', 'rocket_pod', 'air_missile', 'aerial_bomb', 'fuel_can', 'repair_kit']
+mk(ic_ammo(0, 'missile', (150, 60, 50), (240, 160, 40), (90, 30, 30)), 'ir_missile')
+mk(ic_ammo(0, 'missile', (90, 110, 150), (230, 230, 80), (50, 60, 90)), 'flak_missile')
+mk(ic_ammo(0, 'missile', (230, 232, 236), (60, 70, 80), (120, 130, 140)), 'cruise_missile')
+mk(ic_ammo(0, 'missile', (70, 78, 60), (200, 40, 40), (40, 46, 36)), 'ballistic_missile')
+mk(ic_ammo(0, 'missile', (60, 62, 66), (240, 120, 20), (200, 120, 20)), 'buster_missile')
+mk(ic_ammo(0, 'bomb', (70, 76, 62), None, None), 'heavy_bomb')
+ITEMS = ['ir_missile', 'flak_missile', 'cruise_missile', 'ballistic_missile', 'buster_missile', 'heavy_bomb', 'attack_heli', 'fighter_jet', 'cannon_ammo', 'rocket_pod', 'air_missile', 'aerial_bomb', 'fuel_can', 'repair_kit']
 for n in ITEMS:
     json.dump({"parent": "item/generated", "textures": {"layer0": f"uwar:item/{n}"}}, open(f'{R}/models/item/{n}.json', 'w'), indent=1)
 print('textures ok')

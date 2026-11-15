@@ -9,6 +9,7 @@ public class Cfg {
     public static final ForgeConfigSpec.DoubleValue FUEL_USE;
     public static final ForgeConfigSpec.BooleanValue UNLIMITED_AMMO;
     public static final ForgeConfigSpec.BooleanValue LOCK_PLAYERS;
+    public static final ForgeConfigSpec.BooleanValue HEAVY_BLOCKS;
 
     static {
         ForgeConfigSpec.Builder b = new ForgeConfigSpec.Builder();
@@ -22,6 +23,8 @@ public class Cfg {
                 .define("unlimitedAmmo", false);
         LOCK_PLAYERS = b.comment("Les missiles peuvent verrouiller les joueurs")
                 .define("lockPlayers", false);
+        HEAVY_BLOCKS = b.comment("Les armes lourdes (croisiere, balistique, anti-bunker, soute a bombes) detruisent les blocs")
+                .define("heavyBlockDamage", true);
         SPEC = b.build();
     }
 }

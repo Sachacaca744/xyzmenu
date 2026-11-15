@@ -26,6 +26,7 @@ import net.minecraftforge.fml.common.Mod;
 public class ClientEvents {
     public static final String CAT = "key.categories.uwar";
     public static final KeyMapping WEAPON = new KeyMapping("key.uwar.weapon", InputConstants.KEY_G, CAT);
+    public static final KeyMapping LOADOUT = new KeyMapping("key.uwar.loadout", InputConstants.KEY_5, CAT);
     public static final KeyMapping RELOAD = new KeyMapping("key.uwar.reload", InputConstants.KEY_R, CAT);
 
     @Mod.EventBusSubscriber(modid = Uwar.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -40,6 +41,7 @@ public class ClientEvents {
         public static void keys(RegisterKeyMappingsEvent e) {
             e.register(WEAPON);
             e.register(RELOAD);
+            e.register(LOADOUT);
         }
 
         @SubscribeEvent
@@ -52,9 +54,23 @@ public class ClientEvents {
 
     @Mod.EventBusSubscriber(modid = Uwar.MODID, value = Dist.CLIENT)
     public static class ForgeBus {
+        static int lastSlot = -1;
+
         @SubscribeEvent
         public static void tick(TickEvent.ClientTickEvent e) {
             if (e.phase != TickEvent.Phase.END) return;
+            Minecraft mcc = Minecraft.getInstance();
+            if (mcc.player != null && mcc.player.getVehicle() instanceof Aircraft ac) {
+                if (LOADOUT.consumeClick() && mcc.screen == null) {
+                    if (lastSlot >= 0) mcc.player.getInventory().selected = lastSlot;
+                    mcc.setScreen(new LoadoutScreen(ac));
+                }
+                lastSlot = mcc.player.getInventory().selected;
+            } else {
+                while (LOADOUT.consumeClick()) {
+                }
+                lastSlot = -1;
+            }
             if (ClientHooks.mine() == null) {
                 while (WEAPON.consumeClick() || RELOAD.consumeClick()) {
                 }
