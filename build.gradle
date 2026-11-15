@@ -1,0 +1,58 @@
+plugins {
+    id 'java'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+}
+
+group = 'fr.uwar'
+version = '1.0.0'
+
+base {
+    archivesName = 'uwar'
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(17)
+}
+
+minecraft {
+    mappings channel: 'official', version: '1.20.1'
+    runs {
+        server {
+            workingDirectory project.file('run-server')
+            property 'forge.logging.console.level', 'info'
+            property 'uwar.selftest', 'auto'
+            mods { uwar { source sourceSets.main } }
+        }
+        client {
+            workingDirectory project.file('run-client')
+            property 'forge.logging.console.level', 'info'
+            property 'uwar.selftest', 'client'
+            property 'uwar.clienttest', 'true'
+            mods { uwar { source sourceSets.main } }
+        }
+    }
+}
+
+// Les classes de test automatique ne sont incluses que si -Pwithtest
+if (!project.hasProperty('withtest')) {
+    sourceSets.main.java.exclude '**/SelfTest.java', '**/client/ClientTest.java'
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.20.1-47.3.0'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+jar {
+    manifest {
+        attributes([
+            'Specification-Title'  : 'uwar',
+            'Implementation-Title' : 'uwar',
+            'Implementation-Version': project.version
+        ])
+    }
+    finalizedBy 'reobfJar'
+}

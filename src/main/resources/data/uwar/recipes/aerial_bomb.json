@@ -1,0 +1,18 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "ingredients": [
+  {
+   "item": "minecraft:tnt"
+  },
+  {
+   "item": "minecraft:iron_ingot"
+  },
+  {
+   "item": "minecraft:iron_ingot"
+  }
+ ],
+ "result": {
+  "item": "uwar:aerial_bomb",
+  "count": 1
+ }
+}

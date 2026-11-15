@@ -1,0 +1,45 @@
+name: Build mod
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: 8.8
+      - name: Compiler
+        run: |
+          set -o pipefail
+          gradle build --console=plain 2>&1 | tee build.log
+      - name: Verifier le jar
+        run: |
+          ls -l build/libs
+          for f in build/libs/*.jar; do unzip -l "$f" | tee -a build.log; test "$(stat -c%s "$f")" -gt 5000; done
+      - name: Publier le jar dans les Releases
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="build-${GITHUB_REF_NAME}"
+          gh release delete "$TAG" --yes --cleanup-tag || true
+          gh release create "$TAG" build/libs/*.jar --title "Jar - ${GITHUB_REF_NAME}" --notes "Compile automatiquement (${GITHUB_SHA})" --target "$GITHUB_SHA"
+      - name: Publier le journal
+        if: always()
+        run: |
+          mkdir -p /tmp/logs && cp build.log /tmp/logs/build.log || echo "pas de log" > /tmp/logs/build.log
+          cd /tmp/logs
+          git init -q && git checkout -q -b logs
+          git add . && git -c user.name=ci -c user.email=ci@example.com commit -qm "log ${GITHUB_SHA}"
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" "logs:refs/heads/logs-${GITHUB_REF_NAME}"

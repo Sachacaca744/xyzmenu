@@ -1,0 +1,16 @@
+{
+ "item.uwar.attack_heli": "AH-64 Attack Helicopter",
+ "item.uwar.fighter_jet": "F-16 Fighter Jet",
+ "item.uwar.cannon_ammo": "20 mm Cannon Ammo",
+ "item.uwar.rocket_pod": "Rocket Pod",
+ "item.uwar.air_missile": "Guided Missile",
+ "item.uwar.aerial_bomb": "Aerial Bomb",
+ "item.uwar.fuel_can": "Aviation Fuel Can",
+ "item.uwar.repair_kit": "Repair Kit",
+ "entity.uwar.attack_heli": "AH-64 Attack Helicopter",
+ "entity.uwar.fighter_jet": "F-16 Fighter Jet",
+ "entity.uwar.shell": "Aircraft ordnance",
+ "key.categories.uwar": "UWar - Aviation",
+ "key.uwar.weapon": "Next weapon",
+ "key.uwar.reload": "Reload from inventory"
+}

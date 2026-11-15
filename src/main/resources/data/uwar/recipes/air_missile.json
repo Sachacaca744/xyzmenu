@@ -1,0 +1,27 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "ingredients": [
+  {
+   "item": "minecraft:firework_rocket"
+  },
+  {
+   "item": "minecraft:iron_ingot"
+  },
+  {
+   "item": "minecraft:iron_ingot"
+  },
+  {
+   "item": "minecraft:gunpowder"
+  },
+  {
+   "item": "minecraft:gunpowder"
+  },
+  {
+   "item": "minecraft:redstone"
+  }
+ ],
+ "result": {
+  "item": "uwar:air_missile",
+  "count": 1
+ }
+}

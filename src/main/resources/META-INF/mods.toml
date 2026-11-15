@@ -1,0 +1,26 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="MIT"
+
+[[mods]]
+modId="uwar"
+version="1.0.0"
+displayName="UWar - Helicoptere et avion de chasse"
+description='''
+Helicoptere d'attaque AH-64 et avion de chasse pilotables : canon, roquettes, missiles guides, bombes,
+munitions en objets, carburant, reparation. A installer sur le serveur ET chez les joueurs.
+'''
+
+[[dependencies.uwar]]
+modId="forge"
+mandatory=true
+versionRange="[47,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.uwar]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.20.1,1.21)"
+ordering="NONE"
+side="BOTH"

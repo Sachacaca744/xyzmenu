@@ -1,0 +1,37 @@
+{
+ "gun": {
+  "sounds": [
+   "uwar:gun"
+  ]
+ },
+ "boom": {
+  "sounds": [
+   "uwar:boom"
+  ]
+ },
+ "launch": {
+  "sounds": [
+   "uwar:launch"
+  ]
+ },
+ "beep": {
+  "sounds": [
+   "uwar:beep"
+  ]
+ },
+ "warn": {
+  "sounds": [
+   "uwar:warn"
+  ]
+ },
+ "heli_loop": {
+  "sounds": [
+   "uwar:heli_loop"
+  ]
+ },
+ "jet_loop": {
+  "sounds": [
+   "uwar:jet_loop"
+  ]
+ }
+}

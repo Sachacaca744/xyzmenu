@@ -1,0 +1,21 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "ingredients": [
+  {
+   "item": "minecraft:firework_rocket"
+  },
+  {
+   "item": "minecraft:firework_rocket"
+  },
+  {
+   "item": "minecraft:gunpowder"
+  },
+  {
+   "item": "minecraft:iron_ingot"
+  }
+ ],
+ "result": {
+  "item": "uwar:rocket_pod",
+  "count": 1
+ }
+}
