@@ -150,6 +150,11 @@ public class SelfTest {
         r.fp.startRiding(r.a, true);
     }
 
+    /** Isole les tests de verrouillage : supprime les vaches des autres scenarios. */
+    static void clearCows() {
+        for (Entity e : new ArrayList<>(lv.getEntitiesOfClass(Cow.class, new net.minecraft.world.phys.AABB(-400, -100, -400, 400, 300, 400)))) e.discard();
+    }
+
     static Cow cow(double x, double y, double z) {
         Cow c = EntityType.COW.create(lv);
         c.moveTo(x, y, z, 0, 0);
@@ -171,9 +176,12 @@ public class SelfTest {
         String[][] sc = {{"cruise", "JET"}, {"ballistic", "JET"}, {"heli_fly", "HELI"}, {"jet_fly", "JET"}, {"cannon", "HELI"}, {"rocket", "HELI"}, {"missile", "HELI"}, {"bomb", "JET"},
                 {"empty", "HELI"}, {"supply", "HELI"}, {"fuel_out", "HELI"}, {"destroy", "HELI"}, {"crash", "JET"}, {"persist", "JET"},
                 {"pickup", "HELI"}, {"place", "JET"}, {"jet_weapons", "JET"}, {"mini_fly", "MINI"}, {"mini_arms", "MINI"}, {"flak_far", "HELI"}, {"loadout", "HELI"}, {"ir", "HELI"}, {"flak", "HELI"}, {"buster", "HELI"}, {"bay", "JET"}};
+        java.util.Map<String, Integer> delay = java.util.Map.of("missile", 100, "ir", 300, "flak", 500, "buster", 700, "cruise", 900, "ballistic", 1100, "flak_far", 1300);
         int i = 0;
         for (String[] s : sc) {
-            Run r = mk(s[0], Kind.valueOf(s[1]), -90 + (i % 8) * 24, (i / 8) * 60 - 30, s[0]);
+            boolean far = s[0].equals("cruise") || s[0].equals("ballistic") || s[0].equals("flak_far");
+            Run r = far ? mk(s[0], Kind.valueOf(s[1]), -90, -100, s[0]) : mk(s[0], Kind.valueOf(s[1]), -90 + (i % 8) * 24, (i / 8) * 60 - 30, s[0]);
+            r.t0 = t + delay.getOrDefault(s[0], 0);
             runs.add(r);
             i++;
         }
@@ -200,14 +208,14 @@ public class SelfTest {
             try {
                 if (r.a != null && r.a.testPilot != null && !r.a.isRemoved())
                     r.a.setInput(r.a.thrust, r.a.inBoost, r.a.inFire, r.a.inU > 0, r.a.aimYaw, r.a.aimPitch, 0f);
-                step(r, t - r.t0);
+                if (t - r.t0 >= 1) step(r, t - r.t0);
             } catch (Throwable ex) {
                 ex.printStackTrace();
                 check("exception " + r.name, false, ex.toString());
                 r.done = true;
             }
         }
-        if (t > 1500 && !all) {
+        if (t > 2600 && !all) {
             for (Run r : runs) if (!r.done) check("timeout " + r.name, false, "ph=" + r.ph);
             all = true;
         }
@@ -397,6 +405,7 @@ public class SelfTest {
             }
             case "missile" -> {
                 if (lt == 1) {
+                    clearCows();
                     r.c1 = cow(r.start.x + 8, r.start.y, r.start.z + 40);
                     a.nextWeapon(2);
                     a.aimPitch = 0;
@@ -631,6 +640,7 @@ public class SelfTest {
                 if (lt == 1) {
                     a.setLoadout(r.fp, W.CANNON.bit() | W.FLAK.bit());
                     a.setAmmo(W.FLAK, 4);
+                    clearCows();
                     r.c1 = cow(r.start.x, r.start.y, r.start.z + 196);
                     a.nextWeapon(1);
                     a.aimPitch = 0;
@@ -692,6 +702,7 @@ public class SelfTest {
                 if (lt == 1) {
                     String err = a.setLoadout(r.fp, W.CANNON.bit() | w.bit());
                     a.setAmmo(w, 4);
+                    clearCows();
                     double dz = w == W.FLAK ? 45 : w == W.BUSTER ? 30 : 60;
                     r.c1 = cow(r.start.x + (w == W.IR ? 4 : 0), r.start.y, r.start.z + dz);
                     r.d0 = r.c1.getX();
@@ -720,6 +731,7 @@ public class SelfTest {
                 if (lt == 1) {
                     String err = a.setLoadout(r.fp, W.CANNON.bit() | w.bit());
                     a.setAmmo(w, 2);
+                    clearCows();
                     r.c1 = cow(r.start.x, r.start.y, r.start.z + 170);
                     a.nextWeapon(1);
                     a.aimPitch = 0;
