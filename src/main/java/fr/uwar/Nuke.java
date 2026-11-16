@@ -399,7 +399,7 @@ public class Nuke {
         }
         if (t >= 8 && t < 260) {
             double h = Math.min(250, (t - 8) * 2.2) * v * 1.2;
-            for (int k = 0; k < 6; k++) {
+            for (int k = 0; k < 16; k++) {
                 double hh = rnd.nextDouble() * h;
                 double w = (6 + hh * 0.04) * v;
                 particles(lv, s, k % 2 == 0 ? ParticleTypes.LARGE_SMOKE : ParticleTypes.CAMPFIRE_COSY_SMOKE, s.x + (rnd.nextDouble() - 0.5) * w, s.y + hh, s.z + (rnd.nextDouble() - 0.5) * w, 1, 0.5, 0.5, 0.5, 0.02);
@@ -408,7 +408,7 @@ public class Nuke {
             if (t > 60) {
                 double ch = s.y + Math.min(250, (60 - 8) * 2.2 + (t - 60) * 0.6) * v * 1.2;
                 double cr = (30 + Math.min(60, (t - 60) * 0.5)) * v;
-                for (int i = 0; i < 40; i++) {
+                for (int i = 0; i < 90; i++) {
                     double a = rnd.nextDouble() * Math.PI * 2;
                     double rr = cr * (0.75 + rnd.nextDouble() * 0.35);
                     particles(lv, s, i % 4 == 0 ? ParticleTypes.FLAME : ParticleTypes.LARGE_SMOKE, s.x + Math.cos(a) * rr, ch + (rnd.nextDouble() - 0.5) * 18 * v, s.z + Math.sin(a) * rr, 1, 0.4, 0.4, 0.4, 0.02);
