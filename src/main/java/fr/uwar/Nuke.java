@@ -190,8 +190,10 @@ public class Nuke {
         double r0 = R0 * s.sc, r1 = R1 * s.sc, r2 = R2 * s.sc;
         List<Entity> all = new ArrayList<>();
         for (Entity e : sl.getAllEntities()) all.add(e);
+        all.sort((p, q) -> Boolean.compare(q instanceof Aircraft, p instanceof Aircraft));
         for (Entity e : all) {
             if (!(e instanceof LivingEntity) && !(e instanceof Aircraft)) continue;
+            try {
             double d = s.hd(e.getX(), e.getZ());
             if (d > r2) continue;
             if (e instanceof Player pl) {
@@ -211,6 +213,9 @@ public class Nuke {
                 }
             } else {
                 kill(sl, e, false);
+            }
+            } catch (Throwable ex) {
+                System.out.println("UWAR nuke: erreur sur " + e + " : " + ex);
             }
         }
     }
