@@ -204,7 +204,11 @@ public class Nuke {
                 }
             } else if (e instanceof Aircraft ac) {
                 e.invulnerableTime = 0;
-                if (d <= r1) e.hurt(sl.damageSources().explosion(null, null), 100000f);
+                if (d <= r1) {
+                    ac.ejectPassengers();
+                    ac.setHp(0f);
+                    ac.discard();
+                }
             } else {
                 kill(sl, e, false);
             }
@@ -254,13 +258,19 @@ public class Nuke {
         var rnd = lv.random;
         double depthMax = Math.max(4.0, 70.0 * Math.sqrt(s.sc));
         boolean any = false;
+        int chunkTop = minY;
+        for (int si = c.getSectionsCount() - 1; si >= 0; si--) {
+            if (!c.getSection(si).hasOnlyAir()) {
+                chunkTop = minY + si * 16 + 15;
+                break;
+            }
+        }
         for (int lx = 0; lx < 16; lx++) {
             for (int lz = 0; lz < 16; lz++) {
                 int wx = cp.getMinBlockX() + lx, wz = cp.getMinBlockZ() + lz;
                 double d = s.hd(wx + 0.5, wz + 0.5);
                 if (d > r3) continue;
-                int top = c.getHeight(Heightmap.Types.WORLD_SURFACE, lx, lz) - 1;
-                if (top < minY) continue;
+                int top = chunkTop;
                 if (d < r0) {
                     double q = d / r0;
                     int floor = (int) Math.ceil(s.y - depthMax * Math.sqrt(Math.max(0, 1 - q * q)));
@@ -272,7 +282,7 @@ public class Nuke {
                     }
                 } else if (d < r2) {
                     // detruit tout ce qui n'est pas du terrain ; zone carbonisee : le sol devient noir
-                    int y = top, lim = Math.max(minY, top - 90);
+                    int y = top, lim = minY;
                     boolean carbon = d < r1;
                     BlockPos.MutableBlockPos mp = new BlockPos.MutableBlockPos();
                     while (y >= lim) {
@@ -299,7 +309,7 @@ public class Nuke {
                     }
                 } else {
                     // arbres sans feuilles
-                    int lim = Math.max(minY, top - 70);
+                    int lim = Math.max(minY, top - 140);
                     BlockPos.MutableBlockPos mp = new BlockPos.MutableBlockPos();
                     for (int y = top; y >= lim; y--) {
                         BlockState st = c.getBlockState(mp.set(wx, y, wz));
