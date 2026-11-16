@@ -800,7 +800,7 @@ public class SelfTest {
                     check("NUKE : vache zone souffle morte", !r.c2.isAlive(), "");
                     check("NUKE : vache zone 5-10 km morte", !r.c3.isAlive(), "");
                     check("NUKE : vache hors zone vivante", r.c4.isAlive(), "");
-                                        check("NUKE : l'avion est detruit", a.isRemoved() || a.hp() <= 0, "hp=" + a.hp());
+                                        check("NUKE : l'avion est detruit", a.isRemoved() || a.hp() <= 0, "hp=" + a.hp() + " removed=" + a.isRemoved() + " pos=" + a.position() + " start=" + r.start + " sites=" + Nuke.data(lv).sites.size() + " inLevel=" + (lv.getEntity(a.getUUID()) != null));
                 }
                 if (lt == 300) {
                     r.c1 = EntityType.VILLAGER.create(lv);
