@@ -237,13 +237,17 @@ public class ClientTest {
                     cmd("gamemode spectator");
                 }
                 case 1630 -> {
-                    cmd("tp @s 0 -50 -300 0 -8");
+                    cmd("tp @s 0 -52 -115 0 -14");
                     mc.options.setCameraType(CameraType.FIRST_PERSON);
                     mc.options.hideGui = true;
                     mc.player.setYRot(0f);
-                    mc.player.setXRot(-8f);
+                    mc.player.setXRot(-14f);
                 }
-                case 1670 -> cmd("uwar_selftest nuke 0.05");
+                case 1670 -> {
+                    mc.options.hideGui = false;
+                    cmd("uwar_selftest nuke 0.05");
+                }
+                case 1672, 1715, 1800, 1940 -> cmd("effect clear @s");
                 case 1676 -> shot("30_nuke_flash");
                 case 1720 -> shot("31_nuke_boule_de_feu");
                 case 1810 -> shot("32_nuke_colonne");
