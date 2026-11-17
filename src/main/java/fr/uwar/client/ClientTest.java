@@ -296,31 +296,31 @@ public class ClientTest {
                 case 2170 -> shot("31_nuke_boule_de_feu");
                 case 2260 -> shot("32_nuke_colonne");
                 case 2400 -> shot("33_nuke_champignon");
-                case 2850 -> {
+                case 2510 -> {
                     mc.player.setXRot(10f);
                     cmd("tp @s 0 -20 -60 0 25");
                 }
-                case 2900 -> shot("34_nuke_apres_cratere");
-                case 2910 -> {
+                case 2560 -> shot("34_nuke_apres_cratere");
+                case 2570 -> {
                     cmd("tp @s 200 -48 -38 0 8");
                     mc.player.setXRot(8f);
                     mc.player.setYRot(0f);
                 }
-                case 2915 -> cmd("uwar_selftest payload incen 200 -60 0");
-                case 2945 -> shot("50_bombe_incendiaire");
-                case 2950 -> cmd("uwar_selftest payload acid 200 -60 0");
-                case 2995 -> shot("51_bombe_acide");
-                case 3000 -> cmd("uwar_selftest payload thermo 200 -60 0");
-                case 3016 -> shot("52_bombe_thermobarique");
-                case 3050 -> cmd("uwar_selftest payload gas 200 -60 0");
-                case 3100 -> shot("53_bombe_gaz");
-                case 3110 -> cmd("uwar_selftest payload light 200 -60 0");
-                case 3130 -> shot("54_bombe_foudre");
-                case 3190 -> cmd("uwar_selftest payload cluster 200 -60 0");
-                case 3215 -> shot("55_bombe_sous_munitions");
-                case 3260 -> cmd("uwar_selftest payload seismic 200 -60 0");
-                case 3290 -> shot("56_bombe_sismique");
-                case 3300 -> {
+                case 2575 -> cmd("uwar_selftest payload incen 200 -60 0");
+                case 2605 -> shot("50_bombe_incendiaire");
+                case 2610 -> cmd("uwar_selftest payload acid 200 -60 0");
+                case 2655 -> shot("51_bombe_acide");
+                case 2660 -> cmd("uwar_selftest payload thermo 200 -60 0");
+                case 2676 -> shot("52_bombe_thermobarique");
+                case 2710 -> cmd("uwar_selftest payload gas 200 -60 0");
+                case 2760 -> shot("53_bombe_gaz");
+                case 2770 -> cmd("uwar_selftest payload light 200 -60 0");
+                case 2790 -> shot("54_bombe_foudre");
+                case 2850 -> cmd("uwar_selftest payload cluster 200 -60 0");
+                case 2875 -> shot("55_bombe_sous_munitions");
+                case 2920 -> cmd("uwar_selftest payload seismic 200 -60 0");
+                case 2950 -> shot("56_bombe_sismique");
+                case 2960 -> {
                     System.out.println("CLIENTTEST: termine");
                     mc.stop();
                 }

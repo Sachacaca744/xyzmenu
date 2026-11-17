@@ -950,7 +950,7 @@ public class SelfTest {
                     a.setAmmo(W.LRM, 2);
                     a.nextWeapon(1);
                     for (int dx = -8; dx <= 18; dx++) for (int dy = 0; dy < 8; dy++) lv.setBlock(new BlockPos((int) x0 + dx, y + dy, (int) z0 + 400), net.minecraft.world.level.block.Blocks.STONE.defaultBlockState(), 2);
-                    r.c1 = cow(x0 + 5, y, z0 + 395);
+                    r.c1 = cow(x0 + 11, y, z0 + 398);
                     r.c2 = cow(x0 + 5, y, z0 + 440);
                     r.c3 = cow(x0 + 5, y, z0 + 100);
                     a.aimPitch = 0;
@@ -963,7 +963,7 @@ public class SelfTest {
                     check("longue portee : n'a pas traverse le mur (cible derriere vivante)", r.c2.isAlive(), "");
                     int gone = 0;
                     for (int ddx = -8; ddx <= 18; ddx++) for (int ddy = 0; ddy < 8; ddy++) if (lv.getBlockState(new BlockPos((int) x0 + ddx, y + ddy, (int) z0 + 400)).isAir()) gone++;
-                    check("longue portee : le mur est troue (blocs arraches)", gone >= 10, "blocs retires=" + gone);
+                    check("longue portee : le mur est troue (blocs arraches)", gone >= 20, "blocs retires=" + gone);
                     fin(r);
                 }
             }
