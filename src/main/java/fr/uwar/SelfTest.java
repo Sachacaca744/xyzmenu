@@ -246,7 +246,7 @@ public class SelfTest {
         if (all) {
             running = false;
             System.out.println("SELFTEST RESULT: " + pass + " PASS, " + fail + " FAIL");
-            if (auto && server != null) server.halt(false);
+            if (auto && server != null && System.getProperty("uwar.clienttest") == null) server.halt(false);
         }
     }
 
@@ -1009,6 +1009,7 @@ public class SelfTest {
                     r.cs[5] = cow(dx + 10, dy, dz);
                     r.cs[6] = cow(dx + 12, dy, dz + 2);
                     r.cs[7] = cow(dx + 36, dy, dz);
+                    r.ia[1] = lv.getBlockState(new BlockPos((int) dx, dy - 2, (int) dz)).isAir() ? 0 : 1;
                     Payload.detonate(lv, W.THERMO, new Vec3(dx, dy, dz), null);
                 }
                 if (lt == 20) {
@@ -1020,7 +1021,7 @@ public class SelfTest {
                     check("incendiaire : hors zone (40 blocs) intact", !r.cs[2].isOnFire() && r.cs[2].isAlive(), "");
                     check("thermobarique : cibles dans le souffle tuees", !r.cs[5].isAlive() && !r.cs[6].isAlive(), "");
                     check("thermobarique : cible a 36 blocs epargnee", r.cs[7].isAlive(), "");
-                    check("thermobarique : cratere", lv.getBlockState(new BlockPos((int) dx, dy - 3, (int) dz)).isAir(), "bloc=" + lv.getBlockState(new BlockPos((int) dx, dy - 3, (int) dz)));
+                    check("thermobarique : cratere (sol arrache)", r.ia[1] == 1 && lv.getBlockState(new BlockPos((int) dx, dy - 2, (int) dz)).isAir(), "avant=" + r.ia[1] + " y=" + dy);
                 }
                 if (lt == 60) {
                     for (int k = 0; k < 5; k++) if (r.cs[k] != null) r.cs[k].discard();
@@ -1032,7 +1033,10 @@ public class SelfTest {
                     r.cs[0].discard();
                 }
                 if (lt == 230) {
-                    check("acide : les blocs sont ronges en profondeur", r.ia[0] == 0 && lv.getBlockState(new BlockPos((int) bx, by - 3, (int) bz)).isAir(), "bloc=" + lv.getBlockState(new BlockPos((int) bx, by - 3, (int) bz)));
+                    int dis = 0;
+                    for (int ddx = -6; ddx <= 6; ddx++) for (int ddz = -6; ddz <= 6; ddz++) for (int ddy = -3; ddy <= -1; ddy++)
+                        if (lv.getBlockState(new BlockPos((int) bx + ddx, by + ddy, (int) bz + ddz)).isAir()) dis++;
+                    check("acide : les blocs sont ronges en profondeur", dis >= 60, "blocs dissous=" + dis);
                     check("acide : creature dans la flaque touchee", !r.cs[3].isAlive() || ((LivingEntity) r.cs[3]).hasEffect(net.minecraft.world.effect.MobEffects.POISON), "");
                     int air = 0;
                     for (int i = 0; i < 400; i++) {

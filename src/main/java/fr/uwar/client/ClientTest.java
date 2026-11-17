@@ -265,13 +265,13 @@ public class ClientTest {
                     log("b17 en vol");
                     shot("44_b17_vol");
                     cmd("uwar_selftest sel bomb");
-                    mc.player.setXRot(14f);
+                    mc.player.setXRot(24f);
                 }
-                case 1985 -> {
+                case 1995 -> {
                     shot("45_b17_viseur_bombes");
                     mc.options.keyAttack.setDown(true);
                 }
-                case 2015 -> {
+                case 2025 -> {
                     mc.options.keyAttack.setDown(false);
                     shot("46_b17_bombes_larguees");
                 }
@@ -311,7 +311,7 @@ public class ClientTest {
                 case 2950 -> cmd("uwar_selftest payload acid 200 -60 0");
                 case 2995 -> shot("51_bombe_acide");
                 case 3000 -> cmd("uwar_selftest payload thermo 200 -60 0");
-                case 3009 -> shot("52_bombe_thermobarique");
+                case 3016 -> shot("52_bombe_thermobarique");
                 case 3050 -> cmd("uwar_selftest payload gas 200 -60 0");
                 case 3100 -> shot("53_bombe_gaz");
                 case 3110 -> cmd("uwar_selftest payload light 200 -60 0");

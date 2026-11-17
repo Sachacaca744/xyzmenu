@@ -201,8 +201,8 @@ public class Hud {
 
     static void bombsight(GuiGraphics g, Font f, Aircraft a, Minecraft mc, Vec3 eye, int w, int h, int cx, boolean blink) {
         double[] im = predictImpact(a, mc);
-        int bx = 12, by = h / 2 - 34;
-        g.fill(bx - 6, by - 4, bx + 168, by + 62, BG);
+        int bx = w - 178, by = h / 2 - 34 + 26 + a.loaded().size() * 12;
+        g.fill(bx - 6, by - 4, w - 12, by + 62, BG);
         g.drawString(f, "VISEUR BOMBES", bx, by, DIM, false);
         if (im == null) {
             g.drawString(f, "IMPACT   --", bx, by + 12, GREEN, false);

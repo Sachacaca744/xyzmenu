@@ -150,7 +150,7 @@ public class Payload {
             double depth = t.age * 0.055;
             Vec3 cc = new Vec3(t.c.x, t.c.y - depth, t.c.z);
             double R = 6.5;
-            for (int i = 0; i < 70; i++) {
+            for (int i = 0; i < 240; i++) {
                 double dx = (t.lv.random.nextDouble() * 2 - 1) * R, dy = (t.lv.random.nextDouble() * 2 - 1) * R, dz = (t.lv.random.nextDouble() * 2 - 1) * R;
                 if (dx * dx + dy * dy + dz * dz > R * R) continue;
                 BlockPos bp = BlockPos.containing(cc.x + dx, cc.y + dy, cc.z + dz);
