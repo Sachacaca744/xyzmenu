@@ -127,7 +127,7 @@ public class ClientEvents {
             }
             if (MOVE == null) return;
             try {
-                MOVE.invoke(cam, a.kind.heli() ? -9.0 : -11.0 * Math.max(0.7, a.kind.sc), a.kind.heli() ? 1.5 : 1.8 * Math.max(0.7, a.kind.sc), 0.0);
+                MOVE.invoke(cam, a.kind.heli() ? -9.0 : -11.0 * Math.max(0.7, a.kind.sc) * a.kind.camMul(), a.kind.heli() ? 1.5 : 1.8 * Math.max(0.7, a.kind.sc) * a.kind.camMul(), 0.0);
             } catch (Throwable t) {
                 MOVE = null;
             }

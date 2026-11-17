@@ -34,13 +34,17 @@ public class AircraftRenderer extends EntityRenderer<Aircraft> {
     }
 
     public static void draw(Mesh m, PoseStack.Pose pose, VertexConsumer vc, int light, float alpha) {
+        draw(m, pose, vc, light, alpha, 1f, 1f, 1f);
+    }
+
+    public static void draw(Mesh m, PoseStack.Pose pose, VertexConsumer vc, int light, float alpha, float cr, float cg, float cb) {
         for (float[] q : m.q) {
             if (q.length < 24) continue;
             int mat = (int) q[23];
             int l = (mat == Mesh.LED || mat == Mesh.RLED || mat == Mesh.FLAME) ? LightTexture.FULL_BRIGHT : light;
             for (int i = 0; i < 4; i++) {
                 vc.vertex(pose.pose(), q[i * 3], q[i * 3 + 1], q[i * 3 + 2])
-                        .color(1f, 1f, 1f, alpha)
+                        .color(cr, cg, cb, alpha)
                         .uv(q[12 + i * 2], q[13 + i * 2])
                         .overlayCoords(OverlayTexture.NO_OVERLAY)
                         .uv2(l)
@@ -50,11 +54,11 @@ public class AircraftRenderer extends EntityRenderer<Aircraft> {
         }
     }
 
-    private static void station(PoseStack ps, float[] p, float sc, Mesh mesh, VertexConsumer vc, int light) {
+    private static void station(PoseStack ps, float[] p, float sc, Mesh mesh, VertexConsumer vc, int light, int tint) {
         ps.pushPose();
         ps.translate(p[0], p[1], p[2]);
         ps.scale(sc, sc, sc);
-        draw(mesh, ps.last(), vc, light, 1f);
+        draw(mesh, ps.last(), vc, light, 1f, ((tint >> 16) & 255) / 255f, ((tint >> 8) & 255) / 255f, (tint & 255) / 255f);
         ps.popPose();
     }
 
@@ -83,9 +87,9 @@ public class AircraftRenderer extends EntityRenderer<Aircraft> {
             for (W w : a.loaded()) {
                 int n = Math.min(2, a.ammo(w));
                 if (w.missileLike()) {
-                    for (int k = 0; k < n && ms < m.missSt.size(); k++) station(ps, m.missSt.get(ms++), w.visScale(), Models.missile, vc, light);
+                    for (int k = 0; k < n && ms < m.missSt.size(); k++) station(ps, m.missSt.get(ms++), w.visScale(), Models.missile, vc, light, w.tint());
                 } else if (w.bombLike()) {
-                    for (int k = 0; k < n && bs < m.bombSt.size(); k++) station(ps, m.bombSt.get(bs++), w.visScale() * 1.15f, Models.bomb, vc, light);
+                    for (int k = 0; k < n && bs < m.bombSt.size(); k++) station(ps, m.bombSt.get(bs++), w.visScale() * 1.15f, Models.bomb, vc, light, w.tint());
                 }
             }
         }
@@ -112,6 +116,17 @@ public class AircraftRenderer extends EntityRenderer<Aircraft> {
                     draw(m.tailDisc, ps.last(), vt, light, 0.25f);
                 }
                 ps.popPose();
+            }
+        } else if (a.kind.bomber()) {
+            if (!inside) {
+                for (float[] pp : m.props) {
+                    ps.pushPose();
+                    ps.translate(pp[0], pp[1], pp[2]);
+                    ps.mulPose(Axis.ZP.rotationDegrees(rot * 2.2f));
+                    draw(m.rotor, ps.last(), vc, light, 1f);
+                    if (a.engineOn()) draw(m.rotorDisc, ps.last(), buf.getBuffer(RenderType.entityTranslucent(tex)), light, 0.3f);
+                    ps.popPose();
+                }
             }
         } else if (!a.kind.heli() && a.engineOn() && (a.thr() > 0.35f || a.boosting())) {
             float k = a.boosting() ? 1.25f : 0.5f + a.thr() * 0.6f;

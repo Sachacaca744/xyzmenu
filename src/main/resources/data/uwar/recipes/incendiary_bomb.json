@@ -1,0 +1,21 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "ingredients": [
+  {
+   "item": "uwar:aerial_bomb"
+  },
+  {
+   "item": "minecraft:blaze_powder"
+  },
+  {
+   "item": "minecraft:blaze_powder"
+  },
+  {
+   "item": "minecraft:coal"
+  }
+ ],
+ "result": {
+  "item": "uwar:incendiary_bomb",
+  "count": 1
+ }
+}

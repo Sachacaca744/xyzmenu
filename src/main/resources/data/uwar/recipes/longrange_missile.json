@@ -1,0 +1,24 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "ingredients": [
+  {
+   "item": "uwar:air_missile"
+  },
+  {
+   "item": "uwar:fuel_can"
+  },
+  {
+   "item": "uwar:fuel_can"
+  },
+  {
+   "item": "minecraft:tnt"
+  },
+  {
+   "item": "minecraft:iron_block"
+  }
+ ],
+ "result": {
+  "item": "uwar:longrange_missile",
+  "count": 1
+ }
+}

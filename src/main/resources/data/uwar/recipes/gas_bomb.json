@@ -1,0 +1,21 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "ingredients": [
+  {
+   "item": "uwar:aerial_bomb"
+  },
+  {
+   "item": "minecraft:poisonous_potato"
+  },
+  {
+   "item": "minecraft:spider_eye"
+  },
+  {
+   "item": "minecraft:fermented_spider_eye"
+  }
+ ],
+ "result": {
+  "item": "uwar:gas_bomb",
+  "count": 1
+ }
+}

@@ -21,7 +21,7 @@ public class Models {
         public final Mesh rotor = new Mesh(), rotorDisc = new Mesh(), tail = new Mesh(), tailDisc = new Mesh();
         public float rx, ry, rz, tx, ty, tz;
         public final List<Ord> ord = new ArrayList<>();
-        public final List<float[]> missSt = new ArrayList<>(), bombSt = new ArrayList<>();
+        public final List<float[]> missSt = new ArrayList<>(), bombSt = new ArrayList<>(), props = new ArrayList<>();
         public float pivotY = 1.3f;
     }
 
@@ -29,7 +29,7 @@ public class Models {
     public static Mesh bomb = new Mesh(), missile = new Mesh(), rocket = new Mesh();
 
     public static synchronized Model get(Kind k) {
-        return CACHE.computeIfAbsent(k, kk -> kk.heli() ? heli() : jet());
+        return CACHE.computeIfAbsent(k, kk -> kk.heli() ? heli() : kk.bomber() ? b17() : jet());
     }
 
     static void buildBomb(Mesh b) {
@@ -199,6 +199,72 @@ public class Models {
             ord(m, 1, i, s * 4.2f, 0.82f, -2.0f, 1.8f, 2);
         }
         m.pivotY = 1.0f;
+        return m;
+    }
+
+    // ------------------------------------------------------------------ bombardier B-17
+    static Model b17() {
+        Model m = new Model();
+        Mesh b = m.body;
+        b.loft(CAMO, new float[][]{{11.6f, 2.0f, 0.15f, 0.15f}, {10.4f, 2.05f, 0.62f, 0.7f}, {8.5f, 2.25f, 1.0f, 1.12f}, {4.5f, 2.4f, 1.22f, 1.3f},
+                {0f, 2.4f, 1.26f, 1.32f}, {-5f, 2.3f, 1.1f, 1.15f}, {-9f, 2.2f, 0.78f, 0.82f}, {-12.6f, 2.3f, 0.28f, 0.34f}}, 0, 2.3f, 12);
+        // verriere de nez + cockpit
+        b.ellipsoid(LENS, 0, 2.55f, 10.0f, 0.62f, 0.6f, 1.3f, 12, 8);
+        b.ellipsoid(LENS, 0, 3.55f, 6.2f, 0.82f, 0.45f, 1.35f, 12, 8);
+        b.box(HB, 0, 3.0f, 5.0f, 0.9f, 0.05f, 0.3f);
+        // tourelles : dessus, ventrale, queue, flancs
+        b.ellipsoid(LENS, 0, 3.8f, 2.6f, 0.5f, 0.45f, 0.7f, 10, 6);
+        b.ellipsoid(MET, 0, 1.15f, 1.2f, 0.55f, 0.55f, 0.6f, 10, 6);
+        b.ellipsoid(LENS, 0, 2.5f, -12.9f, 0.28f, 0.3f, 0.45f, 8, 5);
+        b.box(MET, 0, 2.45f, -13.4f, 0.03f, 0.03f, 0.5f);
+        for (int s = -1; s <= 1; s += 2) b.ellipsoid(LENS, s * 1.2f, 2.5f, -4.0f, 0.12f, 0.35f, 0.5f, 8, 5);
+        // ailes (envergure ~31 m)
+        float[][] w = {{1.2f, 2.0f, -2.4f, 5.6f, 0.55f}, {7.0f, 2.05f, -2.9f, 4.6f, 0.38f}, {12.0f, 2.1f, -3.5f, 3.2f, 0.26f}, {15.6f, 2.1f, -4.1f, 1.7f, 0.15f}};
+        wing(b, HA, 1, w);
+        wing(b, HA, -1, w);
+        float[][] tp = {{0.5f, 2.5f, -11.2f, 3.2f, 0.2f}, {5.6f, 2.5f, -12.2f, 2.0f, 0.12f}};
+        wing(b, HB, 1, tp);
+        wing(b, HB, -1, tp);
+        b.push().translate(0, 2.4f, 0).rotZ(90);
+        b.foil(HB, new float[][]{{0.8f, 0f, -9.6f, 4.4f, 0.26f}, {3.6f, 0f, -11.4f, 2.8f, 0.16f}, {6.0f, 0f, -12.6f, 1.5f, 0.1f}});
+        b.pop();
+        b.box(RLED, 0, 8.5f, -13.0f, 0.05f, 0.05f, 0.05f);
+        // moteurs
+        float[] ex = {4.4f, 8.6f};
+        for (int s = -1; s <= 1; s += 2) {
+            for (float x : ex) {
+                float ex2 = s * x;
+                b.ellipsoid(HB, ex2, 1.85f, 0.4f, 0.62f, 0.66f, 2.4f, 10, 6);
+                b.revolve(STEEL, 'z', ex2, 1.85f, 2.5f, new float[][]{{-0.15f, 0.62f}, {0.1f, 0.7f}, {0.35f, 0.5f}}, 12);
+                b.box(MET, ex2, 1.2f, -0.4f, 0.2f, 0.06f, 1.0f);
+                m.props.add(new float[]{ex2, 1.85f, 2.95f});
+            }
+        }
+        b.box(LED, 15.7f, 2.1f, -3.5f, 0.05f, 0.05f, 0.1f);
+        b.box(RLED, -15.7f, 2.1f, -3.5f, 0.05f, 0.05f, 0.1f);
+        b.box(WHITE, 0, 5.0f, -12.8f, 0.03f, 0.03f, 0.03f);
+        // soute (trappes sous le fuselage)
+        b.box(MET, 0, 1.08f, 0.2f, 0.7f, 0.03f, 4.4f);
+        // helices
+        m.rotor.push().rotX(90).blades(3, 1.9f, 0.3f).pop();
+        m.rotorDisc.push().rotX(90).disc(BLUR, 1.9f, 20).pop();
+        // train classique (roulette de queue)
+        Mesh g = m.gear;
+        for (int s = -1; s <= 1; s += 2) {
+            g.box(MET, s * 4.4f, 1.0f, 0.2f, 0.07f, 0.6f, 0.07f);
+            wheel(g, s * 4.4f, 0.65f, 0.2f, 0.65f, 0.4f);
+        }
+        g.box(MET, 0, 1.4f, -11.0f, 0.04f, 0.9f, 0.04f);
+        wheel(g, 0, 0.32f, -11.0f, 0.32f, 0.2f);
+        // munitions visibles : 2 rangees de bombes dans la soute + missiles sous les ailes
+        for (int i = 0; i < 8; i++) {
+            for (int s = -1; s <= 1; s += 2) m.bombSt.add(new float[]{s * 0.42f, 0.95f, 4.0f - i * 1.1f});
+        }
+        for (int s = -1; s <= 1; s += 2) {
+            m.missSt.add(new float[]{s * 6.0f, 1.45f, -0.5f});
+            m.missSt.add(new float[]{s * 10.2f, 1.5f, -0.5f});
+        }
+        m.pivotY = 2.0f;
         return m;
     }
 }

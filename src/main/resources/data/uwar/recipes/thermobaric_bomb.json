@@ -1,0 +1,18 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "ingredients": [
+  {
+   "item": "uwar:heavy_bomb"
+  },
+  {
+   "item": "minecraft:blaze_powder"
+  },
+  {
+   "item": "uwar:fuel_can"
+  }
+ ],
+ "result": {
+  "item": "uwar:thermobaric_bomb",
+  "count": 1
+ }
+}

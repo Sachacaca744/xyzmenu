@@ -1,0 +1,21 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "ingredients": [
+  {
+   "item": "uwar:aerial_bomb"
+  },
+  {
+   "item": "minecraft:lightning_rod"
+  },
+  {
+   "item": "minecraft:copper_ingot"
+  },
+  {
+   "item": "minecraft:redstone"
+  }
+ ],
+ "result": {
+  "item": "uwar:lightning_bomb",
+  "count": 1
+ }
+}

@@ -128,6 +128,9 @@ public class Hud {
             }
         }
 
+        // viseur de bombardement (bombes) : point d'impact prevu + indicateur de largage
+        if (a.selected().bombLike() && !a.grounded()) bombsight(g, f, a, mc, eye, w, h, cx, blink);
+
         // verrouillage missile
         if (Aircraft.lockWeapon(a.selected())) {
             Entity tg = mc.level.getEntity(a.lockId());
@@ -173,5 +176,90 @@ public class Hud {
         Vec3 p = a.position();
         var r = mc.level.clip(new ClipContext(p, p.add(0, -400, 0), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, a));
         return r.getType() == HitResult.Type.MISS ? -1 : p.y - r.getLocation().y;
+    }
+
+    /** Simule la chute d'une bombe lachee maintenant (meme physique que Shell) : renvoie {x,y,z,temps} ou null. */
+    static double[] predictImpact(Aircraft a, Minecraft mc) {
+        Vec3 p = a.position().add(0, 0.5, 0), v = a.getDeltaMovement();
+        Vec3 last = p;
+        for (int i = 1; i <= 600; i++) {
+            v = v.add(0, -0.05, 0).scale(0.995);
+            Vec3 n = p.add(v);
+            if (i % 3 == 0 || n.y < mc.level.getMinBuildHeight()) {
+                net.minecraft.world.phys.BlockHitResult br = mc.level.clip(new net.minecraft.world.level.ClipContext(last, n, net.minecraft.world.level.ClipContext.Block.COLLIDER, net.minecraft.world.level.ClipContext.Fluid.NONE, a));
+                if (br.getType() != net.minecraft.world.phys.HitResult.Type.MISS) {
+                    Vec3 q = br.getLocation();
+                    return new double[]{q.x, q.y, q.z, i / 20.0};
+                }
+                last = n;
+            }
+            p = n;
+            if (p.y < mc.level.getMinBuildHeight()) break;
+        }
+        return null;
+    }
+
+    static void bombsight(GuiGraphics g, Font f, Aircraft a, Minecraft mc, Vec3 eye, int w, int h, int cx, boolean blink) {
+        double[] im = predictImpact(a, mc);
+        int bx = 12, by = h / 2 - 34;
+        g.fill(bx - 6, by - 4, bx + 168, by + 62, BG);
+        g.drawString(f, "VISEUR BOMBES", bx, by, DIM, false);
+        if (im == null) {
+            g.drawString(f, "IMPACT   --", bx, by + 12, GREEN, false);
+            return;
+        }
+        Vec3 ip = new Vec3(im[0], im[1], im[2]);
+        int[] s = project(ip, w, h);
+        if (s != null) {
+            box(g, s[0], s[1], 8, GREEN);
+            g.drawString(f, "IMPACT", s[0] + 12, s[1] - 4, GREEN, false);
+        }
+        Vec3 vel = a.getDeltaMovement();
+        Vec3 fwd = new Vec3(vel.x, 0, vel.z);
+        if (fwd.lengthSqr() < 1e-4) fwd = new Vec3(-Math.sin(Math.toRadians(a.getYRot())), 0, Math.cos(Math.toRadians(a.getYRot())));
+        fwd = fwd.normalize();
+        double hd = Math.hypot(ip.x - a.getX(), ip.z - a.getZ());
+        g.drawString(f, "IMPACT   " + Math.round(hd) + " m  (" + String.format("%.1f", im[3]) + " s)", bx, by + 12, GREEN, false);
+        // cible : point du sol sous la ligne de visee
+        Vec3 d = a.aimDir();
+        net.minecraft.world.phys.BlockHitResult br = mc.level.clip(new net.minecraft.world.level.ClipContext(eye, eye.add(d.scale(700)), net.minecraft.world.level.ClipContext.Block.COLLIDER, net.minecraft.world.level.ClipContext.Fluid.NONE, a));
+        if (br.getType() == net.minecraft.world.phys.HitResult.Type.MISS) {
+            g.drawString(f, "CIBLE    -- (visez le sol)", bx, by + 24, DIM, false);
+            return;
+        }
+        Vec3 tp = br.getLocation();
+        int[] ts = project(tp, w, h);
+        if (ts != null) {
+            box(g, ts[0], ts[1], 12, AMBER);
+            g.drawString(f, "CIBLE", ts[0] + 16, ts[1] - 4, AMBER, false);
+        }
+        Vec3 dl = tp.subtract(ip);
+        double along = dl.x * fwd.x + dl.z * fwd.z;
+        double side = dl.x * -fwd.z + dl.z * fwd.x;
+        double tdist = Math.hypot(tp.x - a.getX(), tp.z - a.getZ());
+        g.drawString(f, "CIBLE    " + Math.round(tdist) + " m", bx, by + 24, AMBER, false);
+        String adv;
+        int col;
+        if (Math.abs(along) <= 14 && Math.abs(side) <= 25) {
+            adv = "LARGUEZ !";
+            col = blink ? GREEN : 0xFFFFFFFF;
+        } else if (along > 14) {
+            adv = "ATTENDRE  " + Math.round(along) + " m";
+            col = AMBER;
+        } else {
+            adv = "TROP TARD";
+            col = RED;
+        }
+        g.drawString(f, adv, bx, by + 38, col, false);
+        g.drawString(f, "DERIVE   " + (Math.abs(side) < 3 ? "OK" : (side > 0 ? "gauche " : "droite ") + Math.round(Math.abs(side)) + " m"), bx, by + 50, Math.abs(side) <= 25 ? GREEN : AMBER, false);
+        if (Math.abs(along) <= 14 && Math.abs(side) <= 25)
+            g.drawCenteredString(f, ">>> LARGUEZ LES BOMBES <<<", cx, h - 86, blink ? GREEN : 0xFFFFFFFF);
+        // barre de progression : 0 = impact sur la cible
+        int bw = 160, bx0 = cx - bw / 2, by0 = h - 100;
+        g.fill(bx0, by0, bx0 + bw, by0 + 4, 0x66FFFFFF);
+        double k = Math.max(-1, Math.min(1, along / 300.0));
+        int mx = bx0 + bw / 2 - (int) (k * bw / 2);
+        g.fill(bx0 + bw / 2 - 1, by0 - 3, bx0 + bw / 2 + 1, by0 + 7, GREEN);
+        g.fill(mx - 2, by0 - 2, mx + 2, by0 + 6, AMBER);
     }
 }

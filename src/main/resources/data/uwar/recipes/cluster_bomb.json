@@ -1,0 +1,21 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "ingredients": [
+  {
+   "item": "uwar:aerial_bomb"
+  },
+  {
+   "item": "minecraft:tnt"
+  },
+  {
+   "item": "minecraft:tnt"
+  },
+  {
+   "item": "minecraft:gunpowder"
+  }
+ ],
+ "result": {
+  "item": "uwar:cluster_bomb",
+  "count": 1
+ }
+}

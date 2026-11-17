@@ -1,0 +1,29 @@
+{
+ "type": "minecraft:crafting_shaped",
+ "pattern": [
+  "BBB",
+  "IFI",
+  "GRG"
+ ],
+ "key": {
+  "B": {
+   "item": "minecraft:iron_block"
+  },
+  "I": {
+   "item": "minecraft:iron_ingot"
+  },
+  "F": {
+   "item": "minecraft:blast_furnace"
+  },
+  "G": {
+   "item": "minecraft:glass"
+  },
+  "R": {
+   "item": "minecraft:redstone"
+  }
+ },
+ "result": {
+  "item": "uwar:b17",
+  "count": 1
+ }
+}

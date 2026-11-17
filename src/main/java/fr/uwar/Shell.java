@@ -93,15 +93,15 @@ public class Shell extends Projectile {
                 kl.getChunkSource().addRegionTicket(KEEP, cp, 2, cp);
             }
             switch (w) {
-                case MISSILE, FLAK, BUSTER -> {
+                case MISSILE, FLAK, FLAK5, LRM, BUSTER -> {
                     double sp = Math.min(w.speed, v.length() + 0.18);
                     Vec3 dir = v.lengthSqr() > 1e-4 ? v.normalize() : Vec3.ZERO;
-                    double gain = w == W.FLAK ? 0.26 : w == W.BUSTER ? 0.12 : 0.20;
+                    double gain = w == W.FLAK ? 0.26 : w == W.FLAK5 ? 0.22 : w == W.LRM ? 0.10 : w == W.BUSTER ? 0.12 : 0.20;
                     Entity t = target != null && level() instanceof ServerLevel sl ? sl.getEntity(target) : null;
                     if (t != null && t.isAlive() && life > 4) {
                         Vec3 want = t.getBoundingBox().getCenter().subtract(position()).normalize();
                         dir = dir.scale(1 - gain).add(want.scale(gain)).normalize();
-                        if (w == W.FLAK && t.getBoundingBox().getCenter().distanceTo(position()) < 7.5) {
+                        if (w.flak() && t.getBoundingBox().getCenter().distanceTo(position()) < (w == W.FLAK5 ? 10.0 : 7.5)) {
                             explode();
                             return;
                         }
@@ -168,11 +168,11 @@ public class Shell extends Projectile {
             }
             setPos(getX() + v.x, getY() + v.y, getZ() + v.z);
             travelled += v.length();
-            if (w == W.FLAK && travelled >= FLAK_RANGE) {
+            if (w.range() > 0 && travelled >= w.range()) {
                 explode();
                 return;
             }
-            if (life > 600 || getY() < level().getMinBuildHeight() - 10) explode();
+            if (life > 900 || getY() < level().getMinBuildHeight() - 10) explode();
         } else {
             if (w == W.ROCKET) v = v.add(0, -0.012, 0);
             else if (w == W.BALLISTIC) v = v.add(0, -BALLISTIC_G, 0);
@@ -194,6 +194,11 @@ public class Shell extends Projectile {
             W w = weapon();
             if (w == W.NUKE) {
                 Nuke.detonate(sl, position(), getOwner());
+                discard();
+                return;
+            }
+            if (w.special()) {
+                Payload.detonate(sl, w, position(), getOwner());
                 discard();
                 return;
             }

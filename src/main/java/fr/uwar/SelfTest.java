@@ -40,6 +40,8 @@ public class SelfTest {
     static ServerLevel lv;
     static MinecraftServer server;
     static final List<Run> runs = new ArrayList<>();
+    static final java.util.Map<String, double[]> FAR = java.util.Map.of("missile", new double[]{-250, -100}, "flak_far", new double[]{-170, -100}, "nuke", new double[]{-100, 100},
+            "flak500", new double[]{-300, -130}, "lrm_wall", new double[]{-330, -130}, "lrm_range", new double[]{-360, -130}, "payloads", new double[]{150, -100}, "b17_fly", new double[]{-420, -130});
 
     static class Run {
         String name, mode;
@@ -50,6 +52,9 @@ public class SelfTest {
         int t0, ph, mark;
         boolean done;
         Entity c1, c2, c3, c4;
+        Entity[] cs = new Entity[10];
+        java.util.Set<java.util.UUID> bolts = new java.util.HashSet<>();
+        int[] ia = new int[4];
         double d0, d1;
         float f0;
         int i0;
@@ -93,10 +98,10 @@ public class SelfTest {
             switch (a[0]) {
                 case "models" -> {
                     ServerPlayer sp = src.getPlayerOrException();
-                    for (int i = 0; i < 3; i++) {
+                    for (int i = 0; i < 4; i++) {
                         Kind k = Kind.values()[i];
                         Aircraft ac = new Aircraft(Reg.AIRCRAFTS.get(k).get(), sl, k);
-                        ac.moveTo(i == 0 ? -12 : i == 1 ? 14 : 34, -60, 15, 180, 0);
+                        ac.moveTo(i == 0 ? -12 : i == 1 ? 14 : i == 2 ? 34 : 90, -60, i == 3 ? 40 : 15, 180, 0);
                         ac.applyStack(Aircraft.makeStack(k, true));
                         ac.yRotO = 180;
                         sl.addFreshEntity(ac);
@@ -117,6 +122,16 @@ public class SelfTest {
                 case "nuke" -> {
                     double sc = a.length > 1 ? Double.parseDouble(a[1]) : 0.05;
                     Nuke.detonate(sl, new Vec3(0, -60, 0), null, sc);
+                }
+                case "sel" -> {
+                    if (src.getPlayerOrException().getVehicle() instanceof Aircraft ac) {
+                        W want = W.valueOf(a[1].toUpperCase());
+                        for (int i = 0; i < 24 && ac.selected() != want; i++) ac.nextWeapon(1);
+                    }
+                }
+                case "payload" -> {
+                    W pw = W.valueOf(a[1].toUpperCase());
+                    Payload.detonate(sl, pw, new Vec3(Double.parseDouble(a[2]), Double.parseDouble(a[3]), Double.parseDouble(a[4])), null);
                 }
                 case "unride" -> src.getPlayerOrException().stopRiding();
                 default -> src.sendFailure(Component.literal("?"));
@@ -159,6 +174,10 @@ public class SelfTest {
         for (Entity e : new ArrayList<>(lv.getEntitiesOfClass(Cow.class, new net.minecraft.world.phys.AABB(-400, -100, -400, 400, 300, 400)))) e.discard();
     }
 
+    static int gy(int x, int z) {
+        return lv.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z);
+    }
+
     static Cow cow(double x, double y, double z) {
         Cow c = EntityType.COW.create(lv);
         c.moveTo(x, y, z, 0, 0);
@@ -172,6 +191,7 @@ public class SelfTest {
         if (running) return;
         lv = sl;
         for (int cx = -16; cx <= 12; cx++) for (int cz = -8; cz <= 12; cz++) lv.setChunkForced(cx, cz, true);
+        for (int cx = -28; cx <= -17; cx++) for (int cz = -10; cz <= 62; cz++) lv.setChunkForced(cx, cz, true);
         lv.getChunkSource().getChunk(0, 0, net.minecraft.world.level.chunk.ChunkStatus.FULL, true);
         running = true;
         t = 0;
@@ -179,18 +199,18 @@ public class SelfTest {
         runs.clear();
         String[][] sc = {{"cruise", "JET"}, {"ballistic", "JET"}, {"heli_fly", "HELI"}, {"jet_fly", "JET"}, {"cannon", "HELI"}, {"rocket", "HELI"}, {"missile", "HELI"}, {"bomb", "JET"},
                 {"empty", "HELI"}, {"supply", "HELI"}, {"fuel_out", "HELI"}, {"destroy", "HELI"}, {"crash", "JET"}, {"persist", "JET"},
-                {"pickup", "HELI"}, {"place", "JET"}, {"jet_weapons", "JET"}, {"mini_fly", "MINI"}, {"mini_arms", "MINI"}, {"flak_far", "HELI"}, {"loadout", "HELI"}, {"ir", "HELI"}, {"flak", "HELI"}, {"buster", "HELI"}, {"bay", "JET"}, {"nuke", "JET"}};
-        java.util.Map<String, Integer> delay = java.util.Map.of("missile", 100, "ir", 300, "flak", 500, "buster", 700, "flak_far", 1300, "nuke", 1600);
+                {"pickup", "HELI"}, {"place", "JET"}, {"jet_weapons", "JET"}, {"mini_fly", "MINI"}, {"mini_arms", "MINI"}, {"flak_far", "HELI"}, {"loadout", "HELI"}, {"ir", "HELI"}, {"flak", "HELI"}, {"buster", "HELI"}, {"bay", "JET"}, {"nuke", "JET"}, {"b17_fly", "B17"}, {"b17_arms", "B17"}, {"flak500", "JET"}, {"lrm_wall", "JET"}, {"lrm_range", "JET"}, {"payloads", "JET"}};
+        java.util.Map<String, Integer> delay = java.util.Map.of("missile", 100, "ir", 300, "flak", 500, "buster", 700, "flak_far", 1300, "nuke", 1600, "flak500", 2700, "lrm_wall", 2700, "lrm_range", 2700, "payloads", 2700);
         int i = 0;
         for (String[] s : sc) {
-            boolean far = s[0].equals("missile") || s[0].equals("flak_far") || s[0].equals("nuke");
-            Run r = far ? mk(s[0], Kind.valueOf(s[1]), s[0].equals("nuke") ? -100 : s[0].equals("missile") ? -250 : -170, s[0].equals("nuke") ? 100 : -100, s[0]) : mk(s[0], Kind.valueOf(s[1]), -90 + (i % 8) * 24, (i / 8) * 60 - 30, s[0]);
+            double[] fp = FAR.get(s[0]);
+            Run r = fp != null ? mk(s[0], Kind.valueOf(s[1]), fp[0], fp[1], s[0]) : mk(s[0], Kind.valueOf(s[1]), -90 + (i % 8) * 24, (i / 8) * 60 - 30, s[0]);
             r.t0 = t + delay.getOrDefault(s[0], 0);
             runs.add(r);
             i++;
         }
         for (Run r : runs) {
-            if (r.mode.equals("pickup") || r.mode.equals("place") || r.mode.equals("persist") || r.mode.equals("supply")) {
+            if (r.mode.equals("payloads") || r.mode.equals("pickup") || r.mode.equals("place") || r.mode.equals("persist") || r.mode.equals("supply")) {
                 r.a.testPilot = null;
                 if (r.mode.equals("supply")) r.fp.setPos(r.start.x, r.start.y, r.start.z - 3);
                 continue;
@@ -829,6 +849,221 @@ public class SelfTest {
                     check("NUKE : zone 5-10 km : arbres sans feuilles", lv.getBlockState(new BlockPos((int) x0 + 150, y + 3, (int) z0)).isAir(), "");
                     check("NUKE : hors zone : feuilles intactes", lv.getBlockState(new BlockPos((int) x0 + 230, y + 3, (int) z0)).getBlock() instanceof net.minecraft.world.level.block.LeavesBlock, "");
                     Nuke.scaleOverride = -1;
+                    fin(r);
+                }
+            }
+
+            case "b17_fly" -> {
+                switch (r.ph) {
+                    case 0 -> {
+                        if (lt == 1) {
+                            a.inF = 1;
+                            a.aimPitch = -20;
+                            a.inBoost = true;
+                            r.d0 = a.getY();
+                            check("B-17 : 2 places, grande taille, 9 emplacements", a.kind.seats == 2 && a.getBbWidth() >= 5.5f && a.kind.slots == 9, "bb=" + a.getBbWidth());
+                        }
+                        if (a.getY() > r.d0 + 5) {
+                            check("B-17 decolle", true, st(a));
+                            check("B-17 : pas de postcombustion", !a.boosting(), "");
+                            r.ph = 1;
+                            r.mark = lt;
+                        } else if (lt > 900) {
+                            check("B-17 decolle", false, st(a));
+                            fin(r);
+                        }
+                    }
+                    case 1 -> {
+                        a.aimPitch = -3;
+                        if (lt == r.mark + 40) {
+                            a.aimYaw = net.minecraft.util.Mth.wrapDegrees(a.getYRot() + 90);
+                            r.f0 = a.getYRot();
+                            r.ph = 2;
+                            r.mark = lt;
+                        }
+                    }
+                    case 2 -> {
+                        a.aimPitch = -3;
+                        if (lt == r.mark + 17) {
+                            float turned = Math.abs(net.minecraft.util.Mth.wrapDegrees(a.getYRot() - r.f0));
+                            check("B-17 : virage lent (lourd)", turned > 5 && turned < 55, "tourne=" + turned + " " + st(a));
+                            fin(r);
+                        }
+                    }
+                }
+            }
+            case "b17_arms" -> {
+                if (lt == 1) {
+                    int m9 = W.BOMB.bit() | W.BAY.bit() | W.INCEN.bit() | W.ACID.bit() | W.CLUSTER.bit() | W.THERMO.bit() | W.GAS.bit() | W.SEISMIC.bit() | W.LIGHT.bit();
+                    String e1 = a.setLoadout(r.fp, W.CANNON.bit() | m9);
+                    check("B-17 : 9 types de bombes acceptes", e1 == null && a.slotsUsed() == 9, "err=" + e1);
+                    String e2 = a.setLoadout(r.fp, W.CANNON.bit() | m9 | W.NUKE.bit());
+                    check("B-17 : 10 armes refusees (9 emplacements)", e2 != null, "err=" + e2);
+                    String e3 = a.setLoadout(r.fp, W.CANNON.bit() | W.IR.bit());
+                    check("B-17 : pas de missile IR", e3 != null, "err=" + e3);
+                    check("helico : pas de bombe incendiaire", !Kind.HELI.canCarry(W.INCEN) && Kind.JET.canCarry(W.INCEN) && Kind.HELI.canCarry(W.FLAK5) && Kind.HELI.canCarry(W.LRM), "");
+                    check("mini : pas de fragmentation 500 m ni longue portee", !Kind.MINI.canCarry(W.FLAK5) && !Kind.MINI.canCarry(W.LRM), "");
+                    a.setLoadout(r.fp, W.CANNON.bit() | W.BOMB.bit() | W.INCEN.bit());
+                    a.setAmmo(W.BOMB, 40);
+                    while (a.selected() != W.BOMB) a.nextWeapon(1);
+                    r.i0 = a.ammo(W.BOMB);
+                    a.inFire = true;
+                }
+                if (lt == 50) {
+                    a.inFire = false;
+                    int n = 0;
+                    for (Entity en : lv.getAllEntities()) if (en instanceof Shell sh && sh.weapon() == W.BOMB) n++;
+                    check("B-17 : largue plusieurs bombes en maintenant le tir", r.i0 - a.ammo(W.BOMB) >= 3, "largue=" + (r.i0 - a.ammo(W.BOMB)) + " en vol=" + n);
+                    fin(r);
+                }
+            }
+            case "flak500" -> {
+                double x0 = r.start.x, z0 = r.start.z;
+                if (lt == 1) {
+                    a.setLoadout(r.fp, W.CANNON.bit() | W.FLAK5.bit());
+                    a.setAmmo(W.FLAK5, 2);
+                    a.nextWeapon(1);
+                    check("fragmentation 500 m : selectionnee", a.selected() == W.FLAK5 && W.FLAK5.range() == 500 && W.FLAK.range() == 200, "sel=" + a.selected());
+                    r.c1 = cow(x0 + 5, r.start.y, z0 + 498);
+                    r.c2 = cow(x0 + 8, r.start.y, z0 + 200);
+                    r.c3 = cow(x0 + 5, r.start.y, z0 + 530);
+                    a.aimPitch = 0;
+                    a.inFire = true;
+                }
+                if (lt == 3) a.inFire = false;
+                if (lt == 100) {
+                    boolean still = false;
+                    for (Entity en : lv.getAllEntities()) if (en instanceof Shell sh && sh.weapon() == W.FLAK5) still = true;
+                    check("frag 500 m : ne explose pas a 200 blocs (toujours en vol, cible a 200 intacte)", still && r.c2.isAlive(), "");
+                }
+                if (lt == 260) {
+                    check("frag 500 m : explose a ~500 blocs et detruit la cible", !r.c1.isAlive(), "pv=" + ((LivingEntity) r.c1).getHealth());
+                    check("frag 500 m : cible a 530 hors rayon survit", r.c3.isAlive(), "");
+                    check("frag 500 m : munition consommee", a.ammo(W.FLAK5) == 1, "" + a.ammo(W.FLAK5));
+                    fin(r);
+                }
+            }
+            case "lrm_wall" -> {
+                double x0 = r.start.x, z0 = r.start.z;
+                int y = (int) r.start.y;
+                if (lt == 1) {
+                    a.setLoadout(r.fp, W.CANNON.bit() | W.LRM.bit());
+                    a.setAmmo(W.LRM, 2);
+                    a.nextWeapon(1);
+                    for (int dx = -8; dx <= 18; dx++) for (int dy = 0; dy < 8; dy++) lv.setBlock(new BlockPos((int) x0 + dx, y + dy, (int) z0 + 400), net.minecraft.world.level.block.Blocks.STONE.defaultBlockState(), 2);
+                    r.c1 = cow(x0 + 5, y, z0 + 395);
+                    r.c2 = cow(x0 + 5, y, z0 + 440);
+                    r.c3 = cow(x0 + 5, y, z0 + 100);
+                    a.aimPitch = 0;
+                    a.inFire = true;
+                }
+                if (lt == 3) a.inFire = false;
+                if (lt == 60) check("missile longue portee : en vol a 200+ blocs, cible proche intacte", r.c3.isAlive(), "");
+                if (lt == 250) {
+                    check("longue portee : explose sur l'obstacle (a ~400 blocs) et tue la cible devant", !r.c1.isAlive(), "");
+                    check("longue portee : n'a pas traverse le mur (cible derriere vivante)", r.c2.isAlive(), "");
+                    check("longue portee : le mur est troue (blocs arraches)", lv.getBlockState(new BlockPos((int) x0 + 5, y + 1, (int) z0 + 400)).isAir(), "bloc=" + lv.getBlockState(new BlockPos((int) x0 + 5, y + 1, (int) z0 + 400)));
+                    fin(r);
+                }
+            }
+            case "lrm_range" -> {
+                double x0 = r.start.x, z0 = r.start.z;
+                if (lt == 1) {
+                    a.setLoadout(r.fp, W.CANNON.bit() | W.LRM.bit());
+                    a.setAmmo(W.LRM, 2);
+                    a.nextWeapon(1);
+                    r.c1 = cow(x0 + 5, r.start.y, z0 + 898);
+                    r.c2 = cow(x0 + 9, r.start.y, z0 + 700);
+                    a.aimPitch = 0;
+                    a.inFire = true;
+                }
+                if (lt == 3) a.inFire = false;
+                if (lt == 340) {
+                    check("longue portee : explose en bout de course a 900 blocs", !r.c1.isAlive(), "pv=" + ((LivingEntity) r.c1).getHealth());
+                    check("longue portee : n'explose pas en chemin", r.c2.isAlive(), "");
+                    boolean still = false;
+                    for (Entity en : lv.getAllEntities()) if (en instanceof Shell sh && sh.weapon() == W.LRM) still = true;
+                    check("longue portee : plus de projectile apres l'explosion", !still, "");
+                    fin(r);
+                }
+            }
+            case "payloads" -> {
+                double ax = 150.5, az = -99.5, bx = 120.5, bz = 20.5, cx = 120.5, cz = 100.5, dx = 150.5, dz = 170.5;
+                int ay = gy(150, -100), by = gy(120, 20), cy = gy(120, 100), dy = gy(150, 170);
+                if (lt == 1) {
+                    r.a.discard();
+                    // A : incendiaire
+                    r.cs[0] = cow(ax + 3, ay, az);
+                    r.cs[1] = cow(ax - 6, ay, az + 4);
+                    r.cs[2] = cow(ax + 40, ay, az);
+                    Payload.detonate(lv, W.INCEN, new Vec3(ax, ay, az), null);
+                    // B : acide
+                    r.cs[3] = cow(bx + 1, by, bz);
+                    r.ia[0] = lv.getBlockState(new BlockPos((int) bx, by - 3, (int) bz)).isAir() ? 1 : 0;
+                    Payload.detonate(lv, W.ACID, new Vec3(bx, by, bz), null);
+                    // C : sismique
+                    r.cs[4] = cow(cx + 10, cy, cz);
+                    Payload.detonate(lv, W.SEISMIC, new Vec3(cx, cy, cz), null);
+                    // D : thermobarique
+                    r.cs[5] = cow(dx + 10, dy, dz);
+                    r.cs[6] = cow(dx + 12, dy, dz + 2);
+                    r.cs[7] = cow(dx + 36, dy, dz);
+                    Payload.detonate(lv, W.THERMO, new Vec3(dx, dy, dz), null);
+                }
+                if (lt == 20) {
+                    int fires = 0;
+                    for (int x = -14; x <= 14; x++) for (int z = -14; z <= 14; z++) for (int y = -2; y <= 3; y++)
+                        if (lv.getBlockState(new BlockPos((int) ax + x, ay + y, (int) az + z)).is(net.minecraft.world.level.block.Blocks.FIRE)) fires++;
+                    check("incendiaire : le terrain brule (flammes posees)", fires >= 5, "flammes=" + fires);
+                    check("incendiaire : creatures enflammees", r.cs[0].isOnFire() || !r.cs[0].isAlive(), "");
+                    check("incendiaire : hors zone (40 blocs) intact", !r.cs[2].isOnFire() && r.cs[2].isAlive(), "");
+                    check("thermobarique : cibles dans le souffle tuees", !r.cs[5].isAlive() && !r.cs[6].isAlive(), "");
+                    check("thermobarique : cible a 36 blocs epargnee", r.cs[7].isAlive(), "");
+                    check("thermobarique : cratere", lv.getBlockState(new BlockPos((int) dx, dy - 3, (int) dz)).isAir(), "bloc=" + lv.getBlockState(new BlockPos((int) dx, dy - 3, (int) dz)));
+                }
+                if (lt == 60) {
+                    for (int k = 0; k < 5; k++) if (r.cs[k] != null) r.cs[k].discard();
+                    r.cs[0] = cow(ax + 4, ay, az);
+                    Payload.detonate(lv, W.GAS, new Vec3(ax, ay, az), null);
+                }
+                if (lt == 150) {
+                    check("gaz : creature dans le nuage empoisonnee", ((LivingEntity) r.cs[0]).hasEffect(net.minecraft.world.effect.MobEffects.POISON) || !r.cs[0].isAlive(), "");
+                    r.cs[0].discard();
+                }
+                if (lt == 230) {
+                    check("acide : les blocs sont ronges en profondeur", r.ia[0] == 0 && lv.getBlockState(new BlockPos((int) bx, by - 3, (int) bz)).isAir(), "bloc=" + lv.getBlockState(new BlockPos((int) bx, by - 3, (int) bz)));
+                    check("acide : creature dans la flaque touchee", !r.cs[3].isAlive() || ((LivingEntity) r.cs[3]).hasEffect(net.minecraft.world.effect.MobEffects.POISON), "");
+                    int air = 0;
+                    for (int i = 0; i < 400; i++) {
+                        double a1 = i * 2.399963, d1 = Math.sqrt((i + 0.5) / 400.0) * 38;
+                        int px = (int) (cx + Math.cos(a1) * d1), pz = (int) (cz + Math.sin(a1) * d1);
+                        if (gy(px, pz) < cy) air++;
+                    }
+                    check("sismique : le sol est fissure (surface arrachee)", air >= 40, "colonnes=" + air);
+                    check("sismique : creature secouee et blessee", !r.cs[4].isAlive() || ((LivingEntity) r.cs[4]).getHealth() < ((LivingEntity) r.cs[4]).getMaxHealth(), "");
+                    // sous-munitions
+                    for (int k = 0; k < 6; k++) r.cs[k] = cow(ax + Math.cos(k * 1.05) * 14, ay, az + Math.sin(k * 1.05) * 14);
+                    r.cs[6] = cow(ax + 45, ay, az);
+                    Payload.detonate(lv, W.CLUSTER, new Vec3(ax, ay, az), null);
+                }
+                if (lt == 340) {
+                    int dead = 0;
+                    for (int k = 0; k < 6; k++) if (!r.cs[k].isAlive()) dead++;
+                    check("sous-munitions : plusieurs petites explosions (cibles tuees autour)", dead >= 2, "morts=" + dead);
+                    check("sous-munitions : hors zone (45 blocs) epargne", r.cs[6].isAlive(), "");
+                    for (int k = 0; k < 7; k++) r.cs[k].discard();
+                    for (int k = 0; k < 5; k++) r.cs[k] = cow(ax + (k - 2) * 8, ay, az + 3);
+                    Payload.detonate(lv, W.LIGHT, new Vec3(ax, ay, az), null);
+                }
+                if (lt > 340 && lt < 440) {
+                    for (Entity en : lv.getAllEntities()) if (en instanceof net.minecraft.world.entity.LightningBolt lb) r.bolts.add(lb.getUUID());
+                }
+                if (lt == 450) {
+                    int dead = 0;
+                    for (int k = 0; k < 5; k++) if (!r.cs[k].isAlive() || r.cs[k].isOnFire()) dead++;
+                    check("foudre : plusieurs eclairs", r.bolts.size() >= 4, "eclairs=" + r.bolts.size());
+                    check("foudre : les creatures sont frappees", dead >= 1, "touchees=" + dead);
+                    check("effets lies aux bombes termines proprement", Payload.active() <= 1, "taches=" + Payload.active());
                     fin(r);
                 }
             }

@@ -18,7 +18,8 @@ public class LoadoutScreen extends Screen {
     private final List<W> list = new ArrayList<>();
     private final List<Button> buttons = new ArrayList<>();
     private int x0, y0;
-    private static final int ROW = 22, WIDTH = 400, COLW = 195;
+    private static final int ROW = 22;
+    private int cols = 2, colw = 195, width0 = 400;
 
     public LoadoutScreen(Aircraft a) {
         super(Component.literal("Armement"));
@@ -29,20 +30,23 @@ public class LoadoutScreen extends Screen {
     @Override
     protected void init() {
         buttons.clear();
-        x0 = (width - WIDTH) / 2;
-        y0 = 36;
+        cols = list.size() > 12 ? 3 : 2;
+        colw = Math.min(195, (width - 40 - (cols - 1) * 6) / cols);
+        width0 = cols * colw + (cols - 1) * 6;
+        x0 = (width - width0) / 2;
+        y0 = 30;
         for (int i = 0; i < list.size(); i++) {
             W w = list.get(i);
             Button b = Button.builder(Component.empty(), btn -> toggle(w))
-                    .bounds(x0 + (i % 2) * (COLW + 10), y0 + (i / 2) * ROW, COLW, 20)
+                    .bounds(x0 + (i % cols) * (colw + 6), y0 + (i / cols) * ROW, colw, 20)
                     .tooltip(Tooltip.create(Component.literal(w.desc)))
                     .build();
             buttons.add(addRenderableWidget(b));
         }
-        int by = y0 + ((list.size() + 1) / 2) * ROW + 30;
+        int by = y0 + ((list.size() + cols - 1) / cols) * ROW + 28;
         addRenderableWidget(Button.builder(Component.literal("Recharger depuis l'inventaire"), btn -> Net.CH.sendToServer(new Net.CmdMsg(Net.C_RELOAD)))
-                .bounds(x0, by, COLW, 20).build());
-        addRenderableWidget(Button.builder(Component.literal("Fermer"), btn -> onClose()).bounds(x0 + COLW + 10, by, COLW, 20).build());
+                .bounds(x0, by, Math.max(colw, 150), 20).build());
+        addRenderableWidget(Button.builder(Component.literal("Fermer"), btn -> onClose()).bounds(x0 + Math.max(colw, 150) + 6, by, Math.max(colw, 150), 20).build());
         refresh();
     }
 
@@ -85,7 +89,7 @@ public class LoadoutScreen extends Screen {
         String sl = "Emplacements : " + a.slotsUsed() + " / " + a.kind.slots + "   (le canon 20 mm est toujours monte)";
         g.drawCenteredString(font, sl, width / 2, 21, a.slotsUsed() >= a.kind.slots ? 0xFFFFC040 : 0xFFCCCCCC);
         super.render(g, mx, my, pt);
-        int ty = y0 + ((list.size() + 1) / 2) * ROW + 4;
+        int ty = y0 + ((list.size() + cols - 1) / cols) * ROW + 2;
         boolean ground = a.grounded() || minecraft.player.getAbilities().instabuild;
         g.drawCenteredString(font, ground ? "Clic : installer / retirer (munitions rendues). Survole = description."
                 : "Pose l'appareil au sol pour modifier l'armement.", width / 2, ty, ground ? 0xFFAAAAAA : 0xFFFF6060);

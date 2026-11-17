@@ -130,6 +130,8 @@ PAL = {
                      camo=[(132, 138, 148), (104, 112, 124), (84, 92, 104), (150, 156, 164)]),
  'mini_fighter': dict(ha=(98, 106, 122), hb=(70, 76, 92), acc=(240, 120, 30), met=(46, 48, 56), lens=(110, 150, 190),
                      camo=[(98, 106, 122), (72, 80, 100), (124, 130, 142), (58, 64, 80)]),
+ 'b17': dict(ha=(96, 102, 74), hb=(122, 128, 100), acc=(220, 200, 60), met=(66, 68, 72), lens=(90, 130, 160),
+                     camo=[(96, 102, 74), (82, 90, 62), (110, 112, 86), (70, 76, 54)]),
  'weapons': dict(ha=(120, 124, 120), hb=(84, 90, 84), acc=(230, 120, 30), met=(60, 64, 60), lens=(40, 70, 130),
                  camo=[(120, 124, 120), (96, 100, 96), (84, 90, 84), (140, 144, 140)]),
 }
@@ -231,6 +233,14 @@ def ic_mini(d, S):
     P(d, [(.47, .3), (.53, .3), (.54, .42), (.46, .42)], S, (120, 170, 210))
     P(d, [(.48, .62), (.52, .62), (.52, .9), (.48, .9)], S, (240, 130, 40))
 mk(ic_mini, 'mini_fighter')
+def ic_b17(d, S):
+    P(d, [(.5, .04), (.55, .22), (.57, .4), (.97, .5), (.97, .6), (.57, .62), (.55, .84), (.72, .9), (.72, .96), (.28, .96), (.28, .9), (.45, .84), (.43, .62), (.03, .6), (.03, .5), (.43, .4), (.45, .22)], S, (104, 112, 80))
+    for x in (.2, .33, .67, .8):
+        P(d, [(x - .03, .44), (x + .03, .44), (x + .03, .56), (x - .03, .56)], S, (60, 62, 66))
+    P(d, [(.47, .14), (.53, .14), (.54, .26), (.46, .26)], S, (90, 130, 160))
+mk(ic_b17, 'b17')
+def ic_ammo2(d, S):
+    pass
 mk(ic_ammo(0, 'belt'), 'cannon_ammo')
 mk(ic_ammo(0, 'pod'), 'rocket_pod')
 mk(ic_ammo(0, 'missile'), 'air_missile')
@@ -245,7 +255,17 @@ mk(ic_ammo(0, 'missile', (70, 78, 60), (200, 40, 40), (40, 46, 36)), 'ballistic_
 mk(ic_ammo(0, 'missile', (60, 62, 66), (240, 120, 20), (200, 120, 20)), 'buster_missile')
 mk(ic_ammo(0, 'bomb', (70, 76, 62), None, None), 'heavy_bomb')
 mk(ic_ammo(0, 'bomb', (225, 205, 40), None, (40, 40, 40)), 'nuclear_bomb')
-ITEMS = ['mini_fighter', 'ir_missile', 'flak_missile', 'cruise_missile', 'ballistic_missile', 'buster_missile', 'heavy_bomb', 'nuclear_bomb', 'attack_heli', 'fighter_jet', 'cannon_ammo', 'rocket_pod', 'air_missile', 'aerial_bomb', 'fuel_can', 'repair_kit']
+
+mk(ic_ammo(0, 'missile', (90, 110, 150), (255, 200, 80), (50, 60, 90)), 'flak500_missile')
+mk(ic_ammo(0, 'missile', (200, 150, 90), (200, 40, 40), (120, 80, 40)), 'longrange_missile')
+mk(ic_ammo(0, 'bomb', (210, 90, 30), None, None), 'incendiary_bomb')
+mk(ic_ammo(0, 'bomb', (90, 190, 50), None, None), 'acid_bomb')
+mk(ic_ammo(0, 'bomb', (120, 140, 190), None, None), 'cluster_bomb')
+mk(ic_ammo(0, 'bomb', (170, 50, 50), None, None), 'thermobaric_bomb')
+mk(ic_ammo(0, 'bomb', (190, 200, 60), None, None), 'gas_bomb')
+mk(ic_ammo(0, 'bomb', (150, 110, 70), None, None), 'seismic_bomb')
+mk(ic_ammo(0, 'bomb', (110, 200, 240), None, None), 'lightning_bomb')
+ITEMS = ['b17', 'flak500_missile', 'longrange_missile', 'incendiary_bomb', 'acid_bomb', 'cluster_bomb', 'thermobaric_bomb', 'gas_bomb', 'seismic_bomb', 'lightning_bomb', 'mini_fighter', 'ir_missile', 'flak_missile', 'cruise_missile', 'ballistic_missile', 'buster_missile', 'heavy_bomb', 'nuclear_bomb', 'attack_heli', 'fighter_jet', 'cannon_ammo', 'rocket_pod', 'air_missile', 'aerial_bomb', 'fuel_can', 'repair_kit']
 for n in ITEMS:
     json.dump({"parent": "item/generated", "textures": {"layer0": f"uwar:item/{n}"}}, open(f'{R}/models/item/{n}.json', 'w'), indent=1)
 print('textures ok')

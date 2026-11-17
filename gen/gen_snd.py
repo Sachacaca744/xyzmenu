@@ -109,6 +109,16 @@ items = {
  'buster_missile': ('Missile anti-bunker', 'Bunker Buster Missile'),
  'heavy_bomb': ('Bombe lourde (soute)', 'Heavy Bomb (bay)'),
  'nuclear_bomb': ('Bombe nucléaire', 'Nuclear Bomb'),
+ 'b17': ('Bombardier B-17 Forteresse volante', 'B-17 Flying Fortress'),
+ 'flak500_missile': ('Missile à fragmentation (500 m)', 'Fragmentation Missile (500 m)'),
+ 'longrange_missile': ('Missile longue portée (900 m)', 'Long-Range Missile (900 m)'),
+ 'incendiary_bomb': ('Bombe incendiaire', 'Incendiary Bomb'),
+ 'acid_bomb': ('Bombe à acide', 'Acid Bomb'),
+ 'cluster_bomb': ('Bombe à sous-munitions', 'Cluster Bomb'),
+ 'thermobaric_bomb': ('Bombe thermobarique', 'Thermobaric Bomb'),
+ 'gas_bomb': ('Bombe à gaz toxique', 'Toxic Gas Bomb'),
+ 'seismic_bomb': ('Bombe sismique', 'Seismic Bomb'),
+ 'lightning_bomb': ('Bombe foudre', 'Lightning Bomb'),
 }
 for idx, code in enumerate(['fr_fr', 'en_us']):
     L = {}
@@ -117,6 +127,7 @@ for idx, code in enumerate(['fr_fr', 'en_us']):
     L['entity.uwar.attack_heli'] = items['attack_heli'][idx]
     L['entity.uwar.fighter_jet'] = items['fighter_jet'][idx]
     L['entity.uwar.mini_fighter'] = items['mini_fighter'][idx]
+    L['entity.uwar.b17'] = items['b17'][idx]
     L['entity.uwar.shell'] = ['Munition aérienne', 'Aircraft ordnance'][idx]
     L['key.categories.uwar'] = 'UWar - Aviation'
     L['key.uwar.weapon'] = ['Arme suivante', 'Next weapon'][idx]
@@ -149,4 +160,14 @@ shapeless('buster_missile', ['uwar:air_missile', 'minecraft:tnt', 'minecraft:tnt
 shapeless('heavy_bomb', ['uwar:aerial_bomb', 'minecraft:tnt', 'minecraft:iron_ingot', 'minecraft:gunpowder'], 'heavy_bomb')
 shapeless('nuclear_bomb', ['uwar:heavy_bomb', 'minecraft:nether_star', 'minecraft:netherite_ingot', 'minecraft:tnt', 'minecraft:tnt', 'minecraft:tnt', 'minecraft:tnt'], 'nuclear_bomb')
 shaped('mini_fighter', ['IBI', 'GFG', ' R '], {'B': 'minecraft:iron_block', 'I': 'minecraft:iron_ingot', 'F': 'minecraft:furnace', 'G': 'minecraft:glass', 'R': 'minecraft:redstone'}, 'mini_fighter')
+shaped('b17', ['BBB', 'IFI', 'GRG'], {'B': 'minecraft:iron_block', 'I': 'minecraft:iron_ingot', 'F': 'minecraft:blast_furnace', 'G': 'minecraft:glass', 'R': 'minecraft:redstone'}, 'b17')
+shapeless('flak500_missile', ['uwar:flak_missile', 'uwar:fuel_can', 'minecraft:gunpowder'], 'flak500_missile')
+shapeless('longrange_missile', ['uwar:air_missile', 'uwar:fuel_can', 'uwar:fuel_can', 'minecraft:tnt', 'minecraft:iron_block'], 'longrange_missile')
+shapeless('incendiary_bomb', ['uwar:aerial_bomb', 'minecraft:blaze_powder', 'minecraft:blaze_powder', 'minecraft:coal'], 'incendiary_bomb')
+shapeless('acid_bomb', ['uwar:aerial_bomb', 'minecraft:spider_eye', 'minecraft:slime_ball', 'minecraft:fermented_spider_eye'], 'acid_bomb')
+shapeless('cluster_bomb', ['uwar:aerial_bomb', 'minecraft:tnt', 'minecraft:tnt', 'minecraft:gunpowder'], 'cluster_bomb')
+shapeless('thermobaric_bomb', ['uwar:heavy_bomb', 'minecraft:blaze_powder', 'uwar:fuel_can'], 'thermobaric_bomb')
+shapeless('gas_bomb', ['uwar:aerial_bomb', 'minecraft:poisonous_potato', 'minecraft:spider_eye', 'minecraft:fermented_spider_eye'], 'gas_bomb')
+shapeless('seismic_bomb', ['uwar:heavy_bomb', 'minecraft:piston', 'minecraft:piston', 'minecraft:tnt'], 'seismic_bomb')
+shapeless('lightning_bomb', ['uwar:aerial_bomb', 'minecraft:lightning_rod', 'minecraft:copper_ingot', 'minecraft:redstone'], 'lightning_bomb')
 print('ok')

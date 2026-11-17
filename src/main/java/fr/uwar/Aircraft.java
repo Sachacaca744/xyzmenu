@@ -189,7 +189,7 @@ public class Aircraft extends Entity {
         aimPitch = pitch;
         if (!level().isClientSide) {
             entityData.set(THR, Mth.clamp(thr, 0f, 1f));
-            entityData.set(BOOST, boost && !kind.heli() && fuel() > 20f);
+            entityData.set(BOOST, boost && !kind.heli() && !kind.bomber() && fuel() > 20f);
         }
     }
 
@@ -363,6 +363,7 @@ public class Aircraft extends Entity {
         // {lateral(gauche +), hauteur, avant}
         if (kind == Kind.HELI) return i == 0 ? new double[]{0, 0.45, 1.25} : new double[]{0, 0.30, 2.55};
         if (kind == Kind.MINI) return new double[]{0, 0.05, 0.9};
+        if (kind == Kind.B17) return i == 0 ? new double[]{0.55, 1.5, 6.0} : new double[]{-0.55, 1.5, 6.0};
         return new double[]{0, 0.42, 1.7};
     }
 
@@ -535,7 +536,7 @@ public class Aircraft extends Entity {
             if (inBrake) thrust -= 0.05f;
             thrust = Mth.clamp(thrust, 0f, 1f);
         } else thrust = Math.max(0f, thrust - 0.01f);
-        boolean boost = on && inBoost && fuel() > 20f;
+        boolean boost = on && inBoost && !kind.bomber() && fuel() > 20f;
         double tgt = on ? (0.04 + thrust * 1.5) * (boost ? 1.5 : 1.0) * kind.speedMul : 0.0;
         if (tgt > speedF) speedF += (float) ((tgt - speedF) * 0.03 + 0.002);
         else speedF += (float) ((tgt - speedF) * 0.015);
@@ -636,13 +637,14 @@ public class Aircraft extends Entity {
     }
 
     public static boolean lockWeapon(W w) {
-        return w == W.MISSILE || w == W.IR || w == W.FLAK || w == W.BUSTER || w == W.CRUISE;
+        return w == W.MISSILE || w == W.IR || w.flak() || w == W.BUSTER || w == W.CRUISE || w == W.LRM;
     }
 
     private void updateLock(W w) {
         double minCos = switch (w) {
             case IR -> 0.78;
-            case FLAK -> 0.90;
+            case FLAK, FLAK5 -> 0.90;
+            case LRM -> 0.97;
             case BUSTER -> 0.965;
             case CRUISE -> 0.96;
             default -> 0.94;
@@ -651,6 +653,8 @@ public class Aircraft extends Entity {
             case IR -> 180;
             case CRUISE -> 170;
             case FLAK -> 150;
+            case FLAK5 -> 300;
+            case LRM -> 450;
             case BUSTER -> 100;
             default -> 135;
         };
@@ -667,7 +671,7 @@ public class Aircraft extends Entity {
             BlockHitResult br = level().clip(new ClipContext(o, e.getBoundingBox().getCenter(), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
             if (br.getType() != HitResult.Type.MISS) continue;
             double score = cos + (e instanceof Enemy ? 0.02 : 0);
-            if (e instanceof Aircraft ac) score += w == W.FLAK ? 0.3 : 0.01;
+            if (e instanceof Aircraft ac) score += w.flak() ? 0.3 : 0.01;
             if (w == W.IR) {
                 score += heat(e);
             }
@@ -753,10 +757,10 @@ public class Aircraft extends Entity {
                 launch(sl, w, pilot, o, dir.scale(w.speed).add(vel.scale(0.4)), null, null);
                 sl.playSound(null, o.x, o.y, o.z, Reg.LAUNCH.get(), SoundSource.NEUTRAL, 1.6f, 1.2f);
             }
-            case MISSILE, IR, FLAK, BUSTER -> {
+            case MISSILE, IR, FLAK, FLAK5, LRM, BUSTER -> {
                 Vec3 o = base.add(left.scale(side * (kind.heli() ? 2.5 : 5.0 * kind.sc))).add(dir.scale(1.5)).add(0, -0.6, 0);
                 launch(sl, w, pilot, o, dir.scale(0.9).add(vel.scale(0.5)), lockedUuid(sl), null);
-                sl.playSound(null, o.x, o.y, o.z, Reg.LAUNCH.get(), SoundSource.NEUTRAL, w == W.BUSTER ? 2.6f : 2.0f, w == W.BUSTER ? 0.6f : 0.9f);
+                sl.playSound(null, o.x, o.y, o.z, Reg.LAUNCH.get(), SoundSource.NEUTRAL, w == W.BUSTER || w == W.LRM ? 2.6f : 2.0f, w == W.BUSTER || w == W.LRM ? 0.6f : 0.9f);
             }
             case CRUISE -> {
                 Vec3 o = base.add(0, 0.2, 0).add(dir.scale(2.0));
@@ -778,8 +782,10 @@ public class Aircraft extends Entity {
                 launch(sl, w, pilot, o, vv, null, pt);
                 sl.playSound(null, o.x, o.y, o.z, Reg.LAUNCH.get(), SoundSource.NEUTRAL, 3.2f, 0.45f);
             }
-            case BOMB, BAY, NUKE -> {
-                Vec3 o = base.add(left.scale(side * (w == W.BAY || w == W.NUKE ? 0.5 : 0.8))).add(0, -1.1, 0);
+            case BOMB, BAY, NUKE, INCEN, ACID, CLUSTER, THERMO, GAS, SEISMIC, LIGHT -> {
+                Vec3 o = kind.bomber()
+                        ? position().add(0, 0.55, 0).add(left.scale(side * 0.45)).add(dir.scale(((shots % 8) - 3.5) * 0.9))
+                        : base.add(left.scale(side * (w == W.BAY || w == W.NUKE ? 0.5 : 0.8))).add(0, -1.1, 0);
                 launch(sl, w, pilot, o, vel, null, null);
                 if (w == W.NUKE) {
                     if (pilot instanceof Player pp) pp.displayClientMessage(Component.literal("BOMBE NUCLEAIRE LARGUEE - eloignez-vous a plus de 2 km !"), true);

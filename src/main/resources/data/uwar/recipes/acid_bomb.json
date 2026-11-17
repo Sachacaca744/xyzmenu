@@ -1,0 +1,21 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "ingredients": [
+  {
+   "item": "uwar:aerial_bomb"
+  },
+  {
+   "item": "minecraft:spider_eye"
+  },
+  {
+   "item": "minecraft:slime_ball"
+  },
+  {
+   "item": "minecraft:fermented_spider_eye"
+  }
+ ],
+ "result": {
+  "item": "uwar:acid_bomb",
+  "count": 1
+ }
+}

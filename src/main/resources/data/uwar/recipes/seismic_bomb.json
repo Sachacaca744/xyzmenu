@@ -1,0 +1,21 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "ingredients": [
+  {
+   "item": "uwar:heavy_bomb"
+  },
+  {
+   "item": "minecraft:piston"
+  },
+  {
+   "item": "minecraft:piston"
+  },
+  {
+   "item": "minecraft:tnt"
+  }
+ ],
+ "result": {
+  "item": "uwar:seismic_bomb",
+  "count": 1
+ }
+}

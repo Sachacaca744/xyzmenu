@@ -1,0 +1,18 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "ingredients": [
+  {
+   "item": "uwar:flak_missile"
+  },
+  {
+   "item": "uwar:fuel_can"
+  },
+  {
+   "item": "minecraft:gunpowder"
+  }
+ ],
+ "result": {
+  "item": "uwar:flak500_missile",
+  "count": 1
+ }
+}

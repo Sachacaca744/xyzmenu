@@ -236,28 +236,91 @@ public class ClientTest {
                     cmd("uwar_selftest unride");
                     cmd("gamemode spectator");
                 }
-                case 1630 -> {
+                case 1625 -> cmd("tp @s 90 -52 -2 0 6");
+                case 1626 -> {
+                    cmd("gamemode creative");
+                    mc.options.hideGui = true;
+                    mc.options.setCameraType(CameraType.FIRST_PERSON);
+                }
+                case 1631 -> shot("40_b17_face");
+                case 1632 -> cmd("tp @s 135 -50 40 90 6");
+                case 1637 -> shot("41_b17_profil");
+                case 1638 -> cmd("tp @s 60 -45 80 -150 10");
+                case 1643 -> shot("42_b17_34_arriere");
+                case 1644 -> cmd("tp @s 90 -22 40 0 90");
+                case 1649 -> shot("43_b17_dessus");
+                case 1650 -> {
+                    mc.options.hideGui = false;
+                    cmd("tp @s 90 -60 38 0 0");
+                }
+                case 1655 -> cmd("uwar_selftest ride b17");
+                case 1670 -> {
+                    cmd("uwar_selftest fill");
+                    mc.player.setXRot(-14f);
+                    mc.player.setYRot(180f);
+                    mc.options.keyUp.setDown(true);
+                    mc.options.setCameraType(CameraType.THIRD_PERSON_BACK);
+                }
+                case 1950 -> {
+                    log("b17 en vol");
+                    shot("44_b17_vol");
+                    cmd("uwar_selftest sel bomb");
+                    mc.player.setXRot(14f);
+                }
+                case 1985 -> {
+                    shot("45_b17_viseur_bombes");
+                    mc.options.keyAttack.setDown(true);
+                }
+                case 2015 -> {
+                    mc.options.keyAttack.setDown(false);
+                    shot("46_b17_bombes_larguees");
+                }
+                case 2040 -> {
+                    mc.options.keyUp.setDown(false);
+                    cmd("uwar_selftest unride");
+                    cmd("gamemode spectator");
+                }
+                case 2050 -> {
                     cmd("tp @s 0 -52 -115 0 -14");
                     mc.options.setCameraType(CameraType.FIRST_PERSON);
                     mc.options.hideGui = true;
                     mc.player.setYRot(0f);
                     mc.player.setXRot(-14f);
                 }
-                case 1670 -> {
+                case 2120 -> {
                     mc.options.hideGui = false;
                     cmd("uwar_selftest nuke 0.05");
                 }
-                case 1672, 1715, 1800, 1940 -> cmd("effect clear @s");
-                case 1676 -> shot("30_nuke_flash");
-                case 1720 -> shot("31_nuke_boule_de_feu");
-                case 1810 -> shot("32_nuke_colonne");
-                case 1950 -> shot("33_nuke_champignon");
-                case 2400 -> {
+                case 2122, 2165, 2250, 2390 -> cmd("effect clear @s");
+                case 2126 -> shot("30_nuke_flash");
+                case 2170 -> shot("31_nuke_boule_de_feu");
+                case 2260 -> shot("32_nuke_colonne");
+                case 2400 -> shot("33_nuke_champignon");
+                case 2850 -> {
                     mc.player.setXRot(10f);
                     cmd("tp @s 0 -20 -60 0 25");
                 }
-                case 2450 -> shot("34_nuke_apres_cratere");
-                case 2460 -> {
+                case 2900 -> shot("34_nuke_apres_cratere");
+                case 2910 -> {
+                    cmd("tp @s 200 -48 -38 0 8");
+                    mc.player.setXRot(8f);
+                    mc.player.setYRot(0f);
+                }
+                case 2915 -> cmd("uwar_selftest payload incen 200 -60 0");
+                case 2945 -> shot("50_bombe_incendiaire");
+                case 2950 -> cmd("uwar_selftest payload acid 200 -60 0");
+                case 2995 -> shot("51_bombe_acide");
+                case 3000 -> cmd("uwar_selftest payload thermo 200 -60 0");
+                case 3009 -> shot("52_bombe_thermobarique");
+                case 3050 -> cmd("uwar_selftest payload gas 200 -60 0");
+                case 3100 -> shot("53_bombe_gaz");
+                case 3110 -> cmd("uwar_selftest payload light 200 -60 0");
+                case 3130 -> shot("54_bombe_foudre");
+                case 3190 -> cmd("uwar_selftest payload cluster 200 -60 0");
+                case 3215 -> shot("55_bombe_sous_munitions");
+                case 3260 -> cmd("uwar_selftest payload seismic 200 -60 0");
+                case 3290 -> shot("56_bombe_sismique");
+                case 3300 -> {
                     System.out.println("CLIENTTEST: termine");
                     mc.stop();
                 }
