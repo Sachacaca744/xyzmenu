@@ -1,0 +1,188 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.8/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Task :compileJava
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+
+> Task :processResources
+> Task :classes
+> Task :jar
+> Task :downloadMcpConfig
+> Task :extractSrg
+> Task :createMcpToSrg
+> Task :reobfJar
+> Task :jarJar SKIPPED
+> Task :reobfJarJar SKIPPED
+> Task :assemble
+> Task :compileTestJava NO-SOURCE
+> Task :processTestResources NO-SOURCE
+> Task :testClasses UP-TO-DATE
+> Task :test NO-SOURCE
+> Task :check UP-TO-DATE
+> Task :build
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run-1794897298652.json
+
+BUILD SUCCESSFUL in 18s
+7 actionable tasks: 7 executed
+Archive:  build/libs/uwar-1.0.0.jar
+  Length      Date    Time    Name
+---------  ---------- -----   ----
+        0  1970-01-11 22:58   META-INF/
+      111  2026-11-17 06:35   META-INF/MANIFEST.MF
+      576  2026-11-17 06:35   META-INF/mods.toml
+        0  1970-01-11 22:58   assets/
+        0  1970-01-11 22:58   assets/uwar/
+        0  1970-01-11 22:58   assets/uwar/lang/
+     1627  2026-11-17 06:35   assets/uwar/lang/en_us.json
+     1776  2026-11-17 06:35   assets/uwar/lang/fr_fr.json
+        0  1970-01-11 22:58   assets/uwar/models/
+        0  1970-01-11 22:58   assets/uwar/models/item/
+       84  2026-11-17 06:35   assets/uwar/models/item/acid_bomb.json
+       86  2026-11-17 06:35   assets/uwar/models/item/aerial_bomb.json
+       86  2026-11-17 06:35   assets/uwar/models/item/air_missile.json
+       86  2026-11-17 06:35   assets/uwar/models/item/attack_heli.json
+       78  2026-11-17 06:35   assets/uwar/models/item/b17.json
+       92  2026-11-17 06:35   assets/uwar/models/item/ballistic_missile.json
+       89  2026-11-17 06:35   assets/uwar/models/item/buster_missile.json
+       86  2026-11-17 06:35   assets/uwar/models/item/cannon_ammo.json
+       87  2026-11-17 06:35   assets/uwar/models/item/cluster_bomb.json
+       89  2026-11-17 06:35   assets/uwar/models/item/cruise_missile.json
+       86  2026-11-17 06:35   assets/uwar/models/item/fighter_jet.json
+       90  2026-11-17 06:35   assets/uwar/models/item/flak500_missile.json
+       87  2026-11-17 06:35   assets/uwar/models/item/flak_missile.json
+       83  2026-11-17 06:35   assets/uwar/models/item/fuel_can.json
+       83  2026-11-17 06:35   assets/uwar/models/item/gas_bomb.json
+       85  2026-11-17 06:35   assets/uwar/models/item/heavy_bomb.json
+       90  2026-11-17 06:35   assets/uwar/models/item/incendiary_bomb.json
+       85  2026-11-17 06:35   assets/uwar/models/item/ir_missile.json
+       89  2026-11-17 06:35   assets/uwar/models/item/lightning_bomb.json
+       92  2026-11-17 06:35   assets/uwar/models/item/longrange_missile.json
+       87  2026-11-17 06:35   assets/uwar/models/item/mini_fighter.json
+       87  2026-11-17 06:35   assets/uwar/models/item/nuclear_bomb.json
+       85  2026-11-17 06:35   assets/uwar/models/item/repair_kit.json
+       85  2026-11-17 06:35   assets/uwar/models/item/rocket_pod.json
+       87  2026-11-17 06:35   assets/uwar/models/item/seismic_bomb.json
+       91  2026-11-17 06:35   assets/uwar/models/item/thermobaric_bomb.json
+      358  2026-11-17 06:35   assets/uwar/sounds.json
+        0  1970-01-11 22:58   assets/uwar/sounds/
+     4617  2026-11-17 06:35   assets/uwar/sounds/beep.ogg
+    26234  2026-11-17 06:35   assets/uwar/sounds/boom.ogg
+     5332  2026-11-17 06:35   assets/uwar/sounds/gun.ogg
+    11832  2026-11-17 06:35   assets/uwar/sounds/heli_loop.ogg
+    13909  2026-11-17 06:35   assets/uwar/sounds/jet_loop.ogg
+    15195  2026-11-17 06:35   assets/uwar/sounds/launch.ogg
+    13114  2026-11-17 06:35   assets/uwar/sounds/warn.ogg
+        0  1970-01-11 22:58   assets/uwar/textures/
+        0  1970-01-11 22:58   assets/uwar/textures/entity/
+    15503  2026-11-17 06:35   assets/uwar/textures/entity/attack_heli.png
+    15618  2026-11-17 06:35   assets/uwar/textures/entity/b17.png
+    15480  2026-11-17 06:35   assets/uwar/textures/entity/fighter_jet.png
+    15666  2026-11-17 06:35   assets/uwar/textures/entity/mini_fighter.png
+    15532  2026-11-17 06:35   assets/uwar/textures/entity/weapons.png
+        0  1970-01-11 22:58   assets/uwar/textures/item/
+     1044  2026-11-17 06:35   assets/uwar/textures/item/acid_bomb.png
+     1031  2026-11-17 06:35   assets/uwar/textures/item/aerial_bomb.png
+      734  2026-11-17 06:35   assets/uwar/textures/item/air_missile.png
+     1909  2026-11-17 06:35   assets/uwar/textures/item/attack_heli.png
+     1521  2026-11-17 06:35   assets/uwar/textures/item/b17.png
+      681  2026-11-17 06:35   assets/uwar/textures/item/ballistic_missile.png
+      730  2026-11-17 06:35   assets/uwar/textures/item/buster_missile.png
+     1211  2026-11-17 06:35   assets/uwar/textures/item/cannon_ammo.png
+     1071  2026-11-17 06:35   assets/uwar/textures/item/cluster_bomb.png
+      741  2026-11-17 06:35   assets/uwar/textures/item/cruise_missile.png
+     1571  2026-11-17 06:35   assets/uwar/textures/item/fighter_jet.png
+      722  2026-11-17 06:35   assets/uwar/textures/item/flak500_missile.png
+      724  2026-11-17 06:35   assets/uwar/textures/item/flak_missile.png
+      802  2026-11-17 06:35   assets/uwar/textures/item/fuel_can.png
+      969  2026-11-17 06:35   assets/uwar/textures/item/gas_bomb.png
+     1013  2026-11-17 06:35   assets/uwar/textures/item/heavy_bomb.png
+     1051  2026-11-17 06:35   assets/uwar/textures/item/incendiary_bomb.png
+      688  2026-11-17 06:35   assets/uwar/textures/item/ir_missile.png
+     1074  2026-11-17 06:35   assets/uwar/textures/item/lightning_bomb.png
+      717  2026-11-17 06:35   assets/uwar/textures/item/longrange_missile.png
+     1349  2026-11-17 06:35   assets/uwar/textures/item/mini_fighter.png
+      952  2026-11-17 06:35   assets/uwar/textures/item/nuclear_bomb.png
+      961  2026-11-17 06:35   assets/uwar/textures/item/repair_kit.png
+     1186  2026-11-17 06:35   assets/uwar/textures/item/rocket_pod.png
+     1029  2026-11-17 06:35   assets/uwar/textures/item/seismic_bomb.png
+     1036  2026-11-17 06:35   assets/uwar/textures/item/thermobaric_bomb.png
+        0  1970-01-11 22:58   data/
+        0  1970-01-11 22:58   data/uwar/
+        0  1970-01-11 22:58   data/uwar/recipes/
+      300  2026-11-17 06:35   data/uwar/recipes/acid_bomb.json
+      246  2026-11-17 06:35   data/uwar/recipes/aerial_bomb.json
+      383  2026-11-17 06:35   data/uwar/recipes/air_missile.json
+      393  2026-11-17 06:35   data/uwar/recipes/attack_heli.json
+      385  2026-11-17 06:35   data/uwar/recipes/b17.json
+      394  2026-11-17 06:35   data/uwar/recipes/ballistic_missile.json
+      323  2026-11-17 06:35   data/uwar/recipes/buster_missile.json
+      296  2026-11-17 06:35   data/uwar/recipes/cannon_ammo.json
+      278  2026-11-17 06:35   data/uwar/recipes/cluster_bomb.json
+      317  2026-11-17 06:35   data/uwar/recipes/cruise_missile.json
+      393  2026-11-17 06:35   data/uwar/recipes/fighter_jet.json
+      246  2026-11-17 06:35   data/uwar/recipes/flak500_missile.json
+      286  2026-11-17 06:35   data/uwar/recipes/flak_missile.json
+      275  2026-11-17 06:35   data/uwar/recipes/fuel_can.json
+      305  2026-11-17 06:35   data/uwar/recipes/gas_bomb.json
+      283  2026-11-17 06:35   data/uwar/recipes/heavy_bomb.json
+      294  2026-11-17 06:35   data/uwar/recipes/incendiary_bomb.json
+      207  2026-11-17 06:35   data/uwar/recipes/ir_missile.json
+      298  2026-11-17 06:35   data/uwar/recipes/lightning_bomb.json
+      320  2026-11-17 06:35   data/uwar/recipes/longrange_missile.json
+      388  2026-11-17 06:35   data/uwar/recipes/mini_fighter.json
+      399  2026-11-17 06:35   data/uwar/recipes/nuclear_bomb.json
+      295  2026-11-17 06:35   data/uwar/recipes/repair_kit.json
+      304  2026-11-17 06:35   data/uwar/recipes/rocket_pod.json
+      277  2026-11-17 06:35   data/uwar/recipes/seismic_bomb.json
+      248  2026-11-17 06:35   data/uwar/recipes/thermobaric_bomb.json
+        0  1970-01-11 22:58   fr/
+        0  1970-01-11 22:58   fr/uwar/
+     1774  2026-11-17 06:35   fr/uwar/Aircraft$1.class
+    45872  2026-11-17 06:35   fr/uwar/Aircraft.class
+     6221  2026-11-17 06:35   fr/uwar/AircraftItem.class
+     8320  2026-11-17 06:35   fr/uwar/Blast.class
+     2464  2026-11-17 06:35   fr/uwar/Cfg.class
+     3415  2026-11-17 06:35   fr/uwar/Kind.class
+     3645  2026-11-17 06:35   fr/uwar/Net$CmdMsg.class
+     4481  2026-11-17 06:35   fr/uwar/Net$InputMsg.class
+     4379  2026-11-17 06:35   fr/uwar/Net$LoadoutMsg.class
+     4117  2026-11-17 06:35   fr/uwar/Net$NukeFlash.class
+     4383  2026-11-17 06:35   fr/uwar/Net.class
+     2268  2026-11-17 06:35   fr/uwar/Nuke$Data.class
+      833  2026-11-17 06:35   fr/uwar/Nuke$Job.class
+      988  2026-11-17 06:35   fr/uwar/Nuke$Site.class
+     1817  2026-11-17 06:35   fr/uwar/Nuke$Work.class
+    26720  2026-11-17 06:35   fr/uwar/Nuke.class
+      813  2026-11-17 06:35   fr/uwar/Payload$1.class
+      269  2026-11-17 06:35   fr/uwar/Payload$Step.class
+     1043  2026-11-17 06:35   fr/uwar/Payload$Task.class
+    18376  2026-11-17 06:35   fr/uwar/Payload.class
+     8371  2026-11-17 06:35   fr/uwar/Reg.class
+      902  2026-11-17 06:35   fr/uwar/Shell$1.class
+    13106  2026-11-17 06:35   fr/uwar/Shell.class
+      704  2026-11-17 06:35   fr/uwar/SupplyItem$1.class
+     1135  2026-11-17 06:35   fr/uwar/SupplyItem$Type.class
+     4930  2026-11-17 06:35   fr/uwar/SupplyItem.class
+     2762  2026-11-17 06:35   fr/uwar/TabHook.class
+     2796  2026-11-17 06:35   fr/uwar/Uwar.class
+     1156  2026-11-17 06:35   fr/uwar/W$1.class
+     7600  2026-11-17 06:35   fr/uwar/W.class
+        0  1970-01-11 22:58   fr/uwar/client/
+     9915  2026-11-17 06:35   fr/uwar/client/AircraftRenderer.class
+     1925  2026-11-17 06:35   fr/uwar/client/AircraftSound.class
+     9042  2026-11-17 06:35   fr/uwar/client/ClientEvents$ForgeBus.class
+     4580  2026-11-17 06:35   fr/uwar/client/ClientEvents$ModBus.class
+      920  2026-11-17 06:35   fr/uwar/client/ClientEvents.class
+     2754  2026-11-17 06:35   fr/uwar/client/ClientHooks.class
+    16889  2026-11-17 06:35   fr/uwar/client/Hud.class
+     8601  2026-11-17 06:35   fr/uwar/client/LoadoutScreen.class
+     9118  2026-11-17 06:35   fr/uwar/client/Mesh.class
+     1184  2026-11-17 06:35   fr/uwar/client/Models$Model.class
+      435  2026-11-17 06:35   fr/uwar/client/Models$Ord.class
+    11137  2026-11-17 06:35   fr/uwar/client/Models.class
+     2597  2026-11-17 06:35   fr/uwar/client/NukeFx.class
+     4077  2026-11-17 06:35   fr/uwar/client/ShellRenderer.class
+       61  2026-11-17 06:35   pack.mcmeta
+---------                     -------
+   478280                     156 files
