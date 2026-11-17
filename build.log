@@ -1,0 +1,100 @@
+Collecting portablemc
+  Downloading portablemc-5.0.6-cp39-abi3-win_amd64.whl.metadata (10.0 kB)
+Collecting pyinstaller
+  Downloading pyinstaller-6.22.3-py3-none-win_amd64.whl.metadata (8.5 kB)
+Collecting altgraph (from pyinstaller)
+  Downloading altgraph-0.17.5-py2.py3-none-any.whl.metadata (7.5 kB)
+Requirement already satisfied: packaging>=22.0 in C:\hostedtoolcache\windows\Python\3.12.10\x64\Lib\site-packages (from pyinstaller) (26.3)
+Collecting pefile>=2022.5.30 (from pyinstaller)
+  Downloading pefile-2024.8.26-py3-none-any.whl.metadata (1.4 kB)
+Collecting pyinstaller-hooks-contrib>=2026.7 (from pyinstaller)
+  Downloading pyinstaller_hooks_contrib-2026.10-py3-none-any.whl.metadata (16 kB)
+Collecting pywin32-ctypes>=0.2.1 (from pyinstaller)
+  Downloading pywin32_ctypes-0.2.3-py3-none-any.whl.metadata (3.9 kB)
+Collecting setuptools>=42.0.0 (from pyinstaller)
+  Downloading setuptools-84.2.1-py3-none-any.whl.metadata (6.6 kB)
+Downloading portablemc-5.0.6-cp39-abi3-win_amd64.whl (4.0 MB)
+   ---------------------------------------- 4.0/4.0 MB 34.0 MB/s  0:00:00
+Downloading pyinstaller-6.22.3-py3-none-win_amd64.whl (1.5 MB)
+   ---------------------------------------- 1.5/1.5 MB 38.5 MB/s  0:00:00
+Downloading pefile-2024.8.26-py3-none-any.whl (74 kB)
+Downloading pyinstaller_hooks_contrib-2026.10-py3-none-any.whl (463 kB)
+Downloading pywin32_ctypes-0.2.3-py3-none-any.whl (30 kB)
+Downloading setuptools-84.2.1-py3-none-any.whl (876 kB)
+   ---------------------------------------- 876.3/876.3 kB 40.9 MB/s  0:00:00
+Downloading altgraph-0.17.5-py2.py3-none-any.whl (21 kB)
+Installing collected packages: altgraph, setuptools, pywin32-ctypes, pyinstaller-hooks-contrib, portablemc, pefile, pyinstaller
+
+Successfully installed altgraph-0.17.5 pefile-2024.8.26 portablemc-5.0.6 pyinstaller-6.22.3 pyinstaller-hooks-contrib-2026.10 pywin32-ctypes-0.2.3 setuptools-84.2.1
+287 INFO: PyInstaller: 6.22.3, contrib hooks: 2026.10
+288 INFO: Python: 3.12.10
+310 INFO: Platform: Windows-2025Server-10.0.26100-SP0
+310 INFO: Python environment: C:\hostedtoolcache\windows\Python\3.12.10\x64
+310 INFO: wrote D:\a\xyzmenu\xyzmenu\ServeurLauncher.spec
+978 INFO: Module search paths (PYTHONPATH):
+['D:\\a\\xyzmenu\\xyzmenu',
+ 'C:\\hostedtoolcache\\windows\\Python\\3.12.10\\x64\\python312.zip',
+ 'C:\\hostedtoolcache\\windows\\Python\\3.12.10\\x64\\DLLs',
+ 'C:\\hostedtoolcache\\windows\\Python\\3.12.10\\x64\\Lib',
+ 'C:\\hostedtoolcache\\windows\\Python\\3.12.10\\x64',
+ 'C:\\hostedtoolcache\\windows\\Python\\3.12.10\\x64\\Lib\\site-packages',
+ 'D:\\a\\xyzmenu\\xyzmenu']
+1209 INFO: Appending 'datas' from .spec
+1212 INFO: checking Analysis
+1212 INFO: Building Analysis because Analysis-00.toc is non existent
+1212 INFO: Looking for Python shared library...
+1212 INFO: Using Python shared library: C:\hostedtoolcache\windows\Python\3.12.10\x64\python312.dll
+1212 INFO: Running Analysis Analysis-00.toc
+1212 INFO: Target bytecode optimization level: 0
+1212 INFO: Initializing module dependency graph...
+1222 INFO: Initializing module graph hook caches...
+1237 INFO: Analyzing modules for base_library.zip ...
+3362 INFO: Processing standard module hook 'hook-encodings.py' from 'C:\\hostedtoolcache\\windows\\Python\\3.12.10\\x64\\Lib\\site-packages\\PyInstaller\\hooks'
+3974 INFO: Processing standard module hook 'hook-math.py' from 'C:\\hostedtoolcache\\windows\\Python\\3.12.10\\x64\\Lib\\site-packages\\PyInstaller\\hooks'
+5278 INFO: Processing standard module hook 'hook-pickle.py' from 'C:\\hostedtoolcache\\windows\\Python\\3.12.10\\x64\\Lib\\site-packages\\PyInstaller\\hooks'
+6364 INFO: Processing standard module hook 'hook-heapq.py' from 'C:\\hostedtoolcache\\windows\\Python\\3.12.10\\x64\\Lib\\site-packages\\PyInstaller\\hooks'
+6969 INFO: Caching module dependency graph...
+7012 INFO: Analyzing D:\a\xyzmenu\xyzmenu\launcher.py
+7392 INFO: Processing standard module hook 'hook-webbrowser.py' from 'C:\\hostedtoolcache\\windows\\Python\\3.12.10\\x64\\Lib\\site-packages\\PyInstaller\\hooks'
+7406 INFO: Processing pre-find-module-path hook 'hook-tkinter.py' from 'C:\\hostedtoolcache\\windows\\Python\\3.12.10\\x64\\Lib\\site-packages\\PyInstaller\\hooks\\pre_find_module_path'
+7408 INFO: TclTkInfo: initializing cached Tcl/Tk info...
+8427 INFO: Processing standard module hook 'hook-_tkinter.py' from 'C:\\hostedtoolcache\\windows\\Python\\3.12.10\\x64\\Lib\\site-packages\\PyInstaller\\hooks'
+8467 INFO: Analyzing hidden import 'portablemc.__main__'
+8468 INFO: Analyzing hidden import 'portablemc.base'
+8468 INFO: Analyzing hidden import 'portablemc.fabric'
+8468 INFO: Processing module hooks (post-graph stage)...
+8472 INFO: Processing standard module hook 'hook-_tkinter.py' from 'C:\\hostedtoolcache\\windows\\Python\\3.12.10\\x64\\Lib\\site-packages\\PyInstaller\\hooks'
+8484 INFO: Performing binary vs. data reclassification (950 entries)
+9110 INFO: Looking for ctypes DLLs
+9116 INFO: Analyzing run-time hooks ...
+9116 INFO: Including run-time hook 'pyi_rth_inspect.py' from 'C:\\hostedtoolcache\\windows\\Python\\3.12.10\\x64\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+9120 INFO: Including run-time hook 'pyi_rth__tkinter.py' from 'C:\\hostedtoolcache\\windows\\Python\\3.12.10\\x64\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+9147 INFO: Creating base_library.zip...
+9173 INFO: Looking for dynamic libraries
+9292 INFO: Extra DLL search directories (AddDllDirectory): []
+9292 INFO: Extra DLL search directories (PATH): []
+9991 INFO: Warnings written to D:\a\xyzmenu\xyzmenu\build\ServeurLauncher\warn-ServeurLauncher.txt
+10009 INFO: Graph cross-reference written to D:\a\xyzmenu\xyzmenu\build\ServeurLauncher\xref-ServeurLauncher.html
+10043 INFO: checking PYZ
+10043 INFO: Building PYZ because PYZ-00.toc is non existent
+10043 INFO: Building PYZ (ZlibArchive) D:\a\xyzmenu\xyzmenu\build\ServeurLauncher\PYZ-00.pyz
+10230 INFO: Building PYZ (ZlibArchive) D:\a\xyzmenu\xyzmenu\build\ServeurLauncher\PYZ-00.pyz completed successfully.
+10258 INFO: checking PKG
+10258 INFO: Building PKG because PKG-00.toc is non existent
+10258 INFO: Building PKG (CArchive) ServeurLauncher.pkg
+17075 INFO: Building PKG (CArchive) ServeurLauncher.pkg completed successfully.
+17097 INFO: Bootloader C:\hostedtoolcache\windows\Python\3.12.10\x64\Lib\site-packages\PyInstaller\bootloader\Windows-64bit-intel\runw.exe
+17097 INFO: checking EXE
+17097 INFO: Building EXE because EXE-00.toc is non existent
+17097 INFO: Building EXE from EXE-00.toc
+17097 INFO: Copying bootloader EXE to D:\a\xyzmenu\xyzmenu\dist\ServeurLauncher.exe
+17100 INFO: Copying icon to EXE
+17102 INFO: Copying 0 resources to EXE
+17102 INFO: Embedding manifest in EXE
+17102 INFO: Appending PKG archive to EXE
+17113 INFO: Fixing EXE headers
+17213 INFO: Building EXE from EXE-00.toc completed successfully.
+17233 INFO: Build complete! The results are available in: D:\a\xyzmenu\xyzmenu\dist
+total 16308
+-rwxr-xr-x 1 runneradmin 197121 16697304 Nov 17 06:40 ServeurLauncher.exe
+OK <portablemc.forge.Installer loader=Loader.Forge version=Version.Name("1.20.1-47.4.28")>
