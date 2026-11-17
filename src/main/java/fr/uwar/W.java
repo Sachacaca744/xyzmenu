@@ -32,7 +32,7 @@ public enum W {
             "Met le feu sur 14 blocs : flammes sur le terrain, creatures enflammees, brasier qui dure."),
     ACID("Bombe a acide", "Acide", 10f, 4f, 0f, 16, 1, "acid_bomb", true,
             "Flaque d'acide qui ronge les blocs en profondeur pendant 10 s et empoisonne ceux qui y sont."),
-    CLUSTER("Bombe a sous-munitions", "Sous-munitions", 22f, 3.5f, 0f, 16, 1, "cluster_bomb", false,
+    CLUSTER("Bombe a sous-munitions", "Sous-munitions", 40f, 5f, 0f, 16, 1, "cluster_bomb", false,
             "Disperse 24 petites bombes sur 22 blocs autour de l'impact."),
     THERMO("Bombe thermobarique", "Thermobarique", 120f, 18f, 0f, 24, 1, "thermobaric_bomb", true,
             "Aspire l'air (les creatures sont tirees vers le centre) puis explose : souffle enorme."),

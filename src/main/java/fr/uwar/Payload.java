@@ -182,7 +182,7 @@ public class Payload {
                 double a = t.lv.random.nextDouble() * Math.PI * 2, d = Math.sqrt(t.lv.random.nextDouble()) * 22;
                 BlockPos s = surface(t.lv, t.c.x + Math.cos(a) * d, t.c.z + Math.sin(a) * d);
                 double y = Math.abs(s.getY() - t.c.y) > 12 ? t.c.y : s.getY();
-                Blast.boom(t.lv, new Vec3(t.c.x + Math.cos(a) * d, y + 0.5, t.c.z + Math.sin(a) * d), 3.5f, 22f, null, t.owner, false);
+                Blast.boom(t.lv, new Vec3(t.c.x + Math.cos(a) * d, y + 0.5, t.c.z + Math.sin(a) * d), W.CLUSTER.radius, W.CLUSTER.dmg, null, t.owner, false);
             }
         }));
     }

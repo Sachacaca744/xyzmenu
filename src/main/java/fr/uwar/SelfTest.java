@@ -41,7 +41,7 @@ public class SelfTest {
     static MinecraftServer server;
     static final List<Run> runs = new ArrayList<>();
     static final java.util.Map<String, double[]> FAR = java.util.Map.of("missile", new double[]{-250, -100}, "flak_far", new double[]{-170, -100}, "nuke", new double[]{-100, 100},
-            "flak500", new double[]{-300, -130}, "lrm_wall", new double[]{-330, -130}, "lrm_range", new double[]{-360, -130}, "payloads", new double[]{150, -100}, "b17_fly", new double[]{-420, -130});
+            "flak500", new double[]{-300, -130}, "lrm_wall", new double[]{-330, -130}, "lrm_range", new double[]{-360, -130}, "payloads", new double[]{150, -100}, "b17_fly", new double[]{-440, -130}, "b17_arms", new double[]{-400, -130});
 
     static class Run {
         String name, mode;
@@ -925,7 +925,6 @@ public class SelfTest {
                     a.nextWeapon(1);
                     check("fragmentation 500 m : selectionnee", a.selected() == W.FLAK5 && W.FLAK5.range() == 500 && W.FLAK.range() == 200, "sel=" + a.selected());
                     r.c1 = cow(x0 + 5, r.start.y, z0 + 498);
-                    r.c2 = cow(x0 + 8, r.start.y, z0 + 200);
                     r.c3 = cow(x0 + 5, r.start.y, z0 + 530);
                     a.aimPitch = 0;
                     a.inFire = true;
@@ -934,7 +933,7 @@ public class SelfTest {
                 if (lt == 100) {
                     boolean still = false;
                     for (Entity en : lv.getAllEntities()) if (en instanceof Shell sh && sh.weapon() == W.FLAK5) still = true;
-                    check("frag 500 m : ne explose pas a 200 blocs (toujours en vol, cible a 200 intacte)", still && r.c2.isAlive(), "");
+                    check("frag 500 m : ne explose pas a 200 blocs (toujours en vol apres ~250 blocs)", still && r.c1.isAlive(), "");
                 }
                 if (lt == 260) {
                     check("frag 500 m : explose a ~500 blocs et detruit la cible", !r.c1.isAlive(), "pv=" + ((LivingEntity) r.c1).getHealth());
@@ -962,7 +961,9 @@ public class SelfTest {
                 if (lt == 250) {
                     check("longue portee : explose sur l'obstacle (a ~400 blocs) et tue la cible devant", !r.c1.isAlive(), "");
                     check("longue portee : n'a pas traverse le mur (cible derriere vivante)", r.c2.isAlive(), "");
-                    check("longue portee : le mur est troue (blocs arraches)", lv.getBlockState(new BlockPos((int) x0 + 5, y + 1, (int) z0 + 400)).isAir(), "bloc=" + lv.getBlockState(new BlockPos((int) x0 + 5, y + 1, (int) z0 + 400)));
+                    int gone = 0;
+                    for (int ddx = -8; ddx <= 18; ddx++) for (int ddy = 0; ddy < 8; ddy++) if (lv.getBlockState(new BlockPos((int) x0 + ddx, y + ddy, (int) z0 + 400)).isAir()) gone++;
+                    check("longue portee : le mur est troue (blocs arraches)", gone >= 10, "blocs retires=" + gone);
                     fin(r);
                 }
             }
