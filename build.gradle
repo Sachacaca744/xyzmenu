@@ -1,0 +1,58 @@
+plugins {
+    id 'java'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+}
+
+group = 'fr.uking'
+version = '1.0.0'
+
+base {
+    archivesName = 'uking'
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(17)
+}
+
+minecraft {
+    mappings channel: 'official', version: '1.20.1'
+    runs {
+        server {
+            workingDirectory project.file('run-server')
+            property 'forge.logging.console.level', 'info'
+            property 'uking.selftest', 'auto'
+            mods { uking { source sourceSets.main } }
+        }
+        client {
+            workingDirectory project.file('run-client')
+            property 'forge.logging.console.level', 'info'
+            property 'uking.selftest', 'client'
+            property 'uking.clienttest', 'true'
+            mods { uking { source sourceSets.main } }
+        }
+    }
+}
+
+// Les classes de test automatique ne sont incluses que si -Pwithtest
+if (!project.hasProperty('withtest')) {
+    sourceSets.main.java.exclude '**/SelfTest.java', '**/client/ClientTest.java'
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.20.1-47.3.0'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+jar {
+    manifest {
+        attributes([
+            'Specification-Title'  : 'uking',
+            'Implementation-Title' : 'uking',
+            'Implementation-Version': project.version
+        ])
+    }
+    finalizedBy 'reobfJar'
+}
