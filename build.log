@@ -1,0 +1,44 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.8/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Task :compileJava
+/home/runner/work/xyzmenu/xyzmenu/src/main/java/fr/uking/Net.java:99: error: package fr.uking.client does not exist
+            ctx.get().enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> fr.uking.client.ClientHooks.state(m)));
+                                                                                                             ^
+/home/runner/work/xyzmenu/xyzmenu/src/main/java/fr/uking/Builder.java:38: error: incompatible types: RandomSource cannot be converted to Random
+            fs.spawnUnit(lv, f, UType.PEASANT, Fiefs.spawnSpot(lv, clicked, 3, 6, lv.random), Soldier.O_DEFEND);
+                                                                                    ^
+/home/runner/work/xyzmenu/xyzmenu/src/main/java/fr/uking/Fiefs.java:246: error: incompatible types: RandomSource cannot be converted to Random
+        BlockPos at = spawnSpot(lv, f.pos, 3, 7, lv.random);
+                                                   ^
+/home/runner/work/xyzmenu/xyzmenu/src/main/java/fr/uking/Fiefs.java:367: error: incompatible types: RandomSource cannot be converted to Random
+        Random rnd = lv.random;
+                       ^
+/home/runner/work/xyzmenu/xyzmenu/src/main/java/fr/uking/Soldier.java:321: error: getExperienceReward() in Soldier cannot override getExperienceReward() in Mob
+    @Override protected int getExperienceReward() { return 0; }
+                            ^
+  attempting to assign weaker access privileges; was public
+/home/runner/work/xyzmenu/xyzmenu/src/main/java/fr/uking/Catapult.java:60: error: getExperienceReward() in Catapult cannot override getExperienceReward() in Mob
+    @Override protected int getExperienceReward() { return 0; }
+                            ^
+  attempting to assign weaker access privileges; was public
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: Some messages have been simplified; recompile with -Xdiags:verbose to get full output
+6 errors
+
+> Task :compileJava FAILED
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run-1795023377513.json
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava'.
+> Compilation failed; see the compiler error output for details.
+
+* Try:
+> Run with --info option to get more log output.
+> Run with --scan to get full insights.
+
+BUILD FAILED in 22s
+1 actionable task: 1 executed
